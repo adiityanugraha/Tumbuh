@@ -6,7 +6,7 @@ export default function Home() {
         Untuk anak SD kelas 1-6
       </span>
       <h1 className="font-display text-4xl font-semibold text-daun-800">
-        Kebun Belajar Nusantara
+        Tumbuh
       </h1>
       <p className="text-lg text-tinta-redup">
         Belajar sedikit setiap hari, kebunmu tumbuh, dan Nusantara terbuka satu per satu.

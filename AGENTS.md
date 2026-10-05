@@ -8,7 +8,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# Acuan AI Agent: Kebun Belajar Nusantara
+# Acuan AI Agent: Tumbuh
 
 Dokumen ini adalah acuan untuk setiap AI Agent yang mengerjakan task di repository ini. Baca seluruhnya sebelum menulis kode. Blok di atas dibuat otomatis oleh Next.js dan dibiarkan apa adanya.
 

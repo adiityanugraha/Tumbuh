@@ -7,8 +7,8 @@ const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Kebun Belajar Nusantara",
-    template: "%s | Kebun Belajar Nusantara",
+    default: "Tumbuh - Kebun Belajar Nusantara",
+    template: "%s | Tumbuh",
   },
   description:
     "Belajar Matematika, IPAS, dan Bahasa Inggris untuk anak SD kelas 1-6 sambil merawat kebun virtual dan menjelajah Peta Nusantara.",

@@ -1,4 +1,4 @@
-# Kebun Belajar Nusantara
+# Tumbuh
 
 Web edukasi untuk anak SD kelas 1-6. Anak merawat kebun virtual dan menjelajah Peta Nusantara dengan belajar Matematika, IPAS, dan Bahasa Inggris setiap hari. Guru dan orang tua bisa memantau progres dan memberi semangat.
 
@@ -33,3 +33,6 @@ Jalankan `npm run build`, lalu unggah seluruh isi folder `out/` ke direktori pub
 ## Status Dummy dan Placeholder
 
 - `src/app/page.tsx`: halaman awal sementara (PLACEHOLDER), diganti onboarding di Fase 2.
+- `src/data/classroom.ts`: 19 teman sekelas, statistik topik, dan tantangan awal adalah DUMMY untuk Mode Demo.
+- `src/data/plants.ts`: fakta 12 tanaman Nusantara bertanda VERIFY, wajib dicek manual.
+- `src/data/questions/`: 288 soal (16 per mapel per kelas) disusun mengacu Kurikulum Merdeka, perlu ditinjau ulang oleh manusia sebelum lomba.

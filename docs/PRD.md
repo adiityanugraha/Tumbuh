@@ -1,6 +1,6 @@
-# PRD: Kebun Belajar Nusantara
+# PRD: Tumbuh
 
-Dokumen kebutuhan produk. Sumber kebenaran untuk fitur dan perilaku aplikasi. Aturan kerja AI Agent ada di `AGENTS.md`.
+Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. Sumber kebenaran untuk fitur dan perilaku aplikasi. Aturan kerja AI Agent ada di `AGENTS.md`.
 
 ## 1. Latar Belakang
 
@@ -34,8 +34,8 @@ Dokumen kebutuhan produk. Sumber kebenaran untuk fitur dan perilaku aplikasi. At
 ## 5. Konten
 
 - **Kelas**: 1, 2, 3, 4, 5, 6. Dipilih saat onboarding, bisa diganti di profil. Soal yang muncul sesuai kelas yang dipilih.
-- **Mapel**: Matematika, IPAS, Bahasa Inggris.
-- **Bank soal**: mengacu capaian pembelajaran Kurikulum Merdeka per kelas. Target minimal 15 soal per mapel per kelas (6 x 3 x 15 = 270 soal). Disimpan sebagai JSON per kelas per mapel, contoh `src/data/questions/kelas-3/matematika.json`.
+- **Mapel**: Matematika, IPAS, Bahasa Inggris. Di Kurikulum Merdeka, IPAS resmi mulai kelas 3; untuk kelas 1-2 isinya pengenalan lingkungan sekitar (tubuh, hewan, tumbuhan, cuaca).
+- **Bank soal**: mengacu capaian pembelajaran Kurikulum Merdeka per kelas. Minimal 15 soal per mapel per kelas, saat ini 16 (6 x 3 x 16 = 288 soal). Disimpan sebagai JSON per kelas per mapel, contoh `src/data/questions/kelas-3/matematika.json`.
 - **Tipe soal**: pilihan ganda (boleh bergambar), isian angka, mencocokkan, mengurutkan.
 - **Tanaman**: 2 per wilayah (12 total), contoh Rafflesia arnoldii, Bunga Bangkai, Edelweis Jawa, Melati, Anggrek Hitam, Kantong Semar, Anggrek Bulan, Cendana, Matoa. Fakta wajib singkat dan ditandai `// VERIFY` untuk dicek manual.
 
