@@ -1,0 +1,18 @@
+[
+  { "id": "e5-01", "type": "pilihan", "topic": "Occupations", "prompt": "Orang yang mengobati orang sakit adalah...", "image": "🩺", "options": ["Doctor", "Farmer", "Pilot"], "answer": 0, "hint": "Bekerja di rumah sakit." },
+  { "id": "e5-02", "type": "cocokkan", "topic": "Occupations", "prompt": "Cocokkan nama pekerjaan!", "pairs": [["Teacher", "Guru"], ["Farmer", "Petani"], ["Chef", "Koki"]], "hint": "Teacher mengajar di sekolah." },
+  { "id": "e5-03", "type": "pilihan", "topic": "Occupations", "prompt": "Dengarkan! A pilot flies a...", "image": "👩‍✈️", "say": "A pilot flies a plane", "options": ["Plane", "Bus", "Ship"], "answer": 0, "hint": "Fly artinya terbang." },
+  { "id": "e5-04", "type": "pilihan", "topic": "Places", "prompt": "Tempat membeli obat adalah...", "image": "💊", "options": ["Pharmacy", "Library", "Bakery"], "answer": 0, "hint": "Bakery adalah toko roti." },
+  { "id": "e5-05", "type": "cocokkan", "topic": "Places", "prompt": "Cocokkan nama tempat!", "pairs": [["Library", "Perpustakaan"], ["Market", "Pasar"], ["Hospital", "Rumah sakit"]], "hint": "Hospital adalah tempat dokter bekerja." },
+  { "id": "e5-06", "type": "pilihan", "topic": "Places", "prompt": "Kita meminjam buku di...", "image": "📚", "options": ["Library", "Bank", "Post office"], "answer": 0, "hint": "Tempat yang penuh rak buku." },
+  { "id": "e5-07", "type": "pilihan", "topic": "Simple present", "prompt": "Lengkapi: I ... breakfast every morning.", "options": ["have", "has", "having"], "answer": 0, "hint": "Setelah I, pakai kata kerja tanpa -s." },
+  { "id": "e5-08", "type": "pilihan", "topic": "Simple present", "prompt": "Lengkapi: She ... to school by bike.", "options": ["goes", "go", "going"], "answer": 0, "hint": "Setelah she, kata kerja diberi -s atau -es." },
+  { "id": "e5-09", "type": "urutkan", "topic": "Daily routine", "prompt": "Urutkan kegiatan pagi hari!", "items": ["Wake up", "Take a bath", "Have breakfast", "Go to school"], "hint": "Wake up artinya bangun tidur." },
+  { "id": "e5-10", "type": "urutkan", "topic": "Simple present", "prompt": "Susun kalimat yang benar!", "items": ["He", "plays", "football", "every", "Sunday"], "hint": "Mulai dari siapa yang melakukan." },
+  { "id": "e5-11", "type": "pilihan", "topic": "Food", "prompt": "Dengarkan! Delicious artinya...", "image": "😋", "say": "delicious", "options": ["Lezat", "Pahit", "Asin"], "answer": 0, "hint": "Diucapkan saat makanan terasa enak." },
+  { "id": "e5-12", "type": "cocokkan", "topic": "Food", "prompt": "Cocokkan rasa!", "pairs": [["Sweet", "Manis"], ["Sour", "Asam"], ["Salty", "Asin"]], "hint": "Salt artinya garam." },
+  { "id": "e5-13", "type": "isian", "topic": "Numbers", "prompt": "Dengarkan! Twenty adalah angka...", "say": "twenty", "answer": 20, "hint": "Twenty berasal dari two (dua), jadi dua puluh." },
+  { "id": "e5-14", "type": "isian", "topic": "Numbers", "prompt": "Dengarkan! Fifteen adalah angka...", "say": "fifteen", "answer": 15, "hint": "Five + ten." },
+  { "id": "e5-15", "type": "pilihan", "topic": "Places", "prompt": "Lengkapi: The bakery is ... the bank.", "options": ["next to", "eat", "happy"], "answer": 0, "hint": "Next to artinya di sebelah." },
+  { "id": "e5-16", "type": "pilihan", "topic": "Occupations", "prompt": "Pekerjaan yang memadamkan api adalah...", "image": "🚒", "options": ["Firefighter", "Police officer", "Driver"], "answer": 0, "hint": "Fire artinya api." }
+]

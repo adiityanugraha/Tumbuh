@@ -1,0 +1,18 @@
+[
+  { "id": "e4-01", "type": "pilihan", "topic": "Months", "prompt": "Bulan Januari dalam bahasa Inggris adalah...", "image": "🗓️", "options": ["January", "June", "July"], "answer": 0, "hint": "Bulan pertama dalam setahun." },
+  { "id": "e4-02", "type": "urutkan", "topic": "Months", "prompt": "Urutkan nama bulan!", "items": ["March", "April", "May", "June"], "hint": "Maret, April, Mei, Juni." },
+  { "id": "e4-03", "type": "isian", "topic": "Months", "prompt": "Ada berapa months (bulan) dalam satu tahun?", "answer": 12, "hint": "January sampai December." },
+  { "id": "e4-04", "type": "pilihan", "topic": "Telling time", "prompt": "Dengarkan! It is seven o'clock artinya...", "image": "🕖", "say": "It is seven o'clock", "options": ["Pukul tujuh tepat", "Pukul tujuh lewat", "Pukul sebelas"], "answer": 0, "hint": "O'clock berarti jam tepat." },
+  { "id": "e4-05", "type": "pilihan", "topic": "Telling time", "prompt": "Pukul 03.30 dalam bahasa Inggris adalah...", "image": "🕞", "options": ["Half past three", "Three o'clock", "Half past four"], "answer": 0, "hint": "Half past artinya lewat setengah." },
+  { "id": "e4-06", "type": "pilihan", "topic": "Hobbies", "prompt": "Hobiku membaca. My hobby is...", "image": "📚", "options": ["Reading", "Swimming", "Singing"], "answer": 0, "hint": "Read artinya membaca." },
+  { "id": "e4-07", "type": "cocokkan", "topic": "Hobbies", "prompt": "Cocokkan hobi!", "pairs": [["Swimming", "Berenang"], ["Drawing", "Menggambar"], ["Cooking", "Memasak"]], "hint": "Cook artinya memasak." },
+  { "id": "e4-08", "type": "pilihan", "topic": "Adjectives", "prompt": "Dengarkan! Lawan kata big adalah...", "say": "big", "options": ["Small", "Tall", "Long"], "answer": 0, "hint": "Big artinya besar." },
+  { "id": "e4-09", "type": "cocokkan", "topic": "Adjectives", "prompt": "Cocokkan kata dengan lawan katanya!", "pairs": [["Hot", "Cold"], ["Fast", "Slow"], ["Happy", "Sad"]], "hint": "Hot artinya panas." },
+  { "id": "e4-10", "type": "pilihan", "topic": "Adjectives", "prompt": "Gajah itu besar. Dalam bahasa Inggris...", "image": "🐘", "options": ["The elephant is big", "The elephant is small", "The elephant is fast"], "answer": 0, "hint": "Besar adalah big." },
+  { "id": "e4-11", "type": "pilihan", "topic": "Rooms", "prompt": "Dengarkan! Kitchen artinya...", "say": "kitchen", "options": ["Dapur", "Kamar tidur", "Kamar mandi"], "answer": 0, "hint": "Tempat ibu memasak." },
+  { "id": "e4-12", "type": "cocokkan", "topic": "Rooms", "prompt": "Cocokkan nama ruangan!", "pairs": [["Bedroom", "Kamar tidur"], ["Bathroom", "Kamar mandi"], ["Living room", "Ruang tamu"]], "hint": "Bed artinya tempat tidur." },
+  { "id": "e4-13", "type": "urutkan", "topic": "Hobbies", "prompt": "Susun kalimat: Aku suka berenang.", "items": ["I", "like", "swimming"], "hint": "I like artinya aku suka." },
+  { "id": "e4-14", "type": "pilihan", "topic": "Months", "prompt": "Bulan ke-8 adalah...", "options": ["August", "October", "April"], "answer": 0, "hint": "Bulan peringatan kemerdekaan Indonesia." },
+  { "id": "e4-15", "type": "isian", "topic": "Telling time", "prompt": "Dengarkan! Ten o'clock berarti pukul berapa?", "say": "ten o'clock", "answer": 10, "hint": "Ten adalah sepuluh." },
+  { "id": "e4-16", "type": "pilihan", "topic": "Months", "prompt": "Hari Kemerdekaan Indonesia diperingati setiap bulan...", "image": "🇮🇩", "options": ["August", "May", "December"], "answer": 0, "hint": "Tanggal 17 Agustus." }
+]

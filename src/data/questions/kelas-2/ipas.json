@@ -1,0 +1,18 @@
+[
+  { "id": "i2-01", "type": "pilihan", "topic": "Musim", "prompt": "Indonesia punya dua musim, yaitu...", "options": ["Musim hujan dan kemarau", "Musim salju dan panas", "Musim gugur dan semi"], "answer": 0, "hint": "Di Indonesia tidak ada salju di kota." },
+  { "id": "i2-02", "type": "pilihan", "topic": "Hewan", "prompt": "Hewan pemakan tumbuhan disebut...", "options": ["Herbivora", "Karnivora", "Omnivora"], "answer": 0, "hint": "Karnivora adalah pemakan daging." },
+  { "id": "i2-03", "type": "cocokkan", "topic": "Hewan", "prompt": "Cocokkan hewan dengan makanannya!", "pairs": [["Kelinci 🐇", "Wortel"], ["Kucing 🐈", "Ikan"], ["Kupu-kupu 🦋", "Nektar bunga"]], "hint": "Kupu-kupu suka hinggap di bunga." },
+  { "id": "i2-04", "type": "pilihan", "topic": "Tumbuhan", "prompt": "Agar bisa tumbuh, tumbuhan memerlukan...", "image": "🌿", "options": ["Air dan sinar matahari", "Gula dan garam", "Minyak dan sabun"], "answer": 0, "hint": "Kita menyiram tanaman setiap hari." },
+  { "id": "i2-05", "type": "pilihan", "topic": "Gaya", "prompt": "Contoh kegiatan menarik adalah...", "options": ["Membuka laci", "Menendang bola", "Mendorong troli"], "answer": 0, "hint": "Menarik berarti benda bergerak mendekati kita." },
+  { "id": "i2-06", "type": "pilihan", "topic": "Gaya", "prompt": "Contoh kegiatan mendorong adalah...", "options": ["Mendorong gerobak", "Menarik tali", "Membuka laci"], "answer": 0, "hint": "Mendorong berarti benda bergerak menjauhi kita." },
+  { "id": "i2-07", "type": "isian", "topic": "Hewan", "prompt": "Laba-laba punya berapa kaki?", "image": "🕷️", "answer": 8, "hint": "Lebih banyak dari serangga yang berkaki 6." },
+  { "id": "i2-08", "type": "isian", "topic": "Hewan", "prompt": "Kupu-kupu punya berapa sayap?", "image": "🦋", "answer": 4, "hint": "Di setiap sisi ada sayap depan dan sayap belakang." },
+  { "id": "i2-09", "type": "pilihan", "topic": "Lingkungan", "prompt": "Membuang sampah yang benar adalah...", "image": "🗑️", "options": ["Di tempat sampah", "Di sungai", "Di jalan"], "answer": 0, "hint": "Sampah di sungai bisa menyebabkan banjir." },
+  { "id": "i2-10", "type": "urutkan", "topic": "Tumbuhan", "prompt": "Urutkan pertumbuhan tanaman kacang!", "items": ["Biji", "Kecambah", "Tanaman muda", "Tanaman dewasa"], "hint": "Semua tanaman berawal dari biji." },
+  { "id": "i2-11", "type": "pilihan", "topic": "Keselamatan", "prompt": "Benda berbahaya yang tidak boleh dimainkan adalah...", "options": ["Colokan listrik 🔌", "Boneka 🧸", "Bola 🏐"], "answer": 0, "hint": "Benda ini bisa membuat kita tersetrum." },
+  { "id": "i2-12", "type": "cocokkan", "topic": "Cuaca", "prompt": "Cocokkan cuaca dengan gambarnya!", "pairs": [["Cerah", "☀️"], ["Hujan", "🌧️"], ["Berawan", "☁️"]], "hint": "Cerah berarti matahari bersinar." },
+  { "id": "i2-13", "type": "pilihan", "topic": "Hewan", "prompt": "Hewan yang bertelur adalah...", "options": ["Ayam", "Kucing", "Sapi"], "answer": 0, "hint": "Telur untuk sarapan berasal dari hewan ini." },
+  { "id": "i2-14", "type": "pilihan", "topic": "Cuaca", "prompt": "Hujan turun dari...", "image": "🌦️", "options": ["Awan", "Tanah", "Pohon"], "answer": 0, "hint": "Lihat ke langit saat akan hujan." },
+  { "id": "i2-15", "type": "urutkan", "topic": "Hewan", "prompt": "Urutkan daur hidup kupu-kupu!", "items": ["Telur", "Ulat", "Kepompong", "Kupu-kupu"], "hint": "Ulat membungkus dirinya sebelum menjadi kupu-kupu." },
+  { "id": "i2-16", "type": "pilihan", "topic": "Hidup rukun", "prompt": "Sikap yang baik di sekolah adalah...", "options": ["Antre dengan tertib", "Menyerobot antrean", "Mencoret meja"], "answer": 0, "hint": "Menunggu giliran adalah sikap terpuji." }
+]

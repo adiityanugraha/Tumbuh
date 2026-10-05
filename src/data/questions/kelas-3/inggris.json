@@ -1,0 +1,18 @@
+[
+  { "id": "e3-01", "type": "pilihan", "topic": "Days of the week", "prompt": "Hari Senin dalam bahasa Inggris adalah...", "image": "📅", "options": ["Monday", "Sunday", "Friday"], "answer": 0, "hint": "Hari pertama sekolah dalam seminggu." },
+  { "id": "e3-02", "type": "pilihan", "topic": "Days of the week", "prompt": "Dengarkan! Saturday artinya...", "say": "Saturday", "options": ["Sabtu", "Minggu", "Kamis"], "answer": 0, "hint": "Hari sebelum Sunday." },
+  { "id": "e3-03", "type": "urutkan", "topic": "Days of the week", "prompt": "Urutkan nama hari!", "items": ["Monday", "Tuesday", "Wednesday", "Thursday"], "hint": "Senin, Selasa, Rabu, Kamis." },
+  { "id": "e3-04", "type": "pilihan", "topic": "Days of the week", "prompt": "Hari sesudah Friday adalah...", "options": ["Saturday", "Thursday", "Monday"], "answer": 0, "hint": "Friday adalah Jumat." },
+  { "id": "e3-05", "type": "isian", "topic": "Days of the week", "prompt": "Ada berapa hari dalam satu week (minggu)?", "answer": 7, "hint": "Senin sampai Minggu." },
+  { "id": "e3-06", "type": "pilihan", "topic": "Classroom objects", "prompt": "Apa bahasa Inggris dari buku?", "image": "📕", "options": ["Book", "Bag", "Pen"], "answer": 0, "hint": "Dibaca 'buk'." },
+  { "id": "e3-07", "type": "cocokkan", "topic": "Classroom objects", "prompt": "Cocokkan benda di kelas!", "pairs": [["Pencil", "Pensil"], ["Eraser", "Penghapus"], ["Ruler", "Penggaris"]], "hint": "Pencil bunyinya mirip pensil." },
+  { "id": "e3-08", "type": "pilihan", "topic": "Classroom objects", "prompt": "Dengarkan! Chair artinya...", "image": "🪑", "say": "chair", "options": ["Kursi", "Meja", "Papan tulis"], "answer": 0, "hint": "Kita duduk di atasnya." },
+  { "id": "e3-09", "type": "pilihan", "topic": "Introduction", "prompt": "Untuk memperkenalkan nama, kita berkata...", "options": ["My name is Sari", "How are you?", "See you"], "answer": 0, "hint": "Name artinya nama." },
+  { "id": "e3-10", "type": "pilihan", "topic": "Introduction", "prompt": "Dengarkan! Jawaban yang tepat untuk How are you? adalah...", "say": "How are you?", "options": ["I am fine, thank you", "My name is Bima", "Good night"], "answer": 0, "hint": "How are you artinya apa kabar." },
+  { "id": "e3-11", "type": "urutkan", "topic": "Classroom objects", "prompt": "Susun kalimat: Ini tasku.", "items": ["This", "is", "my", "bag"], "hint": "Bag artinya tas." },
+  { "id": "e3-12", "type": "cocokkan", "topic": "Days of the week", "prompt": "Cocokkan nama hari!", "pairs": [["Sunday", "Minggu"], ["Wednesday", "Rabu"], ["Friday", "Jumat"]], "hint": "Sunday adalah hari libur." },
+  { "id": "e3-13", "type": "pilihan", "topic": "Classroom objects", "prompt": "Alat untuk menggunting kertas adalah...", "image": "✂️", "options": ["Scissors", "Glue", "Marker"], "answer": 0, "hint": "Glue adalah lem." },
+  { "id": "e3-14", "type": "isian", "topic": "Numbers", "prompt": "Dengarkan! Four books artinya ada berapa buku?", "say": "four books", "answer": 4, "hint": "Four adalah empat." },
+  { "id": "e3-15", "type": "pilihan", "topic": "Greetings", "prompt": "Goodbye diucapkan saat...", "image": "👋", "options": ["Berpisah", "Bertemu pagi hari", "Makan"], "answer": 0, "hint": "Bye bye!" },
+  { "id": "e3-16", "type": "urutkan", "topic": "Introduction", "prompt": "Susun kalimat perkenalan!", "items": ["My", "name", "is", "Rara"], "hint": "Mulai dengan My." }
+]

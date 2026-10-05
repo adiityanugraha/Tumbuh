@@ -1,0 +1,18 @@
+[
+  { "id": "e1-01", "type": "pilihan", "topic": "Colors", "prompt": "Apa bahasa Inggris dari merah?", "image": "🔴", "options": ["Red", "Blue", "Green"], "answer": 0, "hint": "Dibaca 'red', seperti warna apel." },
+  { "id": "e1-02", "type": "pilihan", "topic": "Colors", "prompt": "Dengarkan! Warna yellow artinya...", "say": "yellow", "options": ["Kuning", "Hijau", "Ungu"], "answer": 0, "hint": "Warna pisang dan matahari." },
+  { "id": "e1-03", "type": "pilihan", "topic": "Animals", "prompt": "Apa bahasa Inggris dari kucing?", "image": "🐈", "options": ["Cat", "Dog", "Bird"], "answer": 0, "hint": "Dibaca 'ket'." },
+  { "id": "e1-04", "type": "pilihan", "topic": "Animals", "prompt": "Dengarkan! Dog artinya...", "say": "dog", "options": ["Anjing", "Ikan", "Bebek"], "answer": 0, "hint": "Hewan ini menggonggong: guk guk!" },
+  { "id": "e1-05", "type": "isian", "topic": "Numbers", "prompt": "Dengarkan! Five adalah angka...", "say": "five", "answer": 5, "hint": "Sebanyak jari di satu tangan." },
+  { "id": "e1-06", "type": "isian", "topic": "Numbers", "prompt": "Dengarkan! Three adalah angka...", "say": "three", "answer": 3, "hint": "One, two, three..." },
+  { "id": "e1-07", "type": "cocokkan", "topic": "Colors", "prompt": "Cocokkan warna!", "pairs": [["Blue", "Biru"], ["Green", "Hijau"], ["White", "Putih"]], "hint": "Green adalah warna daun." },
+  { "id": "e1-08", "type": "cocokkan", "topic": "Numbers", "prompt": "Cocokkan angka!", "pairs": [["One", "1"], ["Seven", "7"], ["Ten", "10"]], "hint": "Ten adalah angka terbesar di sini." },
+  { "id": "e1-09", "type": "pilihan", "topic": "Animals", "prompt": "Apa bahasa Inggris dari burung?", "image": "🐦", "options": ["Bird", "Fish", "Cow"], "answer": 0, "hint": "Dibaca 'berd'." },
+  { "id": "e1-10", "type": "pilihan", "topic": "Greetings", "prompt": "Pagi hari kita menyapa dengan...", "image": "🌅", "options": ["Good morning", "Good night", "Goodbye"], "answer": 0, "hint": "Morning artinya pagi." },
+  { "id": "e1-11", "type": "urutkan", "topic": "Numbers", "prompt": "Urutkan dari angka yang paling kecil!", "items": ["One", "Two", "Three", "Four"], "hint": "One adalah satu." },
+  { "id": "e1-12", "type": "pilihan", "topic": "Colors", "prompt": "Warna daun dalam bahasa Inggris adalah...", "image": "🍃", "options": ["Green", "Red", "Black"], "answer": 0, "hint": "Dibaca 'grin'." },
+  { "id": "e1-13", "type": "pilihan", "topic": "Greetings", "prompt": "Dengarkan! Thank you artinya...", "say": "thank you", "options": ["Terima kasih", "Selamat tinggal", "Halo"], "answer": 0, "hint": "Diucapkan saat menerima hadiah." },
+  { "id": "e1-14", "type": "cocokkan", "topic": "Animals", "prompt": "Cocokkan nama hewan!", "pairs": [["Fish", "Ikan 🐟"], ["Cow", "Sapi 🐄"], ["Duck", "Bebek 🦆"]], "hint": "Duck berbunyi kwek kwek." },
+  { "id": "e1-15", "type": "isian", "topic": "Numbers", "prompt": "Dengarkan! Eight adalah angka...", "say": "eight", "answer": 8, "hint": "Six, seven, eight..." },
+  { "id": "e1-16", "type": "urutkan", "topic": "Greetings", "prompt": "Urutkan sapaan dari pagi sampai malam!", "items": ["Good morning", "Good afternoon", "Good evening", "Good night"], "hint": "Afternoon artinya siang." }
+]

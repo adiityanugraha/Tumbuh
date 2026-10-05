@@ -1,0 +1,18 @@
+[
+  { "id": "m3-01", "type": "isian", "topic": "Perkalian", "prompt": "6 × 7 = ?", "answer": 42, "hint": "6 × 7 sama dengan 6 × 5 ditambah 6 × 2." },
+  { "id": "m3-02", "type": "isian", "topic": "Pembagian", "prompt": "36 : 4 = ?", "answer": 9, "hint": "Cari angka yang jika dikali 4 hasilnya 36." },
+  { "id": "m3-03", "type": "pilihan", "topic": "Nilai tempat", "prompt": "Nilai angka 5 pada bilangan 352 adalah...", "options": ["50", "5", "500"], "answer": 0, "hint": "Angka 5 ada di posisi puluhan." },
+  { "id": "m3-04", "type": "isian", "topic": "Penjumlahan", "prompt": "245 + 132 = ?", "answer": 377, "hint": "Jumlahkan satuan, puluhan, lalu ratusan." },
+  { "id": "m3-05", "type": "pilihan", "topic": "Pecahan sederhana", "prompt": "Pizza dipotong menjadi 4 bagian sama besar. Satu potong adalah...", "image": "🍕", "options": ["1/4", "1/2", "1/3"], "answer": 0, "hint": "Satu bagian dari empat bagian." },
+  { "id": "m3-06", "type": "pilihan", "topic": "Pecahan sederhana", "prompt": "Pecahan mana yang paling besar?", "options": ["1/2", "1/4", "1/8"], "answer": 0, "hint": "Semakin sedikit potongannya, semakin besar tiap potong." },
+  { "id": "m3-07", "type": "pilihan", "topic": "Pengukuran panjang", "prompt": "1 meter sama dengan ... cm", "options": ["100", "10", "1000"], "answer": 0, "hint": "Penggaris panjang 1 meter berisi seratus garis cm." },
+  { "id": "m3-08", "type": "isian", "topic": "Pembagian", "prompt": "24 permen dibagi rata kepada 3 anak. Tiap anak mendapat berapa permen?", "image": "🍬", "answer": 8, "hint": "24 : 3. Berapa kali 3 sama dengan 24?" },
+  { "id": "m3-09", "type": "isian", "topic": "Perkalian", "prompt": "Satu kotak berisi 8 pensil. Berapa pensil dalam 5 kotak?", "image": "✏️", "answer": 40, "hint": "8 × 5." },
+  { "id": "m3-10", "type": "urutkan", "topic": "Nilai tempat", "prompt": "Urutkan dari yang paling kecil!", "items": ["209", "290", "902", "920"], "hint": "Bandingkan ratusan dulu, lalu puluhan." },
+  { "id": "m3-11", "type": "cocokkan", "topic": "Pembagian", "prompt": "Cocokkan pembagian dengan hasilnya!", "pairs": [["20 : 5", "4"], ["18 : 3", "6"], ["14 : 2", "7"]], "hint": "Pembagian adalah kebalikan perkalian." },
+  { "id": "m3-12", "type": "pilihan", "topic": "Waktu", "prompt": "Pukul 08.30 juga bisa disebut...", "image": "🕣", "options": ["Setengah sembilan", "Setengah delapan", "Jam delapan tepat"], "answer": 0, "hint": "08.30 berarti setengah jam lagi menuju pukul 9." },
+  { "id": "m3-13", "type": "isian", "topic": "Pengukuran panjang", "prompt": "Panjang pita 150 cm. Dipotong 60 cm. Berapa cm sisanya?", "answer": 90, "hint": "150 - 60." },
+  { "id": "m3-14", "type": "pilihan", "topic": "Perkalian", "prompt": "Hasil 9 × 9 adalah...", "options": ["81", "18", "99"], "answer": 0, "hint": "9 × 10 = 90, lalu kurangi 9." },
+  { "id": "m3-15", "type": "cocokkan", "topic": "Pecahan sederhana", "prompt": "Cocokkan pecahan dengan namanya!", "pairs": [["1/2", "setengah"], ["1/4", "seperempat"], ["3/4", "tiga perempat"]], "hint": "Angka bawah menunjukkan jumlah bagian." },
+  { "id": "m3-16", "type": "urutkan", "topic": "Pengukuran panjang", "prompt": "Urutkan dari yang paling pendek!", "items": ["5 cm", "50 cm", "2 m", "5 m"], "hint": "Ingat, 1 m = 100 cm." }
+]

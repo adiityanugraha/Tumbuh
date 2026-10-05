@@ -1,0 +1,18 @@
+[
+  { "id": "m2-01", "type": "isian", "topic": "Penjumlahan", "prompt": "25 + 13 = ?", "answer": 38, "hint": "Jumlahkan satuan dulu (5 + 3), lalu puluhan (20 + 10)." },
+  { "id": "m2-02", "type": "isian", "topic": "Pengurangan", "prompt": "47 - 15 = ?", "answer": 32, "hint": "Kurangi satuan dulu (7 - 5), lalu puluhan (40 - 10)." },
+  { "id": "m2-03", "type": "pilihan", "topic": "Nilai tempat", "prompt": "Bilangan 64 terdiri dari...", "options": ["6 puluhan dan 4 satuan", "4 puluhan dan 6 satuan", "64 puluhan"], "answer": 0, "hint": "Angka di depan adalah puluhan." },
+  { "id": "m2-04", "type": "pilihan", "topic": "Perkalian awal", "prompt": "3 + 3 + 3 + 3 sama dengan...", "options": ["4 × 3", "3 + 4", "4 × 4"], "answer": 0, "hint": "Angka 3 dijumlahkan sebanyak 4 kali." },
+  { "id": "m2-05", "type": "isian", "topic": "Perkalian awal", "prompt": "2 × 5 = ?", "answer": 10, "hint": "Sama dengan 5 + 5." },
+  { "id": "m2-06", "type": "pilihan", "topic": "Jam", "prompt": "Jarum pendek di angka 7, jarum panjang di angka 12. Pukul berapa?", "image": "🕖", "options": ["Pukul 07.00", "Pukul 12.00", "Pukul 07.30"], "answer": 0, "hint": "Jarum pendek menunjukkan jam, jarum panjang di 12 berarti tepat." },
+  { "id": "m2-07", "type": "pilihan", "topic": "Pengukuran", "prompt": "Satuan yang tepat untuk mengukur panjang pensil adalah...", "image": "✏️", "options": ["cm", "kg", "liter"], "answer": 0, "hint": "kg untuk berat, liter untuk air." },
+  { "id": "m2-08", "type": "isian", "topic": "Penjumlahan", "prompt": "Andi punya 30 kelereng, lalu membeli 25 lagi. Berapa kelereng Andi sekarang?", "answer": 55, "hint": "Membeli lagi berarti ditambah: 30 + 25." },
+  { "id": "m2-09", "type": "isian", "topic": "Pengurangan", "prompt": "Di kelas ada 28 kursi. 9 kursi dipindahkan. Berapa kursi yang tersisa?", "answer": 19, "hint": "Dipindahkan berarti dikurangi: 28 - 9." },
+  { "id": "m2-10", "type": "urutkan", "topic": "Nilai tempat", "prompt": "Urutkan dari yang paling kecil!", "items": ["19", "45", "70", "98"], "hint": "Lihat angka puluhannya dulu." },
+  { "id": "m2-11", "type": "cocokkan", "topic": "Perkalian awal", "prompt": "Cocokkan perkalian dengan hasilnya!", "pairs": [["2 × 3", "6"], ["4 × 2", "8"], ["5 × 3", "15"]], "hint": "Ubah jadi penjumlahan berulang, misalnya 2 × 3 = 3 + 3." },
+  { "id": "m2-12", "type": "pilihan", "topic": "Bilangan genap dan ganjil", "prompt": "Mana yang termasuk bilangan genap?", "options": ["20", "13", "7"], "answer": 0, "hint": "Bilangan genap bisa dibagi dua sama rata." },
+  { "id": "m2-13", "type": "pilihan", "topic": "Nilai tempat", "prompt": "Lambang bilangan tujuh puluh dua adalah...", "options": ["72", "27", "702"], "answer": 0, "hint": "Tujuh puluh ditulis 7 di depan." },
+  { "id": "m2-14", "type": "isian", "topic": "Perkalian awal", "prompt": "Ada 4 piring. Tiap piring berisi 2 kue. Berapa semua kue?", "image": "🍰", "answer": 8, "hint": "2 + 2 + 2 + 2." },
+  { "id": "m2-15", "type": "urutkan", "topic": "Membandingkan", "prompt": "Urutkan dari hewan yang paling kecil!", "items": ["Semut 🐜", "Kucing 🐈", "Gajah 🐘"], "hint": "Bayangkan hewan mana yang bisa kamu genggam." },
+  { "id": "m2-16", "type": "cocokkan", "topic": "Bangun datar", "prompt": "Cocokkan nama bangun dengan gambarnya!", "pairs": [["Lingkaran", "⚪"], ["Segitiga", "🔺"], ["Persegi", "🟦"]], "hint": "Hitung sisinya. Lingkaran tidak punya sudut." }
+]

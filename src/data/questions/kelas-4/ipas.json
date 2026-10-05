@@ -1,0 +1,18 @@
+[
+  { "id": "i4-01", "type": "pilihan", "topic": "Fotosintesis", "prompt": "Proses tumbuhan membuat makanan sendiri disebut...", "image": "🌿", "options": ["Fotosintesis", "Respirasi", "Evaporasi"], "answer": 0, "hint": "Foto artinya cahaya." },
+  { "id": "i4-02", "type": "pilihan", "topic": "Fotosintesis", "prompt": "Dalam fotosintesis, tumbuhan membutuhkan...", "options": ["Air, karbon dioksida, dan cahaya matahari", "Oksigen dan gula", "Tanah dan batu"], "answer": 0, "hint": "Gula dan oksigen justru hasil fotosintesis." },
+  { "id": "i4-03", "type": "pilihan", "topic": "Fotosintesis", "prompt": "Hasil fotosintesis yang kita hirup adalah...", "options": ["Oksigen", "Karbon dioksida", "Nitrogen"], "answer": 0, "hint": "Kita membutuhkannya untuk bernapas." },
+  { "id": "i4-04", "type": "urutkan", "topic": "Daur hidup hewan", "prompt": "Urutkan metamorfosis katak!", "items": ["Telur", "Berudu", "Katak muda", "Katak dewasa"], "hint": "Berudu berenang dan punya ekor." },
+  { "id": "i4-05", "type": "pilihan", "topic": "Gaya", "prompt": "Gaya yang membuat benda jatuh ke bawah adalah...", "image": "🍎", "options": ["Gaya gravitasi", "Gaya magnet", "Gaya pegas"], "answer": 0, "hint": "Gaya tarik bumi." },
+  { "id": "i4-06", "type": "pilihan", "topic": "Magnet", "prompt": "Benda yang ditarik magnet adalah...", "image": "🧲", "options": ["Paku besi", "Penghapus karet", "Kertas"], "answer": 0, "hint": "Magnet menarik benda dari besi." },
+  { "id": "i4-07", "type": "pilihan", "topic": "Gaya", "prompt": "Rem sepeda memanfaatkan gaya...", "image": "🚲", "options": ["Gesek", "Magnet", "Listrik"], "answer": 0, "hint": "Karet rem bergesekan dengan roda." },
+  { "id": "i4-08", "type": "cocokkan", "topic": "Energi", "prompt": "Cocokkan alat dengan perubahan energinya!", "pairs": [["Kipas angin", "Listrik menjadi gerak"], ["Lampu", "Listrik menjadi cahaya"], ["Setrika", "Listrik menjadi panas"]], "hint": "Pikirkan apa yang dihasilkan alat itu." },
+  { "id": "i4-09", "type": "pilihan", "topic": "Keragaman budaya", "prompt": "Rumah adat Minangkabau dari Sumatra Barat adalah...", "image": "🏠", "options": ["Rumah Gadang", "Joglo", "Honai"], "answer": 0, "hint": "Atapnya runcing seperti tanduk kerbau." },
+  { "id": "i4-10", "type": "cocokkan", "topic": "Keragaman budaya", "prompt": "Cocokkan rumah adat dengan daerahnya!", "pairs": [["Joglo", "Jawa Tengah"], ["Honai", "Papua"], ["Tongkonan", "Sulawesi Selatan"]], "hint": "Honai berbentuk bulat dengan atap jerami." },
+  { "id": "i4-11", "type": "pilihan", "topic": "Peta", "prompt": "Pada peta, arah utara biasanya ditunjukkan ke...", "image": "🧭", "options": ["Atas", "Bawah", "Kiri"], "answer": 0, "hint": "Lihat mata angin pada peta." },
+  { "id": "i4-12", "type": "isian", "topic": "Peta", "prompt": "Indonesia memiliki berapa provinsi (data tahun 2024)?", "answer": 38, "hint": "Lebih dari 35, kurang dari 40." },
+  { "id": "i4-13", "type": "urutkan", "topic": "Daur hidup hewan", "prompt": "Urutkan daur hidup nyamuk!", "items": ["Telur", "Jentik", "Pupa", "Nyamuk dewasa"], "hint": "Jentik hidup di air yang menggenang." },
+  { "id": "i4-14", "type": "pilihan", "topic": "Energi", "prompt": "Contoh sumber energi yang tidak akan habis adalah...", "options": ["Sinar matahari", "Minyak bumi", "Batu bara"], "answer": 0, "hint": "Sumber ini datang setiap hari dari langit." },
+  { "id": "i4-15", "type": "pilihan", "topic": "Peta", "prompt": "Permukaan bumi paling banyak berupa...", "image": "🌏", "options": ["Lautan", "Daratan", "Gunung"], "answer": 0, "hint": "Lihat globe, warna apa yang paling banyak?" },
+  { "id": "i4-16", "type": "isian", "topic": "Magnet", "prompt": "Magnet punya berapa kutub?", "answer": 2, "hint": "Kutub utara dan kutub selatan." }
+]

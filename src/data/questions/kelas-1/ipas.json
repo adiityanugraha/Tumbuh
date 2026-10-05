@@ -1,0 +1,18 @@
+[
+  { "id": "i1-01", "type": "pilihan", "topic": "Pancaindra", "prompt": "Kita melihat dengan...", "image": "👀", "options": ["Mata", "Telinga", "Hidung"], "answer": 0, "hint": "Tutup matamu, apakah kamu masih bisa melihat?" },
+  { "id": "i1-02", "type": "pilihan", "topic": "Pancaindra", "prompt": "Kita mendengar suara dengan...", "image": "🎵", "options": ["Telinga", "Lidah", "Kulit"], "answer": 0, "hint": "Bagian tubuh ini ada di kanan dan kiri kepala." },
+  { "id": "i1-03", "type": "cocokkan", "topic": "Pancaindra", "prompt": "Cocokkan pancaindra dengan gunanya!", "pairs": [["Hidung 👃", "Mencium bau"], ["Lidah 👅", "Merasakan rasa"], ["Kulit ✋", "Meraba"]], "hint": "Pikirkan apa yang kamu pakai saat makan atau mencium bunga." },
+  { "id": "i1-04", "type": "pilihan", "topic": "Merawat tubuh", "prompt": "Agar gigi sehat, kita harus...", "image": "🦷", "options": ["Menggosok gigi", "Makan permen terus", "Tidur larut malam"], "answer": 0, "hint": "Pakai sikat dan pasta gigi pagi dan malam." },
+  { "id": "i1-05", "type": "pilihan", "topic": "Hewan", "prompt": "Hewan yang hidup di air adalah...", "options": ["Ikan 🐟", "Kucing 🐈", "Ayam 🐔"], "answer": 0, "hint": "Hewan ini bernapas dengan insang dan berenang." },
+  { "id": "i1-06", "type": "pilihan", "topic": "Hewan", "prompt": "Sapi memakan...", "image": "🐄", "options": ["Rumput", "Daging", "Batu"], "answer": 0, "hint": "Sapi sering terlihat di padang hijau." },
+  { "id": "i1-07", "type": "isian", "topic": "Hewan", "prompt": "Ayam punya berapa kaki?", "image": "🐔", "answer": 2, "hint": "Sama seperti kaki manusia." },
+  { "id": "i1-08", "type": "isian", "topic": "Hewan", "prompt": "Kucing punya berapa kaki?", "image": "🐈", "answer": 4, "hint": "Dua di depan dan dua di belakang." },
+  { "id": "i1-09", "type": "pilihan", "topic": "Cuaca", "prompt": "Saat hujan, kita memakai...", "image": "🌧️", "options": ["Payung", "Kacamata hitam", "Topi pantai"], "answer": 0, "hint": "Benda ini melindungi kita dari air hujan." },
+  { "id": "i1-10", "type": "pilihan", "topic": "Tumbuhan", "prompt": "Bagian tumbuhan yang berada di dalam tanah adalah...", "image": "🌱", "options": ["Akar", "Bunga", "Daun"], "answer": 0, "hint": "Bagian ini menyerap air dari tanah." },
+  { "id": "i1-11", "type": "urutkan", "topic": "Merawat tubuh", "prompt": "Urutkan cara mencuci tangan!", "items": ["Basahi tangan dengan air", "Gosok tangan dengan sabun", "Bilas dengan air bersih", "Keringkan dengan lap"], "hint": "Sabun dipakai setelah tangan basah." },
+  { "id": "i1-12", "type": "cocokkan", "topic": "Hewan", "prompt": "Cocokkan hewan dengan suaranya!", "pairs": [["Kucing", "Meong"], ["Ayam jantan", "Kukuruyuk"], ["Bebek", "Kwek kwek"]], "hint": "Tirukan suara hewan itu." },
+  { "id": "i1-13", "type": "pilihan", "topic": "Alam sekitar", "prompt": "Matahari terbit pada...", "image": "🌅", "options": ["Pagi hari", "Malam hari", "Tengah malam"], "answer": 0, "hint": "Saat matahari terbit, kita bangun tidur." },
+  { "id": "i1-14", "type": "pilihan", "topic": "Tumbuhan", "prompt": "Buah yang berwarna kuning dan panjang adalah...", "options": ["Pisang 🍌", "Apel 🍎", "Anggur 🍇"], "answer": 0, "hint": "Buah ini disukai monyet." },
+  { "id": "i1-15", "type": "urutkan", "topic": "Alam sekitar", "prompt": "Urutkan waktu dari pagi sampai malam!", "items": ["Pagi", "Siang", "Sore", "Malam"], "hint": "Siang datang setelah pagi." },
+  { "id": "i1-16", "type": "isian", "topic": "Pancaindra", "prompt": "Berapa jumlah pancaindra manusia?", "answer": 5, "hint": "Mata, telinga, hidung, lidah, dan kulit." }
+]

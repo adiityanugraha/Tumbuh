@@ -1,0 +1,18 @@
+[
+  { "id": "e2-01", "type": "pilihan", "topic": "Body parts", "prompt": "Apa bahasa Inggris dari mata?", "image": "👁️", "options": ["Eye", "Ear", "Nose"], "answer": 0, "hint": "Dibaca 'ai'." },
+  { "id": "e2-02", "type": "pilihan", "topic": "Body parts", "prompt": "Dengarkan! Hand artinya...", "say": "hand", "options": ["Tangan", "Kaki", "Kepala"], "answer": 0, "hint": "Kita menulis dengan bagian tubuh ini." },
+  { "id": "e2-03", "type": "cocokkan", "topic": "Body parts", "prompt": "Cocokkan anggota tubuh!", "pairs": [["Head", "Kepala"], ["Mouth", "Mulut"], ["Foot", "Kaki"]], "hint": "Head ada di bagian paling atas tubuh." },
+  { "id": "e2-04", "type": "pilihan", "topic": "Family", "prompt": "Ayah dalam bahasa Inggris adalah...", "image": "👨", "options": ["Father", "Mother", "Sister"], "answer": 0, "hint": "Mother adalah ibu." },
+  { "id": "e2-05", "type": "pilihan", "topic": "Family", "prompt": "Dengarkan! Grandmother artinya...", "say": "grandmother", "options": ["Nenek", "Kakek", "Bibi"], "answer": 0, "hint": "Ada kata mother di dalamnya." },
+  { "id": "e2-06", "type": "cocokkan", "topic": "Family", "prompt": "Cocokkan anggota keluarga!", "pairs": [["Mother", "Ibu"], ["Brother", "Saudara laki-laki"], ["Grandfather", "Kakek"]], "hint": "Grandfather ada kata father di dalamnya." },
+  { "id": "e2-07", "type": "pilihan", "topic": "Fruits", "prompt": "Apa bahasa Inggris dari pisang?", "image": "🍌", "options": ["Banana", "Apple", "Orange"], "answer": 0, "hint": "Bunyinya mirip dengan 'banana'." },
+  { "id": "e2-08", "type": "pilihan", "topic": "Fruits", "prompt": "Dengarkan! Watermelon artinya...", "image": "🍉", "say": "watermelon", "options": ["Semangka", "Melon", "Jeruk"], "answer": 0, "hint": "Water artinya air. Buah ini banyak airnya." },
+  { "id": "e2-09", "type": "cocokkan", "topic": "Fruits", "prompt": "Cocokkan nama buah!", "pairs": [["Apple", "🍎"], ["Grapes", "🍇"], ["Mango", "🥭"]], "hint": "Grapes adalah anggur." },
+  { "id": "e2-10", "type": "pilihan", "topic": "Feelings", "prompt": "Aku senang. Dalam bahasa Inggris...", "image": "😄", "options": ["I am happy", "I am sad", "I am angry"], "answer": 0, "hint": "Happy artinya senang." },
+  { "id": "e2-11", "type": "pilihan", "topic": "Feelings", "prompt": "Dengarkan! Sad artinya...", "say": "sad", "options": ["Sedih", "Senang", "Takut"], "answer": 0, "hint": "Wajah sad: 😢" },
+  { "id": "e2-12", "type": "isian", "topic": "Body parts", "prompt": "Kita punya berapa eyes (mata)?", "answer": 2, "hint": "Satu di kanan, satu di kiri." },
+  { "id": "e2-13", "type": "isian", "topic": "Body parts", "prompt": "Ada berapa fingers (jari) pada satu tangan?", "image": "✋", "answer": 5, "hint": "Hitung jari di tanganmu." },
+  { "id": "e2-14", "type": "urutkan", "topic": "Family", "prompt": "Susun kalimat: Ini ayahku.", "items": ["This", "is", "my", "father"], "hint": "This is artinya ini adalah." },
+  { "id": "e2-15", "type": "urutkan", "topic": "Fruits", "prompt": "Susun kalimat: Aku suka apel.", "items": ["I", "like", "apples"], "hint": "I artinya aku, like artinya suka." },
+  { "id": "e2-16", "type": "pilihan", "topic": "Body parts", "prompt": "Kita mencium bau dengan...", "image": "👃", "options": ["Nose", "Ear", "Hand"], "answer": 0, "hint": "Dibaca 'nouz'." }
+]

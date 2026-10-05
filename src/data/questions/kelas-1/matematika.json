@@ -1,0 +1,18 @@
+[
+  { "id": "m1-01", "type": "pilihan", "topic": "Membilang", "prompt": "Ada berapa apel?", "image": "🍎🍎🍎🍎🍎", "options": ["5", "4", "6"], "answer": 0, "hint": "Tunjuk apelnya satu per satu sambil berhitung." },
+  { "id": "m1-02", "type": "isian", "topic": "Penjumlahan", "prompt": "3 + 4 = ?", "answer": 7, "hint": "Mulai dari 3, lalu hitung maju 4 kali." },
+  { "id": "m1-03", "type": "isian", "topic": "Pengurangan", "prompt": "9 - 5 = ?", "answer": 4, "hint": "Mulai dari 9, lalu hitung mundur 5 kali." },
+  { "id": "m1-04", "type": "pilihan", "topic": "Bilangan sampai 20", "prompt": "Bilangan sesudah 12 adalah...", "options": ["13", "11", "14"], "answer": 0, "hint": "Sesudah berarti satu lebih banyak." },
+  { "id": "m1-05", "type": "pilihan", "topic": "Bilangan sampai 20", "prompt": "Mana bilangan yang paling besar?", "options": ["18", "15", "11"], "answer": 0, "hint": "Bandingkan angka satuannya karena puluhannya sama." },
+  { "id": "m1-06", "type": "pilihan", "topic": "Bangun datar", "prompt": "Bentuk roda sepeda seperti...", "image": "🚲", "options": ["Lingkaran", "Segitiga", "Persegi"], "answer": 0, "hint": "Roda bentuknya bulat dan bisa menggelinding." },
+  { "id": "m1-07", "type": "pilihan", "topic": "Bangun datar", "prompt": "Bangun ini punya 3 sisi. Apa namanya?", "image": "🔺", "options": ["Segitiga", "Persegi", "Lingkaran"], "answer": 0, "hint": "Namanya mirip dengan banyak sisinya: tiga." },
+  { "id": "m1-08", "type": "isian", "topic": "Penjumlahan", "prompt": "Ibu punya 6 kue. Kakak memberi 2 kue lagi. Berapa kue ibu sekarang?", "image": "🍪", "answer": 8, "hint": "Diberi lagi berarti ditambah: 6 + 2." },
+  { "id": "m1-09", "type": "isian", "topic": "Pengurangan", "prompt": "Ada 10 burung. 3 burung terbang pergi. Berapa burung yang tinggal?", "image": "🐦", "answer": 7, "hint": "Pergi berarti dikurangi: 10 - 3." },
+  { "id": "m1-10", "type": "urutkan", "topic": "Bilangan sampai 20", "prompt": "Urutkan dari yang paling kecil!", "items": ["2", "7", "11", "16"], "hint": "Cari angka yang paling sedikit lebih dulu." },
+  { "id": "m1-11", "type": "cocokkan", "topic": "Membilang", "prompt": "Cocokkan angka dengan banyak bintangnya!", "pairs": [["1", "⭐"], ["3", "⭐⭐⭐"], ["5", "⭐⭐⭐⭐⭐"]], "hint": "Hitung bintang di setiap pilihan." },
+  { "id": "m1-12", "type": "pilihan", "topic": "Membandingkan", "prompt": "Mana yang lebih panjang?", "options": ["Kereta api 🚆", "Sepeda 🚲"], "answer": 0, "hint": "Kereta api punya banyak gerbong." },
+  { "id": "m1-13", "type": "pilihan", "topic": "Penjumlahan", "prompt": "10 + 10 = ...", "options": ["20", "11", "19"], "answer": 0, "hint": "Sepuluh ditambah sepuluh sama dengan dua puluhan." },
+  { "id": "m1-14", "type": "urutkan", "topic": "Bilangan sampai 20", "prompt": "Urutkan dari yang paling besar!", "items": ["20", "14", "9", "3"], "hint": "Mulai dari angka yang paling banyak." },
+  { "id": "m1-15", "type": "pilihan", "topic": "Bangun datar", "prompt": "Ada berapa sisi pada persegi?", "image": "🟥", "options": ["4", "3", "5"], "answer": 0, "hint": "Hitung garis tepinya: atas, bawah, kiri, kanan." },
+  { "id": "m1-16", "type": "cocokkan", "topic": "Penjumlahan", "prompt": "Cocokkan soal dengan jawabannya!", "pairs": [["2 + 2", "4"], ["5 + 1", "6"], ["7 - 4", "3"]], "hint": "Kerjakan satu per satu, boleh pakai jari." }
+]

@@ -1,0 +1,18 @@
+[
+  { "id": "m4-01", "type": "pilihan", "topic": "Pecahan senilai", "prompt": "Pecahan yang senilai dengan 1/2 adalah...", "options": ["2/4", "1/3", "2/3"], "answer": 0, "hint": "Kalikan atas dan bawah dengan angka yang sama." },
+  { "id": "m4-02", "type": "isian", "topic": "Keliling", "prompt": "Keliling persegi dengan sisi 6 cm adalah ... cm", "answer": 24, "hint": "Persegi punya 4 sisi sama panjang: 4 × 6." },
+  { "id": "m4-03", "type": "isian", "topic": "Luas", "prompt": "Luas persegi panjang dengan panjang 8 cm dan lebar 5 cm adalah ... cm²", "answer": 40, "hint": "Luas = panjang × lebar." },
+  { "id": "m4-04", "type": "pilihan", "topic": "Desimal", "prompt": "0,5 sama dengan pecahan...", "options": ["1/2", "1/5", "5/100"], "answer": 0, "hint": "0,5 berarti lima persepuluh." },
+  { "id": "m4-05", "type": "pilihan", "topic": "Faktor dan kelipatan", "prompt": "Faktor dari 12 adalah...", "options": ["1, 2, 3, 4, 6, 12", "1, 2, 5, 12", "2, 4, 8, 12"], "answer": 0, "hint": "Faktor adalah bilangan yang membagi 12 tanpa sisa." },
+  { "id": "m4-06", "type": "pilihan", "topic": "Faktor dan kelipatan", "prompt": "Kelipatan 4 adalah...", "options": ["4, 8, 12, 16", "4, 6, 8, 10", "1, 2, 4, 8"], "answer": 0, "hint": "Kelipatan didapat dengan menambah 4 terus-menerus." },
+  { "id": "m4-07", "type": "pilihan", "topic": "Sudut", "prompt": "Besar sudut siku-siku adalah...", "image": "📐", "options": ["90°", "45°", "180°"], "answer": 0, "hint": "Sudut siku-siku seperti pojok buku." },
+  { "id": "m4-08", "type": "isian", "topic": "Perkalian", "prompt": "125 × 4 = ?", "answer": 500, "hint": "125 + 125 = 250, lalu dua kalinya." },
+  { "id": "m4-09", "type": "isian", "topic": "Satuan", "prompt": "Ibu membeli 3 lusin piring. Berapa buah piringnya?", "answer": 36, "hint": "1 lusin = 12 buah." },
+  { "id": "m4-10", "type": "urutkan", "topic": "Desimal", "prompt": "Urutkan dari yang paling kecil!", "items": ["0,2", "0,5", "0,75", "1,2"], "hint": "Lihat angka sebelum koma dulu, lalu sesudahnya." },
+  { "id": "m4-11", "type": "cocokkan", "topic": "Desimal", "prompt": "Cocokkan pecahan dengan desimalnya!", "pairs": [["1/2", "0,5"], ["1/4", "0,25"], ["3/4", "0,75"]], "hint": "Ubah penyebut menjadi 100, misalnya 1/4 = 25/100." },
+  { "id": "m4-12", "type": "pilihan", "topic": "Penjumlahan pecahan", "prompt": "3/5 + 1/5 = ...", "options": ["4/5", "4/10", "3/25"], "answer": 0, "hint": "Penyebut sama, cukup jumlahkan pembilangnya." },
+  { "id": "m4-13", "type": "isian", "topic": "Keliling", "prompt": "Taman berbentuk persegi panjang berukuran 12 m × 7 m. Kelilingnya ... m", "answer": 38, "hint": "Keliling = 2 × (panjang + lebar)." },
+  { "id": "m4-14", "type": "pilihan", "topic": "Bangun datar", "prompt": "Bangun yang semua sisinya sama panjang dan semua sudutnya siku-siku adalah...", "options": ["Persegi", "Persegi panjang", "Jajargenjang"], "answer": 0, "hint": "Persegi panjang sisinya tidak semua sama." },
+  { "id": "m4-15", "type": "cocokkan", "topic": "Luas", "prompt": "Cocokkan bangun dengan rumus luasnya!", "pairs": [["Persegi", "sisi × sisi"], ["Persegi panjang", "panjang × lebar"], ["Segitiga", "alas × tinggi : 2"]], "hint": "Segitiga adalah setengah dari persegi panjang." },
+  { "id": "m4-16", "type": "isian", "topic": "Data", "prompt": "Nilai ulangan: 7, 8, 8, 9, 8. Nilai yang paling sering muncul adalah?", "answer": 8, "hint": "Hitung berapa kali setiap nilai muncul." }
+]

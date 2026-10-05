@@ -1,0 +1,18 @@
+[
+  { "id": "m6-01", "type": "isian", "topic": "Bilangan bulat", "prompt": "-3 + 8 = ?", "answer": 5, "hint": "Mulai dari -3 di garis bilangan, lalu maju 8 langkah ke kanan." },
+  { "id": "m6-02", "type": "pilihan", "topic": "Bilangan bulat", "prompt": "-5 - 4 = ...", "options": ["-9", "-1", "9"], "answer": 0, "hint": "Mulai dari -5, lalu mundur 4 langkah ke kiri." },
+  { "id": "m6-03", "type": "pilihan", "topic": "Bilangan bulat", "prompt": "Suhu pagi -2°C. Siang hari naik 7°C. Suhu siang adalah...", "image": "🌡️", "options": ["5°C", "9°C", "-9°C"], "answer": 0, "hint": "Naik berarti ditambah: -2 + 7." },
+  { "id": "m6-04", "type": "isian", "topic": "Operasi hitung campuran", "prompt": "6 + 4 × 5 = ?", "answer": 26, "hint": "Kerjakan perkalian lebih dulu, baru penjumlahan." },
+  { "id": "m6-05", "type": "isian", "topic": "Operasi hitung campuran", "prompt": "(18 - 6) : 3 = ?", "answer": 4, "hint": "Kerjakan yang di dalam kurung lebih dulu." },
+  { "id": "m6-06", "type": "pilihan", "topic": "Lingkaran", "prompt": "Jari-jari lingkaran 7 cm. Diameternya...", "options": ["14 cm", "3,5 cm", "21 cm"], "answer": 0, "hint": "Diameter = 2 × jari-jari." },
+  { "id": "m6-07", "type": "isian", "topic": "Lingkaran", "prompt": "Luas lingkaran dengan jari-jari 7 cm adalah ... cm² (pakai π = 22/7)", "answer": 154, "hint": "Luas = π × r × r = 22/7 × 7 × 7." },
+  { "id": "m6-08", "type": "isian", "topic": "Statistika", "prompt": "Rata-rata dari 6, 7, 8, 9, 10 adalah?", "answer": 8, "hint": "Jumlahkan semua, lalu bagi dengan banyak data." },
+  { "id": "m6-09", "type": "pilihan", "topic": "Skala", "prompt": "Skala peta 1 : 100.000. Jarak di peta 3 cm. Jarak sebenarnya...", "image": "🗺️", "options": ["3 km", "30 km", "300 m"], "answer": 0, "hint": "3 × 100.000 cm = 300.000 cm. Ubah ke km." },
+  { "id": "m6-10", "type": "urutkan", "topic": "Bilangan bulat", "prompt": "Urutkan dari yang paling kecil!", "items": ["-7", "-2", "0", "5"], "hint": "Bilangan negatif yang angkanya makin besar justru makin kecil." },
+  { "id": "m6-11", "type": "cocokkan", "topic": "Lingkaran", "prompt": "Cocokkan bagian lingkaran dengan artinya!", "pairs": [["Jari-jari", "Garis dari pusat ke tepi"], ["Diameter", "Garis tepi ke tepi melewati pusat"], ["Keliling", "Panjang garis lengkung lingkaran"]], "hint": "Diameter dua kali panjang jari-jari." },
+  { "id": "m6-12", "type": "pilihan", "topic": "Perbandingan", "prompt": "Perbandingan kelereng Adi dan Banu adalah 2 : 3. Jika kelereng Adi 10, kelereng Banu...", "options": ["15", "12", "20"], "answer": 0, "hint": "2 menjadi 10 berarti dikali 5. Lakukan hal sama pada 3." },
+  { "id": "m6-13", "type": "isian", "topic": "Volume", "prompt": "Volume kubus dengan rusuk 10 cm adalah ... cm³", "answer": 1000, "hint": "10 × 10 × 10." },
+  { "id": "m6-14", "type": "pilihan", "topic": "Statistika", "prompt": "Data: 5, 6, 6, 7, 9. Mediannya adalah...", "options": ["6", "7", "6,6"], "answer": 0, "hint": "Median adalah nilai tengah setelah data diurutkan." },
+  { "id": "m6-15", "type": "cocokkan", "topic": "Bilangan bulat", "prompt": "Cocokkan operasi dengan hasilnya!", "pairs": [["-4 × 3", "-12"], ["-12 : -4", "3"], ["-6 + 6", "0"]], "hint": "Negatif kali positif hasilnya negatif. Negatif bagi negatif hasilnya positif." },
+  { "id": "m6-16", "type": "urutkan", "topic": "Operasi hitung campuran", "prompt": "Urutkan langkah mengerjakan 2 + 3 × (4 - 1)!", "items": ["Dalam kurung: 4 - 1 = 3", "Perkalian: 3 × 3 = 9", "Penjumlahan: 2 + 9 = 11"], "hint": "Kurung dulu, lalu kali/bagi, terakhir tambah/kurang." }
+]
