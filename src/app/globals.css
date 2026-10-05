@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Token desain: palet kebun Nusantara (daun, tanah, kunyit, langit) di atas latar krem */
+@theme {
+  --color-krem: #fff8ec;
+  --color-tinta: #2a2b2e;
+  --color-tinta-redup: #5b5a55;
+
+  --color-daun-50: #effaf1;
+  --color-daun-100: #dcf2e1;
+  --color-daun-300: #8fd19e;
+  --color-daun-500: #3f9a5f;
+  --color-daun-600: #2e7d4f;
+  --color-daun-800: #1d5235;
+
+  --color-tanah-100: #f8e3d6;
+  --color-tanah-300: #e3a17c;
+  --color-tanah-500: #b85c38;
+  --color-tanah-700: #7f3b21;
+
+  --color-kunyit-100: #fff1cc;
+  --color-kunyit-300: #ffd56b;
+  --color-kunyit-400: #f4b63f;
+  --color-kunyit-600: #b97f0f;
+
+  --color-langit-100: #ddeffc;
+  --color-langit-300: #8cc4f0;
+  --color-langit-500: #2f80c9;
+  --color-langit-700: #1c5590;
+
+  --font-display: var(--font-fredoka), "Baloo 2", system-ui, sans-serif;
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+
+  /* Ukuran target sentuh minimal: min-h-touch, min-w-touch */
+  --spacing-touch: 3rem;
+
+  --radius-blob: 1.75rem;
+
+  --shadow-tanah: 0 4px 0 0 var(--color-tanah-700);
+  --shadow-daun: 0 4px 0 0 var(--color-daun-800);
+}
+
+body {
+  background: var(--color-krem);
+  color: var(--color-tinta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

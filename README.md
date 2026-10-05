@@ -33,4 +33,3 @@ Jalankan `npm run build`, lalu unggah seluruh isi folder `out/` ke direktori pub
 ## Status Dummy dan Placeholder
 
 - `src/app/page.tsx`: halaman awal sementara (PLACEHOLDER), diganti onboarding di Fase 2.
-# Tumbuh
