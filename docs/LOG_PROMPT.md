@@ -1,0 +1,111 @@
+# Log Prompt Mentah
+
+Disalin otomatis dari transkrip Claude Code oleh `scripts/prompt-log.mjs`, kata per kata, tanpa diedit.
+Termasuk jawaban peserta atas pertanyaan pilihan dari AI. Waktu dalam WIB.
+
+Terakhir diperbarui: 5 Okt 2026, 21.41.20 WIB
+
+## Sesi 6371c798
+
+Mulai: 5 Okt 2026, 20.48.47 WIB
+
+### 1. Prompt - 5 Okt 2026, 20.48.47 WIB
+
+```text
+@"E:\Tugas Kuliah\Lomba\Lomba Web SD\Guidebook_MONE_Coding_Competition_REVISI.pptx" @"E:\Tugas Kuliah\Lomba\Lomba Web SD\TM_M-ONE.pptx"
+saya sedang menjalani lomba dengan tema web pembelajaran untuk anak SD, berikut ppt technical meeting dan guidebooknya, silahkan analisa sebelum saya masuk ke konsepnya, jika ada pertanyaan silahkan tanya langsung
+```
+
+### 2. Prompt - 5 Okt 2026, 20.50.12 WIB
+
+```text
+tanyakan ke saya langsung dengan pilihan
+```
+
+### 3. Jawaban pilihan - 5 Okt 2026, 20.51.19 WIB
+
+- **Fokus materi website-nya apa?**
+  - Jawaban: Edukasi umum SD
+- **Apakah website perlu fitur AI di dalamnya (bukan cuma AI sebagai alat bantu develop)?**
+  - Jawaban: Tidak, AI hanya alat develop
+- **Stack apa yang mau dipakai?**
+  - Jawaban: Next.js + Tailwind (Recommended)
+- **Hosting & GitHub siap?**
+  - Jawaban: 2, untuk git nanti saya buat
+
+### 4. Jawaban pilihan - 5 Okt 2026, 20.55.40 WIB
+
+- **Target kelas SD berapa?**
+  - Jawaban: Kelas 1–6 (berjenjang)
+- **Mapel apa saja yang dimasukkan?**
+  - Jawaban: Matematika,IPA / IPAS,Bahasa Inggris
+- **Konsep pengalaman belajar utamanya seperti apa?**
+  - Jawaban: Petualangan peta/level (Recommended)
+- **Fitur tambahan mana yang mau dikejar untuk nilai inovasi?**
+  - Jawaban: Text-to-speech (dibacakan),Mode/Dashboard orang tua-guru
+
+### 5. Prompt - 5 Okt 2026, 20.57.59 WIB
+
+```text
+tidak perlu dibagi menjadi 3 jenjang
+```
+
+### 6. Prompt - 5 Okt 2026, 20.59.27 WIB
+
+```text
+setuju, saya kirim blue print dan promptnya skrg
+```
+
+### 7. Prompt - 5 Okt 2026, 20.59.58 WIB
+
+```text
+@"E:\Tugas Kuliah\Lomba\Lomba Web SD\BLUEPRINT.md" @"E:\Tugas Kuliah\Lomba\Lomba Web SD\CLAUDE_CODE_PROMPT.md"
+ini merupakan konsep ide, untuk teknis nya ikuti ide brainstorming kita tadi
+```
+
+### 8. Jawaban pilihan - 5 Okt 2026, 21.01.37 WIB
+
+- **Blueprint memakai konsep Kebun Virtual, sedangkan brainstorm kita memilih Peta Petualangan. Mana yang dipakai?**
+  - Jawaban: Gabungan kebun + peta
+- **Mapelnya? Blueprint: Matematika, B. Indonesia, IPAS. Brainstorm: Matematika, IPAS, B. Inggris.**
+  - Jawaban: Mat, IPAS, B. Inggris
+- **Cakupan konten kelas? Blueprint demo hanya Fase B (kelas 3-4), tadi Anda mau per kelas 1-6.**
+  - Jawaban: Kelas 1-6, semua terisi (Recommended)
+- **Fitur teknis dari blueprint mana yang tetap dipakai?**
+  - Jawaban: Framer Motion,Vitest unit test
+
+### 9. Prompt - 5 Okt 2026, 21.19.23 WIB
+
+```text
+apa fase 0 aman untuk di push? jika ya berikan saya pesan commit
+```
+
+### 10. Prompt - 5 Okt 2026, 21.20.39 WIB
+
+```text
+berubah jadi tumbuh, lanjut fase 1
+```
+
+### 11. Prompt - 5 Okt 2026, 21.33.29 WIB
+
+```text
+buat pesan commit menjadi singkat saja
+```
+
+### 12. Prompt - 5 Okt 2026, 21.34.15 WIB
+
+```text
+bisakah anda buat step by step nya agar lebih transparan ke saya? buat dalam bentuk pdf
+```
+
+### 13. Prompt - 5 Okt 2026, 21.37.20 WIB
+
+```text
+maksud saya seluruh rencana per fase nya dari awal sampai selesai
+```
+
+### 14. Prompt - 5 Okt 2026, 21.40.20 WIB
+
+```text
+untuk log prompt saya di chat ini silahkan catat secara berkala buat dalam 1 docs
+```

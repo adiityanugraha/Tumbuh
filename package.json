@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run --passWithNoTests",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "log:prompt": "node scripts/prompt-log.mjs"
   },
   "dependencies": {
     "motion": "^14.0.0",

@@ -57,6 +57,7 @@ Folder dibuat saat pertama kali dibutuhkan, bukan diisi file kosong.
 8. Bila ada keputusan ambigu atau bertentangan dengan PRD, tanyakan dulu, jangan menebak.
 9. Kode sederhana dulu: tanpa abstraksi yang belum dibutuhkan, tanpa dependency baru bila bisa ditulis beberapa baris. Pengecualian: repository layer memang disengaja agar penyimpanan bisa diganti.
 10. Privasi anak: hanya nama panggilan, tanpa analytics pihak ketiga, tanpa chat bebas.
+11. Di akhir setiap fase, jalankan `npm run log:prompt` untuk memperbarui `docs/LOG_PROMPT.md`. Log adalah salinan kata per kata dari transkrip: jangan diedit manual (aturan tanda pisah tidak berlaku di file ini).
 
 ## Konvensi Kode
 
