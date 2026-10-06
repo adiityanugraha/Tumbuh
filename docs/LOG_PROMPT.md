@@ -3,7 +3,7 @@
 Disalin otomatis dari transkrip Claude Code oleh `scripts/prompt-log.mjs`, kata per kata, tanpa diedit.
 Termasuk jawaban peserta atas pertanyaan pilihan dari AI. Waktu dalam WIB.
 
-Terakhir diperbarui: 6 Okt 2026, 17.41.21 WIB
+Terakhir diperbarui: 6 Okt 2026, 21.47.20 WIB
 
 ## Sesi 6371c798
 
@@ -141,4 +141,22 @@ cocok untuk sementara, save UI nya terlebih dahulu
 
 ```text
 lanjut fase 2 dulu agar saya bisa melihat UI nya juga
+```
+
+### 20. Prompt - 6 Okt 2026, 20.33.49 WIB
+
+```text
+sebelum lanjut ke fase selanjutnya saya ingin urus beberapa asset terlebih dahulu, ada berapa bunga dan bunga apa saja yang anda tambahkan?
+```
+
+### 21. Prompt - 6 Okt 2026, 21.41.08 WIB
+
+```text
+coba cek E:\Tugas Kuliah\Lomba\Lomba Web SD\asset, di dalam nya saya menambahkan asset peta indonesia, coba aplikasikan
+```
+
+### 22. Prompt - 6 Okt 2026, 21.46.51 WIB
+
+```text
+gambar peta dibuat pakai AI generator, untuk point nya masih miss, pas kan di pulau sumatra nya
 ```
