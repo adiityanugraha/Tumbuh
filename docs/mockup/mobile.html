@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup UI Tumbuh (versi HP)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  /* MOCKUP konsep UI, bukan kode produksi. Token warna sama dengan src/app/globals.css */
+  :root {
+    --krem: #fff8ec; --krem-tua: #f6e9d2; --tinta: #2a2b2e; --redup: #5b5a55;
+    --daun-100: #dcf2e1; --daun-300: #8fd19e; --daun-500: #3f9a5f; --daun-600: #2e7d4f; --daun-800: #1d5235;
+    --tanah-100: #f8e3d6; --tanah-300: #e3a17c; --tanah-500: #b85c38; --tanah-700: #7f3b21;
+    --kunyit-100: #fff1cc; --kunyit-300: #ffd56b; --kunyit-400: #f4b63f; --kunyit-600: #b97f0f;
+    --langit-100: #ddeffc; --langit-300: #8cc4f0; --langit-500: #2f80c9; --langit-700: #1c5590;
+    --sogan: #8a5a2b;
+    --r: 28px;
+    /* Kawung: empat kelopak oval mengelilingi titik tengah */
+    --kawung: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='%238a5a2b' stroke-width='1.4'%3E%3Cellipse cx='22' cy='11' rx='6' ry='9'/%3E%3Cellipse cx='22' cy='33' rx='6' ry='9'/%3E%3Cellipse cx='11' cy='22' rx='9' ry='6'/%3E%3Cellipse cx='33' cy='22' rx='9' ry='6'/%3E%3C/g%3E%3Ccircle cx='22' cy='22' r='2' fill='%238a5a2b'/%3E%3C/svg%3E");
+    /* Parang: garis miring bergelombang */
+    --parang: repeating-linear-gradient(-45deg, var(--tanah-500) 0 6px, var(--kunyit-300) 6px 9px, var(--tanah-700) 9px 15px, var(--kunyit-300) 15px 18px);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: Nunito, system-ui, sans-serif; color: var(--tinta); background: #efe4cf; }
+  h1, h2, h3, .display { font-family: Fredoka, system-ui, sans-serif; }
+
+  .page-head { max-width: 1200px; margin: 0 auto; padding: 32px 16px 8px; }
+  .page-head h1 { font-size: 32px; color: var(--daun-800); }
+  .page-head p { color: var(--redup); max-width: 760px; margin-top: 6px; line-height: 1.5; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chip { font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 99px; background: var(--krem); border: 2px solid var(--krem-tua); }
+
+  .gallery { max-width: 1200px; margin: 0 auto; padding: 16px; display: grid; gap: 28px; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); justify-items: center; }
+  figure { width: 100%; max-width: 360px; }
+  figcaption { font-weight: 800; margin: 0 0 8px 4px; color: var(--sogan); }
+  figcaption small { display: block; font-weight: 500; color: var(--redup); }
+
+  /* Bingkai HP */
+  .phone { position: relative; height: 740px; border-radius: 36px; overflow: hidden; background: var(--krem);
+    box-shadow: 0 0 0 8px #2a2b2e, 0 18px 40px rgb(0 0 0 / .25); display: flex; flex-direction: column; }
+  .phone::before { content: ""; position: absolute; inset: 0; background: var(--kawung); opacity: .07; pointer-events: none; }
+  .screen { position: relative; flex: 1; overflow: hidden; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+
+  /* Mega mendung: awan berlapis di atas layar */
+  .mendung { position: absolute; top: -6px; left: 0; right: 0; height: 120px; pointer-events: none; }
+
+  .topbar { position: relative; display: flex; align-items: center; justify-content: space-between; padding-top: 8px; }
+  .hello { display: flex; align-items: center; gap: 10px; }
+  .avatar { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-size: 26px; background: var(--kunyit-100); border: 3px solid var(--kunyit-400); }
+  .hello b { font-family: Fredoka; font-size: 20px; display: block; }
+  .hello span { font-size: 13px; color: var(--redup); font-weight: 700; }
+  .streak { display: flex; align-items: center; gap: 4px; font-family: Fredoka; font-weight: 600; font-size: 18px; color: var(--tanah-700);
+    background: var(--tanah-100); border: 2px solid var(--tanah-300); padding: 6px 12px; border-radius: 99px; }
+
+  .btn { font-family: Fredoka; font-weight: 600; font-size: 22px; min-height: 56px; border: 0; border-radius: var(--r); cursor: pointer;
+    color: #fff; background: var(--daun-600); box-shadow: 0 5px 0 var(--daun-800); transition: transform .12s, box-shadow .12s; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--daun-800); }
+  .btn:active { transform: translateY(5px); box-shadow: 0 0 0 var(--daun-800); }
+  .btn.kunyit { background: var(--kunyit-400); color: var(--tinta); box-shadow: 0 5px 0 var(--kunyit-600); }
+
+  .speak { width: 48px; height: 48px; flex: none; border-radius: 50%; border: 2px solid var(--langit-300); background: var(--langit-100); display: grid; place-items: center; cursor: pointer; }
+  .speak:hover { background: var(--langit-300); }
+
+  /* Kebun */
+  .garden { position: relative; flex: 1; border-radius: var(--r); background: linear-gradient(var(--langit-100) 0 62%, var(--daun-100) 62%);
+    border: 3px solid var(--krem-tua); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 14px; overflow: hidden; }
+  .plant { animation: sway 3.5s ease-in-out infinite; transform-origin: 50% 100%; }
+  @keyframes sway { 50% { transform: rotate(2.5deg); } }
+  .stage { position: absolute; top: 12px; left: 12px; font-weight: 800; font-size: 13px; background: #fff; padding: 4px 10px; border-radius: 99px; color: var(--daun-800); }
+  .bar { width: 100%; height: 18px; background: var(--krem-tua); border-radius: 99px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--parang); border-radius: 99px; }
+  .res { display: flex; justify-content: space-between; font-weight: 800; font-size: 14px; color: var(--redup); }
+
+  .note { display: flex; gap: 10px; align-items: center; background: #fff; border-radius: 20px; padding: 10px 12px; border: 2px dashed var(--kunyit-400); font-weight: 700; font-size: 14px; }
+
+  /* Tab bawah */
+  .tabs { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border-top: 4px solid transparent;
+    border-image: var(--parang) 1; padding: 6px 4px 10px; }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; font-weight: 800; color: var(--redup); min-height: 56px; justify-content: center; border-radius: 16px; }
+  .tab.on { color: var(--daun-800); background: var(--daun-100); }
+  .tab svg { width: 28px; height: 28px; }
+
+  /* Soal */
+  .progress { display: flex; gap: 6px; }
+  .progress i { flex: 1; height: 10px; border-radius: 99px; background: var(--krem-tua); }
+  .progress i.done { background: var(--daun-500); } .progress i.now { background: var(--kunyit-400); }
+  .q-card { position: relative; background: #fff; border-radius: var(--r); padding: 18px; border: 3px solid var(--krem-tua); }
+  .q-card::after { content: ""; position: absolute; left: 18px; right: 18px; bottom: -3px; height: 6px; border-radius: 99px; background: var(--parang); }
+  .q-meta { font-size: 13px; font-weight: 800; color: var(--tanah-500); text-transform: uppercase; letter-spacing: .04em; }
+  .q-text { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; margin-top: 6px; }
+  .q-text h3 { font-size: 24px; line-height: 1.25; }
+  .q-img { font-size: 40px; letter-spacing: 4px; text-align: center; margin-top: 10px; }
+  .options { display: grid; gap: 10px; }
+  .opt { font-family: Fredoka; font-size: 22px; font-weight: 600; min-height: 60px; border-radius: 22px; background: #fff; border: 3px solid var(--krem-tua);
+    box-shadow: 0 4px 0 var(--krem-tua); cursor: pointer; transition: transform .12s, border-color .12s; color: var(--tinta); }
+  .opt:hover { border-color: var(--langit-300); transform: translateY(-2px); }
+  .opt.right { background: var(--daun-100); border-color: var(--daun-500); box-shadow: 0 4px 0 var(--daun-500); animation: pop .35s; }
+  .opt.wrong { background: var(--tanah-100); border-color: var(--tanah-300); animation: shake .35s; }
+  @keyframes pop { 50% { transform: scale(1.05); } }
+  @keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+  .mascot-tip { display: flex; gap: 8px; align-items: flex-end; }
+  .bubble { background: var(--kunyit-100); border: 2px solid var(--kunyit-400); border-radius: 20px 20px 20px 4px; padding: 10px 12px; font-weight: 700; font-size: 14px; }
+
+  /* Hasil */
+  .result { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; }
+  .result h2 { font-size: 30px; color: var(--daun-800); }
+  .burst { position: relative; width: 220px; height: 220px; display: grid; place-items: center; }
+  .burst::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--kawung), var(--kunyit-100); background-size: 30px 30px, auto; animation: spin 20s linear infinite; border: 4px solid var(--kunyit-400); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .gain { display: flex; gap: 10px; }
+  .gain div { background: #fff; border-radius: 18px; padding: 10px 14px; font-family: Fredoka; font-weight: 600; font-size: 20px; border: 2px solid var(--krem-tua); }
+
+  /* Peta */
+  .map { position: relative; flex: 1; border-radius: var(--r); background: var(--langit-100); border: 3px solid var(--langit-300); overflow: hidden; }
+  .map::before { content: ""; position: absolute; inset: 0; background: repeating-radial-gradient(circle at 30% 40%, transparent 0 14px, rgb(47 128 201 / .08) 14px 16px); }
+  .isle { position: absolute; display: grid; place-items: center; font-family: Fredoka; font-weight: 600; font-size: 13px; color: #fff; text-align: center; cursor: pointer; transition: transform .15s; }
+  .isle:hover { transform: scale(1.06); }
+  .isle span { position: relative; z-index: 1; padding: 0 4px; line-height: 1.1; }
+  .isle::before { content: ""; position: absolute; inset: 0; border-radius: 46% 54% 40% 60% / 55% 45% 55% 45%; background: var(--c); box-shadow: 0 4px 0 rgb(0 0 0 / .15); }
+  .isle.lock::before { background: #c9c2b4; } .isle.lock { color: #6b665c; }
+  .pin { position: absolute; z-index: 2; top: -18px; right: -6px; font-size: 22px; animation: bob 1.6s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(-5px); } }
+  .map-legend { display: flex; gap: 10px; font-size: 13px; font-weight: 800; color: var(--redup); flex-wrap: wrap; }
+  .map-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 4px; vertical-align: -1px; margin-right: 4px; }
+
+  /* Koleksi */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; overflow: hidden; }
+  .card { position: relative; background: #fff; border-radius: 22px; padding: 12px; text-align: center; border: 3px solid var(--krem-tua); }
+  .card::before { content: ""; position: absolute; inset: 6px; border-radius: 16px; border: 2px dashed var(--tanah-300); pointer-events: none; }
+  .card .pic { height: 90px; border-radius: 16px; display: grid; place-items: center; font-size: 46px; background: var(--kawung), var(--daun-100); background-size: 26px 26px, auto; }
+  .card b { display: block; font-family: Fredoka; font-size: 16px; margin-top: 8px; }
+  .card small { color: var(--redup); font-weight: 700; }
+  .card.lock .pic { filter: grayscale(1) brightness(.4); opacity: .35; }
+  .detail { background: #fff; border-radius: var(--r); padding: 14px; border: 3px solid var(--kunyit-400); }
+  .detail h3 { font-size: 20px; } .detail p { font-size: 14px; line-height: 1.45; margin-top: 6px; }
+
+  /* Onboarding */
+  .ob { flex: 1; display: flex; flex-direction: column; gap: 14px; padding-top: 40px; }
+  .ob h2 { font-size: 28px; color: var(--daun-800); text-align: center; position: relative; }
+  .field { background: #fff; border: 3px solid var(--krem-tua); border-radius: 20px; min-height: 56px; display: flex; align-items: center; padding: 0 16px; font-size: 20px; font-weight: 800; }
+  .label { font-weight: 800; color: var(--sogan); font-size: 15px; }
+  .grid-av { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .av { aspect-ratio: 1; border-radius: 20px; display: grid; place-items: center; font-size: 30px; background: #fff; border: 3px solid var(--krem-tua); cursor: pointer; }
+  .av.on { border-color: var(--kunyit-400); background: var(--kunyit-100); }
+  .grid-kls { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .kls { min-height: 52px; border-radius: 16px; display: grid; place-items: center; font-family: Fredoka; font-weight: 600; font-size: 22px; background: #fff; border: 3px solid var(--krem-tua); cursor: pointer; }
+  .kls.on { background: var(--daun-600); color: #fff; border-color: var(--daun-800); }
+
+  .notes { max-width: 1200px; margin: 8px auto 48px; padding: 0 16px; }
+  .notes ul { background: var(--krem); border-radius: 20px; padding: 18px 18px 18px 36px; line-height: 1.7; }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Maskot placeholder: Kumbi si kumbang tukang kebun -->
+    <symbol id="kumbi" viewBox="0 0 80 80">
+      <ellipse cx="40" cy="48" rx="24" ry="22" fill="#2e7d4f"/>
+      <path d="M40 27v43" stroke="#1d5235" stroke-width="3"/>
+      <circle cx="30" cy="44" r="4" fill="#ffd56b"/><circle cx="50" cy="44" r="4" fill="#ffd56b"/><circle cx="33" cy="58" r="3" fill="#ffd56b"/><circle cx="47" cy="58" r="3" fill="#ffd56b"/>
+      <circle cx="40" cy="24" r="14" fill="#b85c38"/>
+      <circle cx="35" cy="22" r="3.5" fill="#fff"/><circle cx="45" cy="22" r="3.5" fill="#fff"/>
+      <circle cx="35.6" cy="22.6" r="1.8" fill="#2a2b2e"/><circle cx="45.6" cy="22.6" r="1.8" fill="#2a2b2e"/>
+      <path d="M35 29q5 4 10 0" stroke="#2a2b2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M33 12q-6-8-12-6M47 12q6-8 12-6" stroke="#2a2b2e" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M27 14h26l-4-8H31z" fill="#f4b63f"/><rect x="24" y="13" width="32" height="4" rx="2" fill="#b97f0f"/>
+    </symbol>
+    <!-- Pot gerabah bermotif kawung -->
+    <symbol id="pot" viewBox="0 0 120 70">
+      <path d="M10 8h100l-12 58H22z" fill="#b85c38"/>
+      <rect x="4" y="2" width="112" height="14" rx="7" fill="#7f3b21"/>
+      <g fill="none" stroke="#f8e3d6" stroke-width="1.6" opacity=".8">
+        <ellipse cx="40" cy="34" rx="4" ry="6"/><ellipse cx="40" cy="50" rx="4" ry="6"/><ellipse cx="32" cy="42" rx="6" ry="4"/><ellipse cx="48" cy="42" rx="6" ry="4"/>
+        <ellipse cx="80" cy="34" rx="4" ry="6"/><ellipse cx="80" cy="50" rx="4" ry="6"/><ellipse cx="72" cy="42" rx="6" ry="4"/><ellipse cx="88" cy="42" rx="6" ry="4"/>
+      </g>
+    </symbol>
+    <!-- Mega mendung -->
+    <symbol id="mendung" viewBox="0 0 360 120" preserveAspectRatio="none">
+      <path d="M0 0h360v70c-20 0-24-18-44-18-22 0-22 22-46 22-20 0-22-16-42-16s-24 26-50 26-26-20-48-20-22 16-44 16S60 58 40 58 16 70 0 70z" fill="#ddeffc"/>
+      <path d="M0 0h360v48c-18 0-22-14-40-14-20 0-20 18-42 18-18 0-20-12-38-12s-22 20-44 20-24-16-44-16-20 12-40 12S54 38 36 38 14 48 0 48z" fill="#8cc4f0"/>
+      <path d="M0 0h360v26c-16 0-18-10-34-10-18 0-18 12-36 12s-18-8-34-8-20 14-40 14-20-12-38-12-18 8-36 8-18-10-34-10S12 26 0 26z" fill="#2f80c9"/>
+    </symbol>
+    <symbol id="i-kebun" viewBox="0 0 24 24"><path d="M12 21v-8M12 13c0-4 3-7 7-7 0 4-3 7-7 7zM12 15c0-3-2.5-5.5-6-5.5 0 3 2.5 5.5 6 5.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 21h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-belajar" viewBox="0 0 24 24"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5c-.8 0-1.5.7-1.5 1.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-peta" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-koleksi" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="3" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="13" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 13l1.2 2.5 2.8.4-2 1.9.5 2.7-2.5-1.3-2.5 1.3.5-2.7-2-1.9 2.8-.4z" fill="currentColor"/></symbol>
+    <symbol id="i-speak" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#1c5590"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="#1c5590" stroke-width="2" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="page-head">
+  <h1>Mockup UI Tumbuh</h1>
+  <p>Konsep visual sebelum Fase 2. Gaya: ilustrasi flat bulat dengan aksen motif batik Nusantara (kawung, mega mendung, parang) di atas palet sogan, daun, kunyit, dan langit. Motif dipakai sebagai aksen tipis agar layar tetap tenang untuk anak.</p>
+  <div class="legend">
+    <span class="chip">Kawung: pola latar dan pot</span>
+    <span class="chip">Mega mendung: awan di atas layar</span>
+    <span class="chip">Parang: garis pemisah, progres, tab</span>
+    <span class="chip">Coba klik jawaban di layar soal</span>
+  </div>
+</header>
+
+<main class="gallery">
+
+  <!-- 1. Onboarding -->
+  <figure>
+    <figcaption>1. Kenalan dulu<small>Onboarding: nama, avatar, kelas</small></figcaption>
+    <div class="phone"><div class="screen">
+      <svg class="mendung"><use href="#mendung"/></svg>
+      <div class="ob">
+        <svg width="84" height="84" style="align-self:center;position:relative"><use href="#kumbi"/></svg>
+        <h2>Halo! Aku Kumbi.<br>Siapa namamu?</h2>
+        <div class="label">Nama panggilan</div>
+        <div class="field">Sari</div>
+        <div class="label">Pilih teman avatarmu</div>
+        <div class="grid-av"><div class="av">🦁</div><div class="av on">🐰</div><div class="av">🐼</div><div class="av">🦊</div></div>
+        <div class="label">Kamu kelas berapa?</div>
+        <div class="grid-kls"><div class="kls">1</div><div class="kls">2</div><div class="kls on">3</div><div class="kls">4</div><div class="kls">5</div><div class="kls">6</div></div>
+        <button class="btn" style="margin-top:auto">Mulai Berkebun</button>
+      </div>
+    </div></div>
+  </figure>
+
+  <!-- 2. Kebunku -->
+  <figure>
+    <figcaption>2. Kebunku<small>Halaman utama: tanaman aktif, streak, pesan semangat</small></figcaption>
+    <div class="phone"><div class="screen">
+      <svg class="mendung"><use href="#mendung"/></svg>
+      <div class="topbar">
+        <div class="hello"><div class="avatar">🐰</div><div><b>Hai, Sari!</b><span>Kelas 3</span></div></div>
+        <div class="streak">🔥 4 hari</div>
+      </div>
+      <div class="note"><span style="font-size:24px">💌</span><span>Ibu: "Semangat belajar ya, Nak!"</span></div>
+      <div class="garden">
+        <span class="stage">Tahap: Tumbuh</span>
+        <svg class="plant" width="130" height="150" viewBox="0 0 130 150">
+          <path d="M65 150V40" stroke="#2e7d4f" stroke-width="6" stroke-linecap="round"/>
+          <path d="M65 100c-30 0-44-18-44-36 22 0 44 14 44 36zM65 78c26 0 40-16 40-32-20 0-40 12-40 32zM65 55c-18 0-28-12-28-24 14 0 28 10 28 24z" fill="#3f9a5f"/>
+          <circle cx="65" cy="34" r="10" fill="#f4b63f"/><circle cx="65" cy="34" r="4" fill="#b85c38"/>
+        </svg>
+        <svg width="140" height="80"><use href="#pot"/></svg>
+      </div>
+      <div><div class="res"><span>Padma Raksasa</span><span>12 / 16 poin</span></div><div class="bar" style="margin-top:6px"><i style="width:75%"></i></div>
+      <div class="res" style="margin-top:6px"><span>💧 Air 8</span><span>🌱 Pupuk 4</span></div></div>
+      <button class="btn">Ayo Belajar!</button>
+    </div>
+    <nav class="tabs"><div class="tab on"><svg><use href="#i-kebun"/></svg>Kebun</div><div class="tab"><svg><use href="#i-belajar"/></svg>Belajar</div><div class="tab"><svg><use href="#i-peta"/></svg>Peta</div><div class="tab"><svg><use href="#i-koleksi"/></svg>Koleksi</div></nav>
+    </div>
+  </figure>
+
+  <!-- 3. Soal -->
+  <figure>
+    <figcaption>3. Sesi belajar<small>Soal pilihan ganda, dibacakan, petunjuk dari maskot</small></figcaption>
+    <div class="phone"><div class="screen">
+      <div class="topbar"><span class="display" style="font-size:18px;font-weight:600">Matematika</span><span style="font-weight:800;color:var(--redup)">Soal 3 dari 5</span></div>
+      <div class="progress"><i class="done"></i><i class="done"></i><i class="now"></i><i></i><i></i></div>
+      <div class="q-card">
+        <div class="q-meta">Pecahan sederhana</div>
+        <div class="q-text"><h3>Pizza dipotong 4 sama besar. Satu potong adalah...</h3><button class="speak" aria-label="Bacakan soal"><svg width="24" height="24"><use href="#i-speak"/></svg></button></div>
+        <div class="q-img">🍕</div>
+      </div>
+      <div class="options" id="opts">
+        <button class="opt" data-ok="0">1/2</button>
+        <button class="opt" data-ok="1">1/4</button>
+        <button class="opt" data-ok="0">1/3</button>
+      </div>
+      <div class="mascot-tip" style="margin-top:auto">
+        <svg width="56" height="56" style="flex:none"><use href="#kumbi"/></svg>
+        <div class="bubble" id="tip">Ayo pilih jawabanmu. Tekan tombol biru kalau mau soalnya dibacakan!</div>
+      </div>
+    </div></div>
+  </figure>
+
+  <!-- 4. Hasil -->
+  <figure>
+    <figcaption>4. Hasil sesi<small>Perayaan: air dan pupuk, tanaman naik tahap</small></figcaption>
+    <div class="phone"><div class="screen">
+      <svg class="mendung"><use href="#mendung"/></svg>
+      <div class="result">
+        <div class="burst">
+          <svg class="plant" width="120" height="150" viewBox="0 0 130 150" style="position:relative">
+            <path d="M65 150V50" stroke="#2e7d4f" stroke-width="6"/>
+            <path d="M65 110c-28 0-40-16-40-32 20 0 40 12 40 32zM65 90c24 0 36-14 36-28-18 0-36 10-36 28z" fill="#3f9a5f"/>
+            <g transform="translate(65 40)"><circle r="26" fill="#b85c38"/><g fill="#e3a17c"><circle cx="0" cy="-17" r="9"/><circle cx="16" cy="-5" r="9"/><circle cx="10" cy="14" r="9"/><circle cx="-10" cy="14" r="9"/><circle cx="-16" cy="-5" r="9"/></g><circle r="9" fill="#7f3b21"/></g>
+          </svg>
+        </div>
+        <h2>Padma Raksasa berbunga!</h2>
+        <p style="font-weight:700;color:var(--redup)">4 dari 5 soal benar di percobaan pertama.</p>
+        <div class="gain"><div>💧 +5</div><div>🌱 +4</div></div>
+        <div class="note" style="text-align:left"><span style="font-size:24px">🗺️</span><span>Tanaman baru terbuka: <b>Bunga Bangkai</b> dari Sumatra</span></div>
+      </div>
+      <button class="btn kunyit">Lihat Koleksi</button>
+      <button class="btn">Kembali ke Kebun</button>
+    </div></div>
+  </figure>
+
+  <!-- 5. Peta -->
+  <figure>
+    <figcaption>5. Peta Nusantara<small>Wilayah terbuka satu per satu, barat ke timur</small></figcaption>
+    <div class="phone"><div class="screen">
+      <svg class="mendung"><use href="#mendung"/></svg>
+      <div class="topbar"><h2 style="font-size:24px;color:var(--daun-800)">Peta Nusantara</h2><span class="streak" style="font-size:15px">2 / 12 🌸</span></div>
+      <div class="map">
+        <div class="isle" style="--c:var(--daun-500);left:6%;top:12%;width:30%;height:42%;transform:rotate(-35deg)"><span style="transform:rotate(35deg)">Sumatra</span></div>
+        <div class="pin" style="left:24%;top:16%;right:auto">📍</div>
+        <div class="isle lock" style="left:30%;top:62%;width:34%;height:12%"><span>Jawa</span></div>
+        <div class="isle lock" style="left:38%;top:18%;width:28%;height:30%"><span>Kalimantan</span></div>
+        <div class="isle lock" style="left:68%;top:22%;width:16%;height:30%"><span>Sulawesi</span></div>
+        <div class="isle lock" style="left:62%;top:78%;width:24%;height:9%"><span>Bali &amp; Nusra</span></div>
+        <div class="isle lock" style="left:80%;top:52%;width:18%;height:20%"><span>Maluku &amp; Papua</span></div>
+      </div>
+      <div class="map-legend"><span><i style="background:var(--daun-500)"></i>Sedang dijelajah</span><span><i style="background:var(--kunyit-400)"></i>Selesai</span><span><i style="background:#c9c2b4"></i>Terkunci</span></div>
+      <div class="note"><span style="font-size:24px">🌺</span><span><b>Sumatra</b>: Padma Raksasa (sedang tumbuh), Bunga Bangkai (terkunci)</span></div>
+    </div>
+    <nav class="tabs"><div class="tab"><svg><use href="#i-kebun"/></svg>Kebun</div><div class="tab"><svg><use href="#i-belajar"/></svg>Belajar</div><div class="tab on"><svg><use href="#i-peta"/></svg>Peta</div><div class="tab"><svg><use href="#i-koleksi"/></svg>Koleksi</div></nav>
+    </div>
+  </figure>
+
+  <!-- 6. Koleksi -->
+  <figure>
+    <figcaption>6. Koleksi Tanaman<small>Kartu fakta bermotif, tanaman terkunci jadi siluet</small></figcaption>
+    <div class="phone"><div class="screen">
+      <div class="topbar"><h2 style="font-size:24px;color:var(--daun-800)">Koleksiku</h2><span style="font-weight:800;color:var(--redup)">2 dari 12</span></div>
+      <div class="detail">
+        <div class="q-text"><h3>Padma Raksasa</h3><button class="speak" aria-label="Bacakan fakta"><svg width="24" height="24"><use href="#i-speak"/></svg></button></div>
+        <small style="font-weight:800;color:var(--tanah-500)">Hutan Bengkulu, Sumatra</small>
+        <p>Bunga tunggal terbesar di dunia, lebarnya bisa hampir 1 meter. Ia tidak punya daun dan menumpang hidup pada tumbuhan lain.</p>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="pic">🌺</div><b>Padma Raksasa</b><small>Sumatra</small></div>
+        <div class="card"><div class="pic">🌷</div><b>Bunga Bangkai</b><small>Sumatra</small></div>
+        <div class="card lock"><div class="pic">🤍</div><b>???</b><small>Jawa</small></div>
+        <div class="card lock"><div class="pic">🌼</div><b>???</b><small>Jawa</small></div>
+      </div>
+    </div>
+    <nav class="tabs"><div class="tab"><svg><use href="#i-kebun"/></svg>Kebun</div><div class="tab"><svg><use href="#i-belajar"/></svg>Belajar</div><div class="tab"><svg><use href="#i-peta"/></svg>Peta</div><div class="tab on"><svg><use href="#i-koleksi"/></svg>Koleksi</div></nav>
+    </div>
+  </figure>
+</main>
+
+<section class="notes">
+  <ul>
+    <li><b>Placeholder:</b> maskot Kumbi, ilustrasi tanaman, dan bentuk pulau masih sketsa. Emoji tanaman di koleksi akan diganti ilustrasi SVG di Fase 4.</li>
+    <li><b>Layar lain</b> (soal cocokkan, urutkan, isian angka, Kebun Kelas, guru, orang tua) memakai komponen yang sama: kartu bergaris parang, tombol tebal, gelembung maskot.</li>
+    <li><b>Aksesibilitas:</b> teks gelap di atas krem/putih, tombol minimal 56px, animasi berhenti bila perangkat meminta gerakan dikurangi.</li>
+  </ul>
+</section>
+
+<script>
+  // Interaksi contoh: jawaban salah memberi petunjuk, jawaban benar memberi pujian.
+  const tip = document.getElementById("tip");
+  document.querySelectorAll("#opts .opt").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll("#opts .opt").forEach((o) => o.classList.remove("wrong"));
+    if (b.dataset.ok === "1") { b.classList.add("right"); tip.textContent = "Hebat! Tanamanmu dapat air dan pupuk."; }
+    else { b.classList.add("wrong"); tip.textContent = "Hampir! Pizza dipotong 4, jadi satu potong adalah satu dari empat bagian."; }
+  }));
+</script>
+</body>
+</html>

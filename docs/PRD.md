@@ -97,7 +97,10 @@ Pengalih peran Anak / Guru / Orang Tua yang selalu terlihat, tanpa login, agar j
 
 ## 9. UX, Visual, Aksesibilitas
 
-- Mobile-first, nyaman di layar 360px, rapi juga di desktop.
+Acuan visual lengkap: `docs/UI.md` dan prototipe `docs/mockup/index.html` (gaya batik Nusantara, web desktop dulu).
+
+
+- Web desktop dulu, tetap responsif dan nyaman sampai layar 360px.
 - Target sentuh minimal 48px. Kontras teks WCAG AA.
 - Font: Fredoka (judul), Nunito (isi).
 - Palet bertema kebun Nusantara (daun, tanah, kunyit, langit), bukan gradien ungu/biru generik.
