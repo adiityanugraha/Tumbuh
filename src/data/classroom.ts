@@ -48,8 +48,8 @@ export const DEMO_CLASSROOM: Classroom = {
 // DUMMY: tantangan awal agar Kebun Kelas tidak kosong saat demo.
 export const DEMO_CHALLENGE: ClassChallenge = {
   id: "tantangan-awal",
-  title: "Belajar 60 sesi bersama minggu ini",
-  targetSessions: 60,
+  title: "Belajar 90 sesi bersama minggu ini",
+  targetSessions: 90,
   reward: "Pohon Beringin Kelas",
   createdAt: "2026-10-05",
 };

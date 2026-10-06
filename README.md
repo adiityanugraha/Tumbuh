@@ -32,7 +32,10 @@ Jalankan `npm run build`, lalu unggah seluruh isi folder `out/` ke direktori pub
 
 ## Status Dummy dan Placeholder
 
-- `src/app/page.tsx`: halaman awal sementara (PLACEHOLDER), diganti onboarding di Fase 2.
+- `src/components/art.tsx`: maskot Kumbi, ilustrasi tanaman per tahap, pot, dan awan adalah SVG sederhana (PLACEHOLDER), dipoles di Fase 4.
+- `src/features/child/PetaView.tsx`: bentuk dan posisi pulau di peta masih sketsa (PLACEHOLDER).
+- `src/features/child/KoleksiView.tsx`: gambar tanaman di koleksi masih emoji (PLACEHOLDER), diganti ilustrasi SVG di Fase 4.
+- Kebun Kelas memakai data teman sekelas dummy dan berlabel "Data contoh" di UI.
 - `src/data/classroom.ts`: 19 teman sekelas, statistik topik, dan tantangan awal adalah DUMMY untuk Mode Demo.
 - `src/data/plants.ts`: fakta 12 tanaman Nusantara bertanda VERIFY, wajib dicek manual.
 - `src/data/questions/`: 288 soal (16 per mapel per kelas) disusun mengacu Kurikulum Merdeka, perlu ditinjau ulang oleh manusia sebelum lomba.

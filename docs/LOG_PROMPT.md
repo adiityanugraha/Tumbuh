@@ -3,7 +3,7 @@
 Disalin otomatis dari transkrip Claude Code oleh `scripts/prompt-log.mjs`, kata per kata, tanpa diedit.
 Termasuk jawaban peserta atas pertanyaan pilihan dari AI. Waktu dalam WIB.
 
-Terakhir diperbarui: 5 Okt 2026, 21.41.20 WIB
+Terakhir diperbarui: 6 Okt 2026, 17.41.21 WIB
 
 ## Sesi 6371c798
 
@@ -108,4 +108,37 @@ maksud saya seluruh rencana per fase nya dari awal sampai selesai
 
 ```text
 untuk log prompt saya di chat ini silahkan catat secara berkala buat dalam 1 docs
+```
+
+### 15. Prompt - 5 Okt 2026, 21.43.45 WIB
+
+```text
+sebelum lanjut ke fase 2 apakah project ini sudah memiliki ide UI?
+```
+
+### 16. Jawaban pilihan - 5 Okt 2026, 21.45.13 WIB
+
+- **Arah gaya visual mana yang Anda inginkan?**
+  - Jawaban: Batik/motif Nusantara
+- **Konsep UI mau disajikan dalam bentuk apa?**
+  - Jawaban: Mockup HTML di browser (Recommended)
+- **Pola navigasi utama untuk anak?**
+  - Jawaban: Tab bawah ikon besar (Recommended)
+
+### 17. Prompt - 5 Okt 2026, 21.48.58 WIB
+
+```text
+untuk overall design sementara sudah bagus, namun ini terlalu berorientasi ke hp, untuk lomba yang dibutuhkan web, jadi fokus pada desain yang berbasis web dulu
+```
+
+### 18. Prompt - 5 Okt 2026, 21.56.06 WIB
+
+```text
+cocok untuk sementara, save UI nya terlebih dahulu
+```
+
+### 19. Prompt - 6 Okt 2026, 17.25.42 WIB
+
+```text
+lanjut fase 2 dulu agar saya bisa melihat UI nya juga
 ```

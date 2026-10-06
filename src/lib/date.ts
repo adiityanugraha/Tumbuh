@@ -27,3 +27,9 @@ export function isWithinLastWeek(key: DateKey, today: DateKey): boolean {
   const diff = daysBetween(key, today);
   return diff >= 0 && diff < 7;
 }
+
+/** Ubah DateKey menjadi Date lokal (tengah malam), untuk format nama hari/bulan. */
+export function keyToDate(key: DateKey): Date {
+  const [y, m, d] = key.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}

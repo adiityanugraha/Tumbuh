@@ -4,6 +4,7 @@ import type { PlantSpecies, Region } from "@/lib/types";
 export const PLANTS: PlantSpecies[] = [
   {
     id: "rafflesia",
+    color: "#b85c38",
     name: "Padma Raksasa",
     latinName: "Rafflesia arnoldii",
     region: "sumatra",
@@ -13,6 +14,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "bunga-bangkai",
+    color: "#7a2e4a",
     name: "Bunga Bangkai",
     latinName: "Amorphophallus titanum",
     region: "sumatra",
@@ -22,6 +24,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "melati",
+    color: "#ffffff",
     name: "Melati Putih",
     latinName: "Jasminum sambac",
     region: "jawa",
@@ -31,6 +34,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "edelweis",
+    color: "#f3ecd8",
     name: "Edelweis Jawa",
     latinName: "Anaphalis javanica",
     region: "jawa",
@@ -40,6 +44,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "anggrek-hitam",
+    color: "#9bc46a",
     name: "Anggrek Hitam",
     latinName: "Coelogyne pandurata",
     region: "kalimantan",
@@ -49,6 +54,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "kantong-semar",
+    color: "#8fae3f",
     name: "Kantong Semar",
     latinName: "Nepenthes",
     region: "kalimantan",
@@ -58,6 +64,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "eboni",
+    color: "#3b2a20",
     name: "Eboni",
     latinName: "Diospyros celebica",
     region: "sulawesi",
@@ -67,6 +74,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "anggrek-bulan",
+    color: "#fdf6fb",
     name: "Anggrek Bulan",
     latinName: "Phalaenopsis amabilis",
     region: "sulawesi",
@@ -76,6 +84,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "cendana",
+    color: "#c98a4b",
     name: "Cendana",
     latinName: "Santalum album",
     region: "bali-nusra",
@@ -85,6 +94,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "majegau",
+    color: "#d9a441",
     name: "Majegau",
     latinName: "Dysoxylum densiflorum",
     region: "bali-nusra",
@@ -94,6 +104,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "pala",
+    color: "#e2b04a",
     name: "Pala",
     latinName: "Myristica fragrans",
     region: "maluku-papua",
@@ -103,6 +114,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "matoa",
+    color: "#8a4b2a",
     name: "Matoa",
     latinName: "Pometia pinnata",
     region: "maluku-papua",

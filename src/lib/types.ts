@@ -58,6 +58,8 @@ export interface PlantSpecies {
   origin: string;
   fact: string;
   emoji: string;
+  /** Warna bunga/buah untuk ilustrasi tanaman. */
+  color: string;
 }
 
 export interface Region {

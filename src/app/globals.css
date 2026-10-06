@@ -1,10 +1,13 @@
 @import "tailwindcss";
 
-/* Token desain: palet kebun Nusantara (daun, tanah, kunyit, langit) di atas latar krem */
+/* Token desain: palet kebun Nusantara (daun, tanah, kunyit, langit, sogan) di atas latar krem. Acuan: docs/UI.md */
 @theme {
   --color-krem: #fff8ec;
+  --color-krem-tua: #f3e4c8;
   --color-tinta: #2a2b2e;
   --color-tinta-redup: #5b5a55;
+  --color-sogan: #8a5a2b;
+  --color-kunci: #c9c2b4;
 
   --color-daun-50: #effaf1;
   --color-daun-100: #dcf2e1;
@@ -36,13 +39,83 @@
 
   --radius-blob: 1.75rem;
 
-  --shadow-tanah: 0 4px 0 0 var(--color-tanah-700);
-  --shadow-daun: 0 4px 0 0 var(--color-daun-800);
+  --shadow-daun: 0 5px 0 0 var(--color-daun-800);
+  --shadow-kunyit: 0 5px 0 0 var(--color-kunyit-600);
+  --shadow-krem: 0 5px 0 0 var(--color-krem-tua);
+
+  --animate-sway: sway 3.5s ease-in-out infinite;
+  --animate-bob: bob 1.6s ease-in-out infinite;
+  --animate-spin-slow: spin 24s linear infinite;
+  --animate-shake: shake 0.35s;
+
+  @keyframes sway {
+    50% {
+      transform: rotate(2.5deg);
+    }
+  }
+  @keyframes bob {
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  @keyframes shake {
+    25% {
+      transform: translateX(-6px);
+    }
+    75% {
+      transform: translateX(6px);
+    }
+  }
+}
+
+/* Motif batik. Kawung: empat kelopak oval mengelilingi titik tengah. */
+@utility bg-kawung {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='%238a5a2b' stroke-width='1.4' stroke-opacity='.35'%3E%3Cellipse cx='22' cy='11' rx='6' ry='9'/%3E%3Cellipse cx='22' cy='33' rx='6' ry='9'/%3E%3Cellipse cx='11' cy='22' rx='9' ry='6'/%3E%3Cellipse cx='33' cy='22' rx='9' ry='6'/%3E%3C/g%3E%3Ccircle cx='22' cy='22' r='2' fill='%238a5a2b' fill-opacity='.35'/%3E%3C/svg%3E");
+}
+/* Parang: garis miring berlapis */
+@utility bg-parang {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-tanah-500) 0 6px,
+    var(--color-kunyit-300) 6px 9px,
+    var(--color-tanah-700) 9px 15px,
+    var(--color-kunyit-300) 15px 18px
+  );
+}
+/* Garis parang di bawah kartu */
+@utility batik-line {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: -3px;
+    height: 6px;
+    border-radius: 99px;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--color-tanah-500) 0 6px,
+      var(--color-kunyit-300) 6px 9px,
+      var(--color-tanah-700) 9px 15px,
+      var(--color-kunyit-300) 15px 18px
+    );
+  }
 }
 
 body {
   background: var(--color-krem);
   color: var(--color-tinta);
+}
+/* Pola kawung tipis di seluruh latar */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='%238a5a2b' stroke-width='1.4'%3E%3Cellipse cx='22' cy='11' rx='6' ry='9'/%3E%3Cellipse cx='22' cy='33' rx='6' ry='9'/%3E%3Cellipse cx='11' cy='22' rx='9' ry='6'/%3E%3Cellipse cx='33' cy='22' rx='9' ry='6'/%3E%3C/g%3E%3Ccircle cx='22' cy='22' r='2' fill='%238a5a2b'/%3E%3C/svg%3E");
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -50,6 +123,7 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

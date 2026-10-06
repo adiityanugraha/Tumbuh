@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fredoka, Nunito } from "next/font/google";
+import { AppProvider } from "@/components/AppProvider";
 import "./globals.css";
 
 const fredoka = Fredoka({ variable: "--font-fredoka", subsets: ["latin"] });
@@ -21,7 +22,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="id" className={`${fredoka.variable} ${nunito.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+      <body className="min-h-full font-sans">
+        <AppProvider>{children}</AppProvider>
+      </body>
     </html>
   );
 }
