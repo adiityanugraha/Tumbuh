@@ -6,7 +6,7 @@ import { createDemoData } from "@/data/demo";
 import { PLANT_ORDER } from "@/data/plants";
 import { toDateKey } from "@/lib/date";
 import { applySession, createGarden, type SessionOutcome } from "@/lib/garden";
-import type { Encouragement, Garden, Grade, Session, Student } from "@/lib/types";
+import type { Encouragement, Garden, Grade, ParentChallenge, Session, Student } from "@/lib/types";
 import { getRepository } from "@/services/repository";
 
 interface AppState {
@@ -16,12 +16,14 @@ interface AppState {
   garden: Garden | null;
   sessions: Session[];
   encouragements: Encouragement[];
+  challenge: ParentChallenge | null;
   createStudent: (s: Omit<Student, "createdAt">) => Promise<void>;
   setGrade: (grade: Grade) => Promise<void>;
   completeSession: (s: Omit<Session, "id" | "date">) => Promise<SessionOutcome>;
   markEncouragementsRead: () => Promise<void>;
   sendEncouragement: (e: Pick<Encouragement, "from" | "message" | "sticker">) => Promise<void>;
   loadDemo: () => Promise<void>;
+  setChallenge: (c: ParentChallenge | null) => Promise<void>;
   reset: () => Promise<void>;
 }
 
@@ -41,19 +43,22 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [garden, setGarden] = useState<Garden | null>(null);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [encouragements, setEncouragements] = useState<Encouragement[]>([]);
+  const [challenge, setChallengeState] = useState<ParentChallenge | null>(null);
 
   const load = useCallback(async () => {
     const repo = getRepository();
-    const [st, g, se, en] = await Promise.all([
+    const [st, g, se, en, ch] = await Promise.all([
       repo.getStudent(),
       repo.getGarden(),
       repo.getSessions(),
       repo.getEncouragements(),
+      repo.getChallenge(),
     ]);
     setStudent(st);
     setGarden(g);
     setSessions(se);
     setEncouragements(en);
+    setChallengeState(ch);
     setToday(toDateKey());
     setReady(true);
   }, []);
@@ -113,7 +118,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     await repo.saveStudent(demo.student);
     await repo.saveGarden(demo.garden);
     for (const s of demo.sessions) await repo.addSession(s);
+    await repo.saveChallenge(demo.challenge);
     await load();
+  };
+
+  const setChallenge: AppState["setChallenge"] = async (c) => {
+    await getRepository().saveChallenge(c);
+    setChallengeState(c);
   };
 
   const reset = async () => {
@@ -130,12 +141,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         garden,
         sessions,
         encouragements,
+        challenge,
         createStudent,
         setGrade,
         completeSession,
         markEncouragementsRead,
         sendEncouragement,
         loadDemo,
+        setChallenge,
         reset,
       }}
     >

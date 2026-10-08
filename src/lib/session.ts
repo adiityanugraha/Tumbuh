@@ -1,4 +1,4 @@
-import type { Question } from "./types";
+import type { Question, Session } from "./types";
 
 export const SESSION_SIZE = 5;
 
@@ -17,6 +17,14 @@ export function pickQuestions(
   random: () => number = Math.random,
 ): Question[] {
   return shuffle(bank, random).slice(0, count);
+}
+
+/** Id soal yang terakhir kali tidak benar di percobaan pertama. Hilang dari daftar setelah dijawab benar sekali coba. */
+export function mistakeIds(sessions: Session[]): Set<string> {
+  const last = new Map<string, boolean>();
+  // sessions tersimpan berurutan waktu, jadi hasil terakhir menimpa yang lama.
+  for (const s of sessions) for (const r of s.results) last.set(r.questionId, r.correctFirstTry);
+  return new Set([...last].filter(([, ok]) => !ok).map(([id]) => id));
 }
 
 /** Jawaban per tipe: pilihan = indeks, isian = angka, cocokkan = pasangan kanan sesuai urutan kiri, urutkan = urutan item. */

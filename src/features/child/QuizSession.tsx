@@ -8,7 +8,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { Button, ButtonLink, Card } from "@/components/ui";
 import { getQuestions, SUBJECTS } from "@/data/questions";
 import { MAX_ATTEMPTS, type SessionOutcome } from "@/lib/garden";
-import { checkAnswer, pickQuestions, type AnswerValue } from "@/lib/session";
+import { checkAnswer, mistakeIds, pickQuestions, type AnswerValue } from "@/lib/session";
 import { playCorrect, playWrong } from "@/lib/sound";
 import type { AnswerResult, Garden, Question, Subject } from "@/lib/types";
 import { QuestionInput, type QuestionStatus } from "./QuestionInput";
@@ -27,11 +27,18 @@ function revealText(q: Question) {
   }
 }
 
-export function QuizSession({ subject }: { subject: Subject }) {
-  const { student, garden, completeSession } = useApp();
+/** review: hanya soal yang pernah salah (Siram Ulang). */
+export function QuizSession({ subject, review = false }: { subject: Subject; review?: boolean }) {
+  const { student, garden, sessions, completeSession } = useApp();
   const meta = SUBJECTS.find((s) => s.id === subject)!;
   // AppShell baru merender halaman ini setelah data dimuat di browser, jadi aman mengacak di sini.
-  const draw = () => (student ? pickQuestions(getQuestions(student.grade, subject)) : []);
+  const draw = () => {
+    if (!student) return [];
+    const bank = getQuestions(student.grade, subject);
+    if (!review) return pickQuestions(bank);
+    const wrong = mistakeIds(sessions);
+    return pickQuestions(bank.filter((q) => wrong.has(q.id)));
+  };
   const [questions, setQuestions] = useState<Question[]>(draw);
   const [round, setRound] = useState(0);
   const [index, setIndex] = useState(0);
@@ -41,7 +48,22 @@ export function QuizSession({ subject }: { subject: Subject }) {
   const [message, setMessage] = useState("Baca soalnya baik-baik, ya. Tekan tombol biru kalau mau soalnya dibacakan!");
   const [finished, setFinished] = useState<{ outcome: SessionOutcome; before: Garden } | null>(null);
 
-  if (!student || !garden || questions.length === 0) return null;
+  if (!student || !garden) return null;
+  if (questions.length === 0) {
+    return (
+      <Card batik className="mx-auto mt-8 max-w-lg text-center">
+        <Mascot size={110} className="mx-auto" />
+        <h1 className="mt-2 font-display text-3xl font-semibold">Tidak ada soal untuk diulang</h1>
+        <p className="mt-2 font-bold text-tinta-redup">Semua soal {meta.name} sudah kamu jawab dengan benar. Hebat!</p>
+        <div className="mt-5 flex flex-wrap justify-center gap-3">
+          <ButtonLink href={`/belajar/${subject}/`}>Belajar soal baru</ButtonLink>
+          <ButtonLink href="/belajar/" variant="ghost">
+            Kembali
+          </ButtonLink>
+        </div>
+      </Card>
+    );
+  }
 
   if (finished) {
     return (
@@ -109,7 +131,7 @@ export function QuizSession({ subject }: { subject: Subject }) {
     <section>
       <div className="relative mt-2 mb-5 flex flex-wrap items-center gap-x-5 gap-y-2">
         <h1 className="font-display text-2xl font-semibold whitespace-nowrap text-daun-800 md:text-3xl">
-          {meta.emoji} {meta.name}
+          {meta.emoji} {review ? `Siram Ulang ${meta.name}` : meta.name}
         </h1>
         <ol className="order-last flex w-full gap-2 md:order-none md:w-auto md:flex-1" aria-label={`Soal ${index + 1} dari ${questions.length}`}>
           {questions.map((x, i) => (

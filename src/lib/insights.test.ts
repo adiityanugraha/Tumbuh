@@ -1,14 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
-  challengeProgress,
-  classGarden,
   masteryBySubject,
   masteryOf,
   topicStats,
   weeklySummary,
 } from "./insights";
 import { checkAnswer, pickQuestions, shuffle } from "./session";
-import type { Classroom, Question, Session } from "./types";
+import type { Question, Session } from "./types";
 
 const s = (date: string, topic: string, firsts: boolean[], subject: Session["subject"] = "matematika"): Session => ({
   id: date + topic,
@@ -17,15 +15,6 @@ const s = (date: string, topic: string, firsts: boolean[], subject: Session["sub
   grade: 3,
   results: firsts.map((f, i) => ({ questionId: `${i}`, topic, correctFirstTry: f, solved: true, attempts: f ? 1 : 2 })),
 });
-
-const classroom: Classroom = {
-  name: "Tes",
-  grade: 3,
-  classmates: [
-    { nickname: "A", avatar: "", streak: 1, lastStudyDaysAgo: 0, sessionsThisWeek: 3, growthPoints: 20 },
-    { nickname: "B", avatar: "", streak: 0, lastStudyDaysAgo: 8, sessionsThisWeek: 0, growthPoints: 5 },
-  ],
-};
 
 describe("insights", () => {
   it("menghitung penguasaan per topik", () => {
@@ -48,16 +37,6 @@ describe("insights", () => {
     expect(w.activeDays).toBe(2);
     expect(w.bySubject).toEqual({ matematika: 2, ipas: 1, inggris: 0 });
     expect(w.firstTry).toBe(3);
-  });
-
-  it("kebun kelas menggabungkan kontribusi teman dan anak ini", () => {
-    const own = [s("2026-10-05", "x", [true, true])];
-    const g = classGarden(classroom, own, "2026-10-05");
-    expect(g.points).toBe(29);
-    expect(g.sessionsThisWeek).toBe(4);
-    expect(g.activeToday).toBe(2);
-    expect(challengeProgress({ id: "c", title: "", targetSessions: 8, reward: "", createdAt: "" }, 4)).toBe(50);
-    expect(challengeProgress({ id: "c", title: "", targetSessions: 2, reward: "", createdAt: "" }, 4)).toBe(100);
   });
 });
 

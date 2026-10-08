@@ -25,8 +25,8 @@ function answerGate(correct: boolean) {
 
 describe("ParentView", () => {
   beforeEach(() => {
-    const { student, garden, sessions } = createDemoData(new Date().toLocaleDateString("sv-SE"));
-    localStorage.setItem("tumbuh:v1", JSON.stringify({ version: 1, student, garden, sessions, encouragements: [] }));
+    const { student, garden, sessions, challenge } = createDemoData(new Date().toLocaleDateString("sv-SE"));
+    localStorage.setItem("tumbuh:v1", JSON.stringify({ version: 1, student, garden, sessions, challenge, encouragements: [] }));
   });
 
   it("gerbang orang tua, laporan, lalu kirim semangat", async () => {
@@ -53,5 +53,17 @@ describe("ParentView", () => {
     expect(screen.getByText(/Ayah ·/)).toHaveTextContent("Belum dibaca");
     const saved = JSON.parse(localStorage.getItem("tumbuh:v1")!).encouragements;
     expect(saved).toMatchObject([{ from: "Ayah", message: "Hebat, kebunmu makin subur!", sticker: "🌟", read: false }]);
+
+    // Tantangan demo: 5 dari 6 hari. Hapus, lalu buat tantangan baru 2 sesi.
+    expect(screen.getByText(/Kurang 1 hari lagi/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Hapus tantangan" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Jumlah sesi" }));
+    fireEvent.click(screen.getByRole("button", { name: "Kurangi target" }));
+    fireEvent.click(screen.getByRole("button", { name: "Kurangi target" }));
+    fireEvent.click(screen.getByRole("button", { name: "Kurangi target" }));
+    fireEvent.click(screen.getByRole("button", { name: "Masak bersama" }));
+    fireEvent.click(screen.getByRole("button", { name: "Buat tantangan" }));
+    await screen.findByText(/Kurang 2 sesi lagi/);
+    expect(JSON.parse(localStorage.getItem("tumbuh:v1")!).challenge).toMatchObject({ from: "Ibu", kind: "sesi", target: 2, reward: "Masak bersama" });
   });
 });

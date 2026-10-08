@@ -6,6 +6,8 @@ import { useApp } from "@/components/AppProvider";
 import { PlantVisual } from "@/components/PlantVisual";
 import { Button, ButtonLink, Card, Tag } from "@/components/ui";
 import { getPlant, REGIONS, stageLabel } from "@/data/plants";
+import { badgeStatus } from "@/lib/badges";
+import { challengeStatus } from "@/lib/challenge";
 import { currentStreak, getGrowthStage, growthPoints, type SessionOutcome } from "@/lib/garden";
 import { playCelebrate } from "@/lib/sound";
 import type { AnswerResult, Garden } from "@/lib/types";
@@ -22,7 +24,7 @@ export function ResultView({
   results: AnswerResult[];
   onAgain: () => void;
 }) {
-  const { student, today } = useApp();
+  const { student, today, sessions, challenge } = useApp();
   const firstTry = results.filter((r) => r.correctFirstTry).length;
   const bloomed = outcome.bloomedPlantId ? getPlant(outcome.bloomedPlantId) : null;
   const nextPlant = outcome.nextPlantId ? getPlant(outcome.nextPlantId) : null;
@@ -33,9 +35,20 @@ export function ResultView({
   const shownPlant = bloomed ?? getPlant(outcome.garden.activePlantId)!;
   const shownStage = bloomed ? "berbunga" : stageAfter;
 
+  // sessions sudah berisi sesi ini, jadi kondisi sebelumnya = tanpa sesi terakhir.
+  const hadBefore = new Set(
+    badgeStatus({ garden: before, sessions: sessions.slice(0, -1), regions: REGIONS }).filter((b) => b.earned).map((b) => b.id),
+  );
+  const newBadges = badgeStatus({ garden: outcome.garden, sessions, regions: REGIONS }).filter((b) => b.earned && !hadBefore.has(b.id));
+  const challengeDone =
+    challenge &&
+    challengeStatus(challenge, sessions, today).completed &&
+    !challengeStatus(challenge, sessions.slice(0, -1), today).completed;
+  const celebrate = Boolean(bloomed) || stageAfter !== stageBefore || newBadges.length > 0 || Boolean(challengeDone);
+
   useEffect(() => {
-    if (bloomed || stageAfter !== stageBefore) playCelebrate();
-  }, [bloomed, stageAfter, stageBefore]);
+    if (celebrate) playCelebrate();
+  }, [celebrate]);
 
   const title = bloomed
     ? `Hore! ${bloomed.name} sudah ${stageLabel(bloomed, "berbunga").toLowerCase()}!`
@@ -78,6 +91,26 @@ export function ResultView({
               <p>
                 {newRegion ? `Wilayah baru terbuka: ${newRegion.name}! ` : "Tanaman baru terbuka! "}
                 <b>{nextPlant.name}</b> dari {nextPlant.origin} siap ditanam.
+              </p>
+            </div>
+          )}
+          {challengeDone && (
+            <div className="mb-5 flex items-center gap-3 rounded-[20px] border-2 border-daun-300 bg-daun-100 p-4 font-bold text-daun-800">
+              <span className="text-3xl" aria-hidden="true">
+                🎁
+              </span>
+              <p>
+                Tantangan dari {challenge.from} selesai! Tagih hadiahmu: <b>{challenge.reward}</b>
+              </p>
+            </div>
+          )}
+          {newBadges.length > 0 && (
+            <div className="mb-5 flex items-center gap-3 rounded-[20px] border-2 border-kunyit-400 bg-kunyit-100 p-4 font-bold">
+              <span className="text-3xl" aria-hidden="true">
+                {newBadges.map((b) => b.emoji).join("")}
+              </span>
+              <p>
+                Lencana baru: <b>{newBadges.map((b) => b.name).join(", ")}</b>!
               </p>
             </div>
           )}

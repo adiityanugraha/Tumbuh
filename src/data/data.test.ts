@@ -69,5 +69,7 @@ describe("data Mode Demo", () => {
     expect(sessions.every((s) => s.results.length === 5)).toBe(true);
     expect(garden.collection.length).toBeGreaterThan(0);
     expect(garden.lastStudyDate).toBe("2026-10-07");
+    const { challengeStatus } = await import("@/lib/challenge");
+    expect(challengeStatus(createDemoData("2026-10-08").challenge, sessions, "2026-10-08")).toMatchObject({ done: 5, completed: false });
   });
 });

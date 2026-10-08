@@ -1,4 +1,4 @@
-import type { Encouragement, Garden, Session, Student } from "@/lib/types";
+import type { Encouragement, Garden, ParentChallenge, Session, Student } from "@/lib/types";
 
 /**
  * Antarmuka penyimpanan. Komponen hanya memakai ini, tidak menyentuh localStorage langsung,
@@ -15,6 +15,8 @@ export interface Repository {
   getEncouragements(): Promise<Encouragement[]>;
   addEncouragement(encouragement: Encouragement): Promise<void>;
   markEncouragementsRead(): Promise<void>;
+  getChallenge(): Promise<ParentChallenge | null>;
+  saveChallenge(challenge: ParentChallenge | null): Promise<void>;
   reset(): Promise<void>;
 }
 
@@ -24,6 +26,7 @@ interface StoredState {
   garden: Garden | null;
   sessions: Session[];
   encouragements: Encouragement[];
+  challenge: ParentChallenge | null;
 }
 
 const KEY = "tumbuh:v1";
@@ -33,6 +36,7 @@ const empty = (): StoredState => ({
   garden: null,
   sessions: [],
   encouragements: [],
+  challenge: null,
 });
 
 /** Implementasi localStorage. Seluruh data disimpan sebagai satu objek JSON. */
@@ -67,6 +71,8 @@ export function createLocalRepository(storage: Storage): Repository {
     addEncouragement: async (e) => update((s) => void s.encouragements.push(e)),
     markEncouragementsRead: async () =>
       update((s) => s.encouragements.forEach((e) => (e.read = true))),
+    getChallenge: async () => read().challenge,
+    saveChallenge: async (challenge) => update((s) => void (s.challenge = challenge)),
     reset: async () => storage.removeItem(KEY),
   };
 }

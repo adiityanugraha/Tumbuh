@@ -1,6 +1,5 @@
 import { isWithinLastWeek } from "./date";
-import { sessionReward } from "./garden";
-import type { ClassChallenge, Classroom, DateKey, GrowthStage, Session, Subject } from "./types";
+import type { DateKey, Session, Subject } from "./types";
 
 export interface TopicStat {
   topic: string;
@@ -55,44 +54,3 @@ export function weeklySummary(sessions: Session[], today: DateKey) {
     bySubject,
   };
 }
-
-export const totalGrowthPoints = (sessions: Session[]) =>
-  sessions.reduce((n, s) => {
-    const r = sessionReward(s.results);
-    return n + r.water + r.fertilizer;
-  }, 0);
-
-/** Poin minimal untuk tiap tahap pohon Kebun Kelas. */
-export const CLASS_TREE_THRESHOLDS: Record<GrowthStage, number> = {
-  bibit: 0,
-  tunas: 150,
-  tumbuh: 400,
-  berbunga: 800,
-};
-
-export function classTreeStage(points: number): GrowthStage {
-  if (points >= CLASS_TREE_THRESHOLDS.berbunga) return "berbunga";
-  if (points >= CLASS_TREE_THRESHOLDS.tumbuh) return "tumbuh";
-  if (points >= CLASS_TREE_THRESHOLDS.tunas) return "tunas";
-  return "bibit";
-}
-
-/** Gabungan kontribusi teman sekelas (dummy) dan anak ini ke Kebun Kelas. */
-export function classGarden(classroom: Classroom, ownSessions: Session[], today: DateKey) {
-  const points =
-    classroom.classmates.reduce((n, c) => n + c.growthPoints, 0) + totalGrowthPoints(ownSessions);
-  const sessionsThisWeek =
-    classroom.classmates.reduce((n, c) => n + c.sessionsThisWeek, 0) +
-    weeklySummary(ownSessions, today).sessions;
-  return {
-    points,
-    stage: classTreeStage(points),
-    sessionsThisWeek,
-    activeToday:
-      classroom.classmates.filter((c) => c.lastStudyDaysAgo === 0).length +
-      (ownSessions.some((s) => s.date === today) ? 1 : 0),
-  };
-}
-
-export const challengeProgress = (challenge: ClassChallenge, sessionsThisWeek: number) =>
-  Math.min(100, Math.round((sessionsThisWeek / challenge.targetSessions) * 100));

@@ -105,15 +105,6 @@ export interface Session {
   results: AnswerResult[];
 }
 
-export interface ClassChallenge {
-  id: string;
-  title: string;
-  /** Target jumlah sesi belajar seluruh kelas minggu ini. */
-  targetSessions: number;
-  reward: string;
-  createdAt: DateKey;
-}
-
 export interface Encouragement {
   id: string;
   /** Pengirim, misalnya "Ibu" atau "Ayah". */
@@ -124,17 +115,12 @@ export interface Encouragement {
   read: boolean;
 }
 
-export interface ClassmateSummary {
-  nickname: string;
-  avatar: string;
-  streak: number;
-  lastStudyDaysAgo: number;
-  sessionsThisWeek: number;
-  growthPoints: number;
-}
-
-export interface Classroom {
-  name: string;
-  grade: Grade;
-  classmates: ClassmateSummary[];
+/** Tantangan mingguan buatan orang tua, berlaku 7 hari sejak startDate. */
+export interface ParentChallenge {
+  id: string;
+  from: string;
+  kind: "hari" | "sesi";
+  target: number;
+  reward: string;
+  startDate: DateKey;
 }

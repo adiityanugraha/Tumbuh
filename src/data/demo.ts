@@ -1,6 +1,6 @@
 import { addDays } from "@/lib/date";
 import { applySession, createGarden } from "@/lib/garden";
-import type { DateKey, Garden, Session, Student, Subject } from "@/lib/types";
+import type { DateKey, Garden, ParentChallenge, Session, Student, Subject } from "@/lib/types";
 import { PLANT_ORDER } from "./plants";
 import { getQuestions } from "./questions";
 
@@ -38,12 +38,19 @@ function demoSession(i: number, daysAgo: number, subject: Subject, today: DateKe
   };
 }
 
-export function createDemoData(today: DateKey): { student: Student; garden: Garden; sessions: Session[] } {
+export function createDemoData(today: DateKey): {
+  student: Student;
+  garden: Garden;
+  sessions: Session[];
+  challenge: ParentChallenge;
+} {
   const sessions = PLAN.map(([daysAgo, subject], i) => demoSession(i, daysAgo, subject, today));
   const garden = sessions.reduce((g, s) => applySession(g, s, PLANT_ORDER).garden, createGarden(PLANT_ORDER));
   return {
     student: { nickname: "Dewi", avatar: "🦋", grade: GRADE, createdAt: addDays(today, -6), demo: true },
     garden,
     sessions,
+    // Sudah 5 dari 6 hari: satu sesi hari ini langsung menyelesaikan tantangan saat demo.
+    challenge: { id: "demo-tantangan", from: "Ibu", kind: "hari", target: 6, reward: "Piknik ke taman kota", startDate: addDays(today, -6) },
   };
 }

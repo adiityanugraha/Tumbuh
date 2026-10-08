@@ -60,7 +60,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 gap-1 border-t-4 border-kunyit-300 bg-white p-1.5 md:static md:ml-3 md:flex md:border-0 md:bg-transparent md:p-0"
           >
             {NAV.map((n) => {
-              const active = pathname.startsWith(n.href.slice(0, -1));
+              const active =
+                pathname.startsWith(n.href.slice(0, -1)) || (n.href === "/belajar/" && /^\/(kartu-kata|memori)/.test(pathname));
               return (
                 <Link
                   key={n.href}

@@ -13,7 +13,7 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 
 - Belajar terasa seperti merawat, bukan ujian.
 - Tidak ada hukuman berat: tanaman bisa layu, tidak pernah mati, dan selalu bisa dipulihkan.
-- Kerja sama (Kebun Kelas) lebih ditonjolkan daripada kompetisi. Tidak ada ranking publik antar murid.
+- Anak bersaing dengan dirinya sendiri (lencana, streak), bukan dengan teman. Tidak ada ranking publik antar murid.
 - Teks sedikit, tombol besar, semua teks penting bisa dibacakan.
 
 ## 3. Pengguna
@@ -43,15 +43,19 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 ### A. Sisi Anak (prioritas tertinggi)
 
 1. **Onboarding**: nama panggilan, avatar (pilihan bawaan), kelas. Tanpa data pribadi lain.
-2. **Kebunku**: tanaman aktif di tengah, streak harian, tombol besar "Ayo Belajar!", akses ke Peta, Koleksi, Kebun Kelas. Pesan semangat dari orang tua muncul di sini.
+2. **Kebunku**: tanaman aktif di tengah, streak harian, tombol besar "Ayo Belajar!", akses ke Peta dan Koleksi, kartu Lencanaku. Pesan semangat dari orang tua muncul di sini.
 3. **Sesi belajar**: pilih mapel, 5 soal campuran tipe. Umpan balik langsung yang ramah (animasi, suara). Jawaban salah diberi petunjuk dan boleh coba lagi. Layar hasil merayakan progres (air/pupuk yang didapat, tanaman naik tahap).
 4. **Pertumbuhan**: air dan pupuk dari jawaban benar menaikkan progres tanaman. Benar di percobaan pertama memberi lebih banyak daripada benar setelah petunjuk.
 5. **Layu**: tidak belajar 3 hari > tanaman tampak layu. Satu sesi selesai > langsung pulih. Tidak ada kondisi mati.
 6. **Peta Nusantara**: wilayah terbuka/terkunci, tanaman per wilayah, posisi progres saat ini.
 7. **Koleksi**: kartu fakta tanaman yang sudah tumbuh penuh, tanaman terkunci tampil sebagai siluet.
-8. **Kebun Kelas**: pohon bersama yang tumbuh dari kontribusi semua murid, progres tantangan kelas (data contoh).
+8. **Lencana Pencapaian**: 8 lencana (Langkah Pertama, Tepat Sasaran, Rajin 3 Hari, Serba Bisa, Tanaman Pertama, Penjelajah Pulau, Rajin 7 Hari, Separuh Nusantara), dihitung dari riwayat belajar sehingga tidak hilang walau streak putus. Lencana yang belum didapat tampil pudar dan bisa diklik untuk melihat caranya. Lencana baru dirayakan di layar hasil sesi. (Kebun Kelas dibatalkan bersama sisi guru.)
 9. **Narasi suara**: Web Speech API. Soal Matematika dan IPAS dibacakan `id-ID`, soal Bahasa Inggris memakai `en-US` untuk kata/kalimat Inggris. Bila suara tidak tersedia, tombol speaker disembunyikan atau memberi pesan ramah, tidak error.
 10. **Maskot**: karakter orisinal (kumbang tukang kebun) yang menyapa, menyemangati, dan memberi petunjuk.
+11. **Siram Ulang**: soal yang pernah salah (tidak benar di percobaan pertama) dikumpulkan per mapel di halaman Belajar. Sesi ulang berisi maksimal 5 soal itu dan tetap memberi air/pupuk. Soal hilang dari daftar setelah dijawab benar sekali coba.
+12. **Kartu Kata**: flashcard kosakata Bahasa Inggris bergambar, 8 tema dengan saran kelas 1-6. Ketuk untuk membalik (arti), tombol suara `en-US`, acak kartu. Tanpa skor.
+13. **Memori Nusantara**: permainan memori 12 kartu, memasangkan gambar tanaman dengan nama dan wilayahnya. Terbuka setelah satu wilayah peta selesai.
+14. **Tantangan dari orang tua**: kartu di Kebunku berisi target, progres, dan hadiah. Saat tercapai, layar hasil sesi merayakannya.
 
 ### B. Sisi Guru
 
@@ -63,12 +67,13 @@ Tidak dibuat (keputusan peserta, 8 Okt 2026). Dipindah ke rencana pengembangan (
 2. Materi yang sudah dikuasai vs perlu latihan, per mapel.
 3. Tombol "Kirim Semangat": pengirim (Ibu, Ayah, ...), stiker, dan pesan singkat (maks. 80 huruf) yang muncul di Kebunku anak, dengan status sudah/belum dibaca.
 4. Dilindungi gerbang orang tua sederhana (soal hitungan) agar anak tidak iseng masuk.
+5. **Tantangan & Hadiah**: orang tua membuat satu tantangan untuk 7 hari ke depan: target hari belajar (1-7) atau jumlah sesi (1-20), hadiah (maks. 40 huruf), dan pengirim. Progres terlihat di kedua sisi. Bisa dihapus atau diganti setelah selesai/berakhir.
 
 ### D. Mode Demo
 
 - Pengalih peran Anak / Orang Tua di header, tanpa login, agar juri bisa mencoba kedua sisi. Di layar di bawah 1100px pindah ke dialog profil.
-- Tombol "Buka Mode Demo" di onboarding (dan di halaman orang tua bila belum ada profil): membuat anak contoh "Dewi" kelas 3 dengan riwayat belajar seminggu, sehingga kebun, koleksi, peta, dan laporan orang tua langsung terisi. Hari ini sengaja kosong agar juri bisa mencoba sesi sendiri.
-- Semua data dummy (teman sekelas, tantangan kelas, anak contoh) diberi label "Data contoh" di UI.
+- Tombol "Buka Mode Demo" di onboarding (dan di halaman orang tua bila belum ada profil): membuat anak contoh "Dewi" kelas 3 dengan riwayat belajar seminggu, sehingga kebun, koleksi, peta, lencana, Siram Ulang, dan laporan orang tua langsung terisi. Ada tantangan dari Ibu (5 dari 6 hari). Hari ini sengaja kosong agar satu sesi juri langsung menyelesaikan tantangan itu.
+- Data dummy (anak contoh Mode Demo) diberi label "Data contoh" di UI.
 
 ## 7. Halaman (route)
 
@@ -76,10 +81,13 @@ Tidak dibuat (keputusan peserta, 8 Okt 2026). Dipindah ke rencana pengembangan (
 |---|---|
 | `/` | Onboarding bila belum ada profil, selain itu ke Kebunku |
 | `/kebun/` | Kebunku |
-| `/belajar/` | Pilih mapel dan sesi belajar |
+| `/belajar/` | Pilih mapel, Siram Ulang, dan permainan |
+| `/belajar/[mapel]/` | Sesi belajar 5 soal |
+| `/belajar/[mapel]/ulang/` | Siram Ulang: soal yang pernah salah |
+| `/kartu-kata/` | Kartu Kata Bahasa Inggris |
+| `/memori/` | Memori Nusantara |
 | `/peta/` | Peta Nusantara |
 | `/koleksi/` | Koleksi Tanaman Nusantara |
-| `/kebun-kelas/` | Kebun Kelas |
 | `/orang-tua/` | Halaman orang tua |
 
 ## 8. Arahan Teknis
@@ -87,7 +95,7 @@ Tidak dibuat (keputusan peserta, 8 Okt 2026). Dipindah ke rencana pengembangan (
 - Next.js (App Router) + TypeScript + Tailwind CSS v4, `output: "export"` (situs statis).
 - Animasi: `motion` (Framer Motion). Tidak memakai Lottie.
 - Data: repository layer dengan antarmuka jelas, implementasi awal localStorage. Komponen tidak boleh memanggil localStorage langsung, agar nanti bisa diganti backend.
-- Logika inti (pertumbuhan, streak, layu, unlock, agregasi kelas) berupa pure function dengan unit test Vitest.
+- Logika inti (pertumbuhan, streak, layu, unlock, lencana, tantangan, soal salah, laporan) berupa pure function dengan unit test Vitest.
 - Deploy: hasil `npm run build` (folder `out/`) diunggah ke hosting panitia.
 - Tidak memakai PWA. Tidak ada fitur AI di dalam website.
 - Lingkungan dev: Windows + PowerShell, Node.js native, tanpa Docker/WSL.

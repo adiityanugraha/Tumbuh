@@ -6,12 +6,12 @@ import { MegaMendung } from "@/components/art";
 import { PlantVisual } from "@/components/PlantVisual";
 import { Page } from "@/components/Page";
 import { Bar, ButtonLink, Card, DemoTag, Tag } from "@/components/ui";
-import { DEMO_CHALLENGE, DEMO_CLASSROOM } from "@/data/classroom";
 import { getPlant, REGIONS, stageLabel } from "@/data/plants";
 import { SUBJECTS } from "@/data/questions";
 import { addDays, keyToDate } from "@/lib/date";
 import { bloomProgress, getGrowthStage, getRegionStatus, growthPoints, isWilted, STAGE_THRESHOLDS } from "@/lib/garden";
-import { challengeProgress, classGarden } from "@/lib/insights";
+import { BadgeCard } from "./BadgeCard";
+import { ChallengeCard } from "./ChallengeCard";
 
 export const SUBJECT_BG = { matematika: "bg-kunyit-100", ipas: "bg-daun-100", inggris: "bg-langit-100" } as const;
 
@@ -30,8 +30,6 @@ export function KebunView() {
   const studyDays = new Set(sessions.map((s) => s.date));
 
   const latest = [...encouragements].sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0];
-  const cls = classGarden(DEMO_CLASSROOM, sessions, today);
-  const challenge = DEMO_CHALLENGE;
   const region = REGIONS.find((r) => getRegionStatus(r, garden) === "aktif") ?? REGIONS.at(-1)!;
 
   const status = wilted
@@ -124,24 +122,8 @@ export function KebunView() {
             </div>
           </div>
 
-          <Card batik>
-            <div className="flex items-center justify-between gap-2">
-              <h2 className="font-display text-xl font-semibold">Kebun Kelas</h2>
-              <DemoTag />
-            </div>
-            <p className="mt-1 text-sm font-bold text-tinta-redup">{challenge.title}</p>
-            <div className="mt-2.5">
-              <Bar value={challengeProgress(challenge, cls.sessionsThisWeek)} motif={false} label="Progres tantangan kelas" />
-            </div>
-            <div className="mt-2 flex items-center justify-between text-sm font-extrabold text-tinta-redup">
-              <span>
-                {cls.sessionsThisWeek} / {challenge.targetSessions} sesi
-              </span>
-              <Link href="/kebun-kelas/" className="min-h-10 content-center text-daun-800 underline">
-                Lihat
-              </Link>
-            </div>
-          </Card>
+          <ChallengeCard />
+          <BadgeCard />
         </div>
 
         {/* Kolom kanan */}

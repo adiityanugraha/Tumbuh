@@ -52,6 +52,7 @@ describe("QuizSession", () => {
         garden: { activePlantId: "rafflesia", water: 0, fertilizer: 0, collection: [], streak: 0, lastStudyDate: null },
         sessions: [],
         encouragements: [],
+        challenge: { id: "c", from: "Ibu", kind: "sesi", target: 1, reward: "Piknik", startDate: new Date().toLocaleDateString("sv-SE") },
       }),
     );
   });
@@ -97,6 +98,8 @@ describe("QuizSession", () => {
     await screen.findByText("Sesi selesai");
     expect(document.body).toHaveTextContent("💧 +4Air");
     expect(document.body).toHaveTextContent("🌱 +3Pupuk");
+    expect(document.body).toHaveTextContent("Lencana baru: Langkah Pertama!");
+    expect(document.body).toHaveTextContent("Tantangan dari Ibu selesai! Tagih hadiahmu: Piknik");
     await waitFor(() => {
       const saved = JSON.parse(localStorage.getItem("tumbuh:v1")!);
       expect(saved.sessions).toHaveLength(1);

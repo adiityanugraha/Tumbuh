@@ -70,7 +70,7 @@ Folder dibuat saat pertama kali dibutuhkan, bukan diisi file kosong.
 
 0. Setup: scaffold, token desain, font, dokumen acuan, README, CREDITS.
 1. Model data & logika inti: tipe, repository, pure function + unit test, seed tanaman, bank soal kelas 1-6, data kelas dummy.
-2. Sisi anak: onboarding, Kebunku, sesi belajar, peta, koleksi, Kebun Kelas, narasi suara, maskot.
+2. Sisi anak: onboarding, Kebunku, sesi belajar, peta, koleksi, lencana, narasi suara, maskot.
 3. Sisi orang tua + Mode Demo (sisi guru dibatalkan).
 4. Aksesibilitas, performa, SEO (target Lighthouse mobile minimal 90).
 5. Finalisasi: README, CREDITS, DEMO.md, build untuk hosting panitia.
