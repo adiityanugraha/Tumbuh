@@ -73,3 +73,13 @@ describe("data Mode Demo", () => {
     expect(challengeStatus(createDemoData("2026-10-08").challenge, sessions, "2026-10-08")).toMatchObject({ done: 5, completed: false });
   });
 });
+
+describe("budaya daerah", () => {
+  it("setiap wilayah punya 4 kartu budaya yang terisi", async () => {
+    const { CULTURE } = await import("./culture");
+    for (const r of REGIONS) {
+      expect(CULTURE[r.id]).toHaveLength(4);
+      expect(CULTURE[r.id].every((c) => c.name && c.note && c.kind)).toBe(true);
+    }
+  });
+});

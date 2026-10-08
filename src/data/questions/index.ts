@@ -37,3 +37,7 @@ export const SUBJECTS: { id: Subject; name: string; emoji: string }[] = [
   { id: "ipas", name: "IPAS", emoji: "🔬" },
   { id: "inggris", name: "Bahasa Inggris", emoji: "🗣️" },
 ];
+
+/** Jumlah soal per mapel (kelas ini) yang ada di daftar soal salah. */
+export const reviewCounts = (grade: Grade, wrong: Set<string>) =>
+  SUBJECTS.map((s) => ({ ...s, count: getQuestions(grade, s.id).filter((q) => wrong.has(q.id)).length }));

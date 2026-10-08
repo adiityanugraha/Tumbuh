@@ -30,6 +30,7 @@
   --color-langit-300: #8cc4f0;
   --color-langit-500: #2f80c9;
   --color-langit-700: #1c5590;
+  --color-malam: #13243d;
 
   --font-display: var(--font-fredoka), "Baloo 2", system-ui, sans-serif;
   --font-sans: var(--font-nunito), system-ui, sans-serif;
@@ -48,6 +49,9 @@
   --animate-spin-slow: spin 24s linear infinite;
   --animate-shake: shake 0.35s;
   --animate-breathe: breathe 3.5s ease-in-out infinite;
+  --animate-flutter: flutter 14s ease-in-out infinite;
+  --animate-twinkle: twinkle 2.6s ease-in-out infinite;
+  --animate-drift: drift 7s ease-in-out infinite alternate;
 
   @keyframes sway {
     50% {
@@ -62,6 +66,33 @@
   @keyframes breathe {
     50% {
       transform: scaleY(1.025);
+    }
+  }
+  /* Kupu-kupu terbang berkeliling kebun */
+  @keyframes flutter {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(-8deg);
+    }
+    25% {
+      transform: translate(120px, -40px) rotate(8deg);
+    }
+    50% {
+      transform: translate(220px, 10px) rotate(-6deg);
+    }
+    75% {
+      transform: translate(90px, 50px) rotate(10deg);
+    }
+  }
+  /* Awan, ombak, dan perahu bergeser pelan bolak-balik */
+  @keyframes drift {
+    to {
+      transform: translateX(28px);
+    }
+  }
+  @keyframes twinkle {
+    50% {
+      opacity: 0.25;
     }
   }
   @keyframes shake {

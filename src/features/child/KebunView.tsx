@@ -2,21 +2,40 @@
 
 import Link from "next/link";
 import { useApp } from "@/components/AppProvider";
-import { MegaMendung } from "@/components/art";
-import { PlantVisual } from "@/components/PlantVisual";
+import { PlantThumb } from "@/components/PlantVisual";
+import { SpeakButton } from "@/components/SpeakButton";
 import { Page } from "@/components/Page";
-import { Bar, ButtonLink, Card, DemoTag, Tag } from "@/components/ui";
-import { getPlant, REGIONS, stageLabel } from "@/data/plants";
-import { SUBJECTS } from "@/data/questions";
-import { addDays, keyToDate } from "@/lib/date";
-import { bloomProgress, getGrowthStage, getRegionStatus, growthPoints, isWilted, STAGE_THRESHOLDS } from "@/lib/garden";
+import { ButtonLink, Card, DemoTag, Tag } from "@/components/ui";
+import { getPlant, PLANTS, REGIONS } from "@/data/plants";
+import { reviewCounts, SUBJECTS } from "@/data/questions";
+import { addDays, daysBetween, keyToDate } from "@/lib/date";
+import {
+  getGrowthStage,
+  getRegionStatus,
+  growthPoints,
+  isWilted,
+  STAGE_THRESHOLDS,
+} from "@/lib/garden";
+import { mistakeIds } from "@/lib/session";
 import { BadgeCard } from "./BadgeCard";
 import { ChallengeCard } from "./ChallengeCard";
+import { GardenScene } from "./GardenScene";
 
-export const SUBJECT_BG = { matematika: "bg-kunyit-100", ipas: "bg-daun-100", inggris: "bg-langit-100" } as const;
+export const SUBJECT_BG = {
+  matematika: "bg-kunyit-100",
+  ipas: "bg-daun-100",
+  inggris: "bg-langit-100",
+} as const;
 
 export function KebunView() {
-  const { student, garden, sessions, today, encouragements, markEncouragementsRead } = useApp();
+  const {
+    student,
+    garden,
+    sessions,
+    today,
+    encouragements,
+    markEncouragementsRead,
+  } = useApp();
   if (!student || !garden) return null;
 
   const plant = getPlant(garden.activePlantId)!;
@@ -29,8 +48,12 @@ export function KebunView() {
   const week = Array.from({ length: 7 }, (_, i) => addDays(today, i - 6));
   const studyDays = new Set(sessions.map((s) => s.date));
 
-  const latest = [...encouragements].sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0];
-  const region = REGIONS.find((r) => getRegionStatus(r, garden) === "aktif") ?? REGIONS.at(-1)!;
+  const latest = [...encouragements].sort((a, b) =>
+    b.createdAt.localeCompare(a.createdAt),
+  )[0];
+  const region =
+    REGIONS.find((r) => getRegionStatus(r, garden) === "aktif") ??
+    REGIONS.at(-1)!;
 
   const status = wilted
     ? "Tanamanmu layu karena lama tidak disiram. Satu sesi belajar langsung memulihkannya!"
@@ -45,49 +68,41 @@ export function KebunView() {
     >
       <div className="grid items-start gap-5 md:grid-cols-2 xl:grid-cols-[290px_1fr_330px]">
         {/* Kebun di tengah (paling atas di layar kecil) */}
-        <div className="relative flex min-h-[520px] flex-col items-center justify-end overflow-hidden rounded-[32px] border-3 border-krem-tua bg-linear-to-b from-langit-300/60 to-langit-100 md:col-span-2 xl:col-span-1 xl:col-start-2 xl:row-start-1">
-          <MegaMendung className="absolute inset-x-0 top-0 h-28 w-full" />
-          <Tag className="absolute top-4 right-4 z-10 bg-white! px-3! py-1! text-sm! text-daun-800!">
-            {wilted ? "Layu" : `Tahap: ${stageLabel(plant, stage)}`}
-          </Tag>
-          <div className="relative z-10 -mb-2">
-            <PlantVisual plant={plant} stage={stage} wilted={wilted} />
-          </div>
-          <div className="relative z-10 w-full bg-white/85 px-6 pt-4 pb-5">
-            <div className="flex flex-wrap justify-between gap-2 font-extrabold text-tinta-redup">
-              <span className="font-display text-xl text-tinta">{plant.name}</span>
-              <span>{allDone ? "Semua tanaman sudah tumbuh penuh!" : `${points} / ${STAGE_THRESHOLDS.berbunga} poin menuju ${stageLabel(plant, "berbunga").toLowerCase()}`}</span>
-            </div>
-            <div className="mt-2">
-              <Bar value={bloomProgress(points)} label={`Progres menuju ${stageLabel(plant, "berbunga").toLowerCase()}`} />
-            </div>
-            <div className="mt-2 flex justify-between font-extrabold text-tinta-redup">
-              <span>💧 Air {garden.water}</span>
-              <span>🌱 Pupuk {garden.fertilizer}</span>
-            </div>
-          </div>
-        </div>
+        <GardenScene
+          plant={plant}
+          stage={stage}
+          points={points}
+          wilted={wilted}
+          allDone={allDone}
+        />
 
         {/* Kolom kiri */}
         <div className="grid gap-5 xl:col-start-1 xl:row-start-1">
           <Card>
             <div className="flex items-center gap-3.5">
-              <span className="grid size-16 flex-none place-items-center rounded-full border-3 border-kunyit-400 bg-kunyit-100 text-4xl">
+              <span className="border-kunyit-400 bg-kunyit-100 grid size-16 flex-none place-items-center rounded-full border-3 text-4xl">
                 {student.avatar}
               </span>
               <div>
-                <p className="font-display text-2xl font-semibold">Hai, {student.nickname}!</p>
+                <p className="font-display text-2xl font-semibold">
+                  Hai, {student.nickname}!
+                </p>
                 <Tag>Kelas {student.grade}</Tag> {student.demo && <DemoTag />}
               </div>
             </div>
-            <ol className="mt-4 grid grid-cols-7 gap-1.5 text-center text-xs font-extrabold text-tinta-redup" aria-label="Belajar 7 hari terakhir">
+            <ol
+              className="text-tinta-redup mt-4 grid grid-cols-7 gap-1.5 text-center text-xs font-extrabold"
+              aria-label="Belajar 7 hari terakhir"
+            >
               {week.map((d) => {
                 const done = studyDays.has(d);
                 return (
                   <li key={d}>
-                    {keyToDate(d).toLocaleDateString("id-ID", { weekday: "short" })}
+                    {keyToDate(d).toLocaleDateString("id-ID", {
+                      weekday: "short",
+                    })}
                     <span
-                      className={`mt-1 grid h-8.5 place-items-center rounded-xl ${done ? "bg-daun-500 text-white" : "bg-krem-tua"} ${d === today ? "outline-3 outline-kunyit-400" : ""}`}
+                      className={`mt-1 grid h-8.5 place-items-center rounded-xl ${done ? "bg-daun-500 text-white" : "bg-krem-tua"} ${d === today ? "outline-kunyit-400 outline-3" : ""}`}
                       aria-label={done ? "sudah belajar" : "belum belajar"}
                     >
                       {done ? "✓" : ""}
@@ -98,17 +113,26 @@ export function KebunView() {
             </ol>
           </Card>
 
-          <div className="flex items-start gap-3 rounded-[20px] border-2 border-dashed border-kunyit-400 bg-kunyit-100 p-4 font-bold">
+          <div className="border-kunyit-400 bg-kunyit-100 flex items-start gap-3 rounded-[20px] border-2 border-dashed p-4 font-bold">
             <span className="text-3xl" aria-hidden="true">
               {latest?.sticker ?? "🐞"}
             </span>
             <div className="flex-1">
               {latest ? (
                 <>
-                  Pesan dari {latest.from ?? "orang tua"}{!latest.read && <Tag className="ml-2 bg-kunyit-400! text-tinta!">Baru</Tag>}
-                  <p className="font-semibold">&ldquo;{latest.message}&rdquo;</p>
+                  Pesan dari {latest.from ?? "orang tua"}
                   {!latest.read && (
-                    <button type="button" onClick={markEncouragementsRead} className="mt-1 min-h-10 cursor-pointer text-sm text-sogan underline">
+                    <Tag className="bg-kunyit-400! text-tinta! ml-2">Baru</Tag>
+                  )}
+                  <p className="font-semibold">
+                    &ldquo;{latest.message}&rdquo;
+                  </p>
+                  {!latest.read && (
+                    <button
+                      type="button"
+                      onClick={markEncouragementsRead}
+                      className="text-sogan mt-1 min-h-10 cursor-pointer text-sm underline"
+                    >
                       Terima kasih!
                     </button>
                   )}
@@ -116,7 +140,10 @@ export function KebunView() {
               ) : (
                 <>
                   Kumbi berkata
-                  <p className="font-semibold">&ldquo;Belajar sebentar saja setiap hari, kebunmu pasti tumbuh!&rdquo;</p>
+                  <p className="font-semibold">
+                    &ldquo;Belajar sebentar saja setiap hari, kebunmu pasti
+                    tumbuh!&rdquo;
+                  </p>
                 </>
               )}
             </div>
@@ -124,45 +151,146 @@ export function KebunView() {
 
           <ChallengeCard />
           <BadgeCard />
+          <FactCard />
         </div>
 
         {/* Kolom kanan */}
         <div className="grid gap-5 xl:col-start-3 xl:row-start-1">
           <Card batik>
-            <h2 className="mb-2.5 font-display text-xl font-semibold">Ayo Belajar!</h2>
+            <h2 className="font-display mb-2.5 text-xl font-semibold">
+              Ayo Belajar!
+            </h2>
             <div className="grid gap-2.5">
               {SUBJECTS.map((s) => (
                 <Link
                   key={s.id}
                   href={`/belajar/${s.id}/`}
-                  className="flex min-h-18 items-center gap-3.5 rounded-[22px] border-3 border-krem-tua bg-white px-4 py-2.5 transition hover:translate-x-1 hover:border-daun-300"
+                  className="border-krem-tua hover:border-daun-300 flex min-h-18 items-center gap-3.5 rounded-[22px] border-3 bg-white px-4 py-2.5 transition hover:translate-x-1"
                 >
-                  <span className={`grid size-12 flex-none place-items-center rounded-2xl text-2xl ${SUBJECT_BG[s.id]}`}>{s.emoji}</span>
+                  <span
+                    className={`grid size-12 flex-none place-items-center rounded-2xl text-2xl ${SUBJECT_BG[s.id]}`}
+                  >
+                    {s.emoji}
+                  </span>
                   <span>
-                    <span className="block font-display text-lg font-semibold">{s.name}</span>
-                    <span className="text-sm font-bold text-tinta-redup">5 soal kelas {student.grade}</span>
+                    <span className="font-display block text-lg font-semibold">
+                      {s.name}
+                    </span>
+                    <span className="text-tinta-redup text-sm font-bold">
+                      5 soal kelas {student.grade}
+                    </span>
                   </span>
                 </Link>
               ))}
             </div>
           </Card>
+          <TodayCard />
           <Card>
-            <h2 className="font-display text-xl font-semibold">Jelajah Nusantara</h2>
-            <p className="mt-1 text-sm font-bold text-tinta-redup">
-              Sedang di <b className="text-daun-800">{region.name}</b>, {garden.collection.length} dari 12 tanaman terkumpul
+            <h2 className="font-display text-xl font-semibold">
+              Jelajah Nusantara
+            </h2>
+            <p className="text-tinta-redup mt-1 text-sm font-bold">
+              Sedang di <b className="text-daun-800">{region.name}</b>,{" "}
+              {garden.collection.length} dari 12 tanaman terkumpul
             </p>
             <div className="mt-2 flex gap-1.5" aria-hidden="true">
               {REGIONS.map((r) => {
                 const st = getRegionStatus(r, garden);
-                return <i key={r.id} className={`h-3 flex-1 rounded-full ${st === "selesai" ? "bg-kunyit-400" : st === "aktif" ? "bg-daun-500" : "bg-krem-tua"}`} />;
+                return (
+                  <i
+                    key={r.id}
+                    className={`h-3 flex-1 rounded-full ${st === "selesai" ? "bg-kunyit-400" : st === "aktif" ? "bg-daun-500" : "bg-krem-tua"}`}
+                  />
+                );
               })}
             </div>
-            <ButtonLink href="/peta/" variant="ghost" className="mt-3.5 min-h-12 w-full text-lg">
+            <ButtonLink
+              href="/peta/"
+              variant="ghost"
+              className="mt-3.5 min-h-12 w-full text-lg"
+            >
               Buka Peta
             </ButtonLink>
           </Card>
         </div>
       </div>
     </Page>
+  );
+}
+
+/** Ringkasan belajar hari ini dan pengingat Siram Ulang. */
+function TodayCard() {
+  const { student, sessions, today } = useApp();
+  if (!student) return null;
+  const solved = (list: typeof sessions) =>
+    list.reduce((n, s) => n + s.results.filter((r) => r.solved).length, 0);
+  const todays = sessions.filter((s) => s.date === today);
+  const toReview = reviewCounts(student.grade, mistakeIds(sessions)).reduce(
+    (n, s) => n + s.count,
+    0,
+  );
+  return (
+    <Card>
+      <h2 className="font-display text-xl font-semibold">Hari ini</h2>
+      <dl className="mt-2.5 grid grid-cols-3 gap-2 text-center">
+        {[
+          ["Sesi", todays.length],
+          ["Benar", solved(todays)],
+          ["Total benar", solved(sessions)],
+        ].map(([label, value]) => (
+          <div key={label} className="bg-krem rounded-2xl px-2 py-2">
+            <dd className="font-display text-daun-800 text-2xl font-semibold">
+              {value}
+            </dd>
+            <dt className="text-tinta-redup text-xs font-extrabold">{label}</dt>
+          </div>
+        ))}
+      </dl>
+      {toReview > 0 ? (
+        <Link
+          href="/belajar/#siram-ulang"
+          className="border-langit-300 bg-langit-100 text-langit-700 hover:border-langit-500 mt-3 flex min-h-12 items-center gap-2 rounded-2xl border-2 border-dashed px-3 py-2 text-sm font-extrabold"
+        >
+          🔁 {toReview} soal menunggu disiram ulang
+          <span className="ml-auto underline">Ulangi</span>
+        </Link>
+      ) : (
+        <p className="text-tinta-redup mt-3 text-sm font-bold">
+          Tidak ada soal yang perlu diulang. Hebat!
+        </p>
+      )}
+    </Card>
+  );
+}
+
+/** Satu fakta tanaman Nusantara yang berganti setiap hari. */
+function FactCard() {
+  const { today } = useApp();
+  const plant =
+    PLANTS[
+      ((daysBetween("2026-01-01", today) % PLANTS.length) + PLANTS.length) %
+        PLANTS.length
+    ];
+  const region = REGIONS.find((r) => r.id === plant.region)!;
+  return (
+    <Card batik>
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="font-display text-xl font-semibold">Tahukah kamu?</h2>
+        <SpeakButton
+          parts={[{ text: `${plant.name}. ${plant.fact}`, lang: "id-ID" }]}
+          label="Bacakan fakta"
+        />
+      </div>
+      <div className="mt-2 flex items-center gap-3">
+        <span className="bg-langit-100 grid size-16 flex-none place-items-center rounded-2xl">
+          <PlantThumb plant={plant} size={56} />
+        </span>
+        <p className="font-bold">
+          <span className="font-display block text-lg">{plant.name}</span>
+          <span className="text-tinta-redup text-sm">{region.name}</span>
+        </p>
+      </div>
+      <p className="mt-2 pb-1 font-semibold">{plant.fact}</p>
+    </Card>
   );
 }

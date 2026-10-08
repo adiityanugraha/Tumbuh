@@ -44,10 +44,17 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 
 1. **Onboarding**: nama panggilan, avatar (pilihan bawaan), kelas. Tanpa data pribadi lain.
 2. **Kebunku**: tanaman aktif di tengah, streak harian, tombol besar "Ayo Belajar!", akses ke Peta dan Koleksi, kartu Lencanaku. Pesan semangat dari orang tua muncul di sini.
+   - Kebun hidup: tanaman koleksi terbaru berjejer di kiri-kanan tanaman aktif (2 per sisi, 1 di HP), langit mengikuti jam lokal (pagi, siang, sore, malam berbintang), kupu-kupu, dan Kumbi yang bisa diketuk untuk sapaan. Mengetuk tanaman menampilkan fakta uniknya. Animasi mati bila `prefers-reduced-motion`.
+   - Kartu "Hari ini": sesi dan soal benar hari ini, total soal benar, pengingat Siram Ulang.
+   - Kartu "Tahukah kamu?" (kolom kiri): fakta satu tanaman Nusantara yang berganti setiap hari, bisa dibacakan.
 3. **Sesi belajar**: pilih mapel, 5 soal campuran tipe. Umpan balik langsung yang ramah (animasi, suara). Jawaban salah diberi petunjuk dan boleh coba lagi. Layar hasil merayakan progres (air/pupuk yang didapat, tanaman naik tahap).
 4. **Pertumbuhan**: air dan pupuk dari jawaban benar menaikkan progres tanaman. Benar di percobaan pertama memberi lebih banyak daripada benar setelah petunjuk.
 5. **Layu**: tidak belajar 3 hari > tanaman tampak layu. Satu sesi selesai > langsung pulih. Tidak ada kondisi mati.
 6. **Peta Nusantara**: wilayah terbuka/terkunci, tanaman per wilayah, posisi progres saat ini.
+   - Jalur ekspedisi: garis antarwilayah sesuai urutan buka (ruas yang dilalui berwarna kunyit), Kumbi berperahu di dekat wilayah yang sedang dijelajah.
+   - Laut hidup: awan, ombak, perahu, ikan, dan kompas (animasi mati bila `prefers-reduced-motion`).
+   - Linimasa ekspedisi di bawah peta: 6 wilayah dengan status dan gambar tanamannya, bisa diklik.
+   - Kenali Daerah: rumah adat, tarian, makanan khas, dan ungkapan daerah per wilayah, bisa dibacakan. Terkunci sampai wilayah dibuka.
 7. **Koleksi**: kartu fakta tanaman yang sudah tumbuh penuh, tanaman terkunci tampil sebagai siluet.
 8. **Lencana Pencapaian**: 8 lencana (Langkah Pertama, Tepat Sasaran, Rajin 3 Hari, Serba Bisa, Tanaman Pertama, Penjelajah Pulau, Rajin 7 Hari, Separuh Nusantara), dihitung dari riwayat belajar sehingga tidak hilang walau streak putus. Lencana yang belum didapat tampil pudar dan bisa diklik untuk melihat caranya. Lencana baru dirayakan di layar hasil sesi. (Kebun Kelas dibatalkan bersama sisi guru.)
 9. **Narasi suara**: Web Speech API. Soal Matematika dan IPAS dibacakan `id-ID`, soal Bahasa Inggris memakai `en-US` untuk kata/kalimat Inggris. Bila suara tidak tersedia, tombol speaker disembunyikan atau memberi pesan ramah, tidak error.

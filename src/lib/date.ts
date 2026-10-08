@@ -33,3 +33,13 @@ export function keyToDate(key: DateKey): Date {
   const [y, m, d] = key.split("-").map(Number);
   return new Date(y, m - 1, d);
 }
+
+export type TimeOfDay = "pagi" | "siang" | "sore" | "malam";
+
+/** Waktu sesuai jam lokal, untuk warna langit kebun dan sapaan Kumbi. */
+export function timeOfDay(hour: number): TimeOfDay {
+  if (hour >= 5 && hour < 10) return "pagi";
+  if (hour >= 10 && hour < 15) return "siang";
+  if (hour >= 15 && hour < 18) return "sore";
+  return "malam";
+}
