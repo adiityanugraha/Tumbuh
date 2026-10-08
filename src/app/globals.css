@@ -47,6 +47,7 @@
   --animate-bob: bob 1.6s ease-in-out infinite;
   --animate-spin-slow: spin 24s linear infinite;
   --animate-shake: shake 0.35s;
+  --animate-breathe: breathe 3.5s ease-in-out infinite;
 
   @keyframes sway {
     50% {
@@ -56,6 +57,11 @@
   @keyframes bob {
     50% {
       transform: translateY(-6px);
+    }
+  }
+  @keyframes breathe {
+    50% {
+      transform: scaleY(1.025);
     }
   }
   @keyframes shake {

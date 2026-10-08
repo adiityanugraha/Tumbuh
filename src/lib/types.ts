@@ -60,6 +60,8 @@ export interface PlantSpecies {
   emoji: string;
   /** Warna bunga/buah untuk ilustrasi tanaman. */
   color: string;
+  /** Nama tahap akhir bila bukan bunga, misalnya "Dewasa" untuk pohon atau "Berbuah". Bawaan: "Berbunga". */
+  matureLabel?: string;
 }
 
 export interface Region {

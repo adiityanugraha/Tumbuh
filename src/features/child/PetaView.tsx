@@ -4,8 +4,9 @@ import Image from "next/image";
 import { Fragment, useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import { Page } from "@/components/Page";
+import { PlantThumb } from "@/components/PlantVisual";
 import { ButtonLink, Card, Tag } from "@/components/ui";
-import { getPlant, REGIONS } from "@/data/plants";
+import { getPlant, REGIONS, stageLabel } from "@/data/plants";
 import { bloomProgress, getRegionStatus, growthPoints, type RegionStatus } from "@/lib/garden";
 import type { RegionId } from "@/lib/types";
 
@@ -119,12 +120,12 @@ export function PetaView() {
             return (
               <div key={id} className={`mt-2.5 flex items-center gap-3 rounded-[18px] bg-krem p-2.5 ${!collected && !growing ? "opacity-60" : ""}`}>
                 <span className={`grid size-14 flex-none place-items-center rounded-2xl bg-daun-100 bg-kawung bg-size-[22px_22px] text-3xl ${!collected && !growing ? "grayscale" : ""}`}>
-                  {collected || growing ? p.emoji : "❔"}
+                  {collected || growing ? <PlantThumb plant={p} size={52} /> : "❔"}
                 </span>
                 <div>
                   <b className="font-display">{collected || growing ? p.name : "Tanaman rahasia"}</b>
                   <p className={`text-sm font-extrabold ${collected ? "text-kunyit-600" : growing ? "text-daun-600" : "text-tinta-redup"}`}>
-                    {collected ? "Sudah berbunga" : growing ? `Sedang tumbuh, ${bloomProgress(growthPoints(garden))}%` : "Belum terbuka"}
+                    {collected ? `Sudah ${stageLabel(p, "berbunga").toLowerCase()}` : growing ? `Sedang tumbuh, ${bloomProgress(growthPoints(garden))}%` : "Belum terbuka"}
                   </p>
                 </div>
               </div>

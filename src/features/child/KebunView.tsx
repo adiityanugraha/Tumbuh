@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import { useApp } from "@/components/AppProvider";
-import { MegaMendung, PlantArt, Pot } from "@/components/art";
+import { MegaMendung } from "@/components/art";
+import { PlantVisual } from "@/components/PlantVisual";
 import { Page } from "@/components/Page";
 import { Bar, ButtonLink, Card, DemoTag, Tag } from "@/components/ui";
 import { DEMO_CHALLENGE, DEMO_CLASSROOM } from "@/data/classroom";
-import { getPlant, REGIONS } from "@/data/plants";
+import { getPlant, REGIONS, stageLabel } from "@/data/plants";
 import { SUBJECTS } from "@/data/questions";
 import { addDays, keyToDate } from "@/lib/date";
 import { bloomProgress, getGrowthStage, getRegionStatus, growthPoints, isWilted, STAGE_THRESHOLDS } from "@/lib/garden";
 import { challengeProgress, classGarden } from "@/lib/insights";
 
-const STAGE_LABEL = { bibit: "Bibit", tunas: "Tunas", tumbuh: "Tumbuh", berbunga: "Berbunga" } as const;
 export const SUBJECT_BG = { matematika: "bg-kunyit-100", ipas: "bg-daun-100", inggris: "bg-langit-100" } as const;
 
 export function KebunView() {
@@ -51,21 +51,18 @@ export function KebunView() {
           <MegaMendung className="absolute inset-x-0 top-0 h-28 w-full" />
           <div className="absolute inset-x-0 bottom-0 h-[45%] bg-kawung opacity-40" />
           <Tag className="absolute top-4 right-4 z-10 bg-white! px-3! py-1! text-sm! text-daun-800!">
-            {wilted ? "Layu" : `Tahap: ${STAGE_LABEL[stage]}`}
+            {wilted ? "Layu" : `Tahap: ${stageLabel(plant, stage)}`}
           </Tag>
-          <div className={`relative z-10 ${wilted ? "saturate-50" : "animate-sway"}`} style={{ transformOrigin: "50% 100%" }}>
-            <PlantArt stage={stage} color={plant.color} wilted={wilted} />
-          </div>
-          <div className="relative z-10 -mt-1.5">
-            <Pot />
+          <div className="relative z-10 -mb-2">
+            <PlantVisual plant={plant} stage={stage} wilted={wilted} />
           </div>
           <div className="relative z-10 w-full bg-white/85 px-6 pt-4 pb-5">
             <div className="flex flex-wrap justify-between gap-2 font-extrabold text-tinta-redup">
               <span className="font-display text-xl text-tinta">{plant.name}</span>
-              <span>{allDone ? "Semua tanaman sudah berbunga!" : `${points} / ${STAGE_THRESHOLDS.berbunga} poin menuju berbunga`}</span>
+              <span>{allDone ? "Semua tanaman sudah tumbuh penuh!" : `${points} / ${STAGE_THRESHOLDS.berbunga} poin menuju ${stageLabel(plant, "berbunga").toLowerCase()}`}</span>
             </div>
             <div className="mt-2">
-              <Bar value={bloomProgress(points)} label="Progres menuju berbunga" />
+              <Bar value={bloomProgress(points)} label={`Progres menuju ${stageLabel(plant, "berbunga").toLowerCase()}`} />
             </div>
             <div className="mt-2 flex justify-between font-extrabold text-tinta-redup">
               <span>💧 Air {garden.water}</span>

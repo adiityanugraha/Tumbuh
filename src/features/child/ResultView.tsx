@@ -3,14 +3,13 @@
 import { motion } from "motion/react";
 import { useEffect } from "react";
 import { useApp } from "@/components/AppProvider";
-import { PlantArt } from "@/components/art";
+import { PlantVisual } from "@/components/PlantVisual";
 import { Button, ButtonLink, Card, Tag } from "@/components/ui";
-import { getPlant, REGIONS } from "@/data/plants";
+import { getPlant, REGIONS, stageLabel } from "@/data/plants";
 import { currentStreak, getGrowthStage, growthPoints, type SessionOutcome } from "@/lib/garden";
 import { playCelebrate } from "@/lib/sound";
 import type { AnswerResult, Garden } from "@/lib/types";
 
-const STAGE_LABEL = { bibit: "Bibit", tunas: "Tunas", tumbuh: "Tumbuh", berbunga: "Berbunga" } as const;
 
 export function ResultView({
   outcome,
@@ -39,9 +38,9 @@ export function ResultView({
   }, [bloomed, stageAfter, stageBefore]);
 
   const title = bloomed
-    ? `Hore! ${bloomed.name} berbunga!`
+    ? `Hore! ${bloomed.name} sudah ${stageLabel(bloomed, "berbunga").toLowerCase()}!`
     : stageAfter !== stageBefore
-      ? `Tanamanmu naik ke tahap ${STAGE_LABEL[stageAfter]}!`
+      ? `Tanamanmu naik ke tahap ${stageLabel(shownPlant, stageAfter)}!`
       : "Sesi selesai, kerja bagus!";
 
   return (
@@ -50,7 +49,7 @@ export function ResultView({
         <div className="relative mx-auto grid size-64 place-items-center md:size-80">
           <div className="absolute inset-0 animate-spin-slow rounded-full border-5 border-kunyit-400 bg-kunyit-100 bg-kawung bg-size-[36px_36px]" />
           <motion.div initial={{ scale: 0.4, y: 30 }} animate={{ scale: 1, y: 0 }} transition={{ type: "spring", bounce: 0.5, delay: 0.2 }} className="relative">
-            <PlantArt stage={shownStage} color={shownPlant.color} size={170} />
+            <PlantVisual plant={shownPlant} stage={shownStage} potWidth={110} maxHeight={230} />
           </motion.div>
         </div>
         <div>

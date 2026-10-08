@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import { Page } from "@/components/Page";
 import { SpeakButton } from "@/components/SpeakButton";
+import { PlantThumb } from "@/components/PlantVisual";
 import { Card, Tag } from "@/components/ui";
 import { PLANTS, REGIONS } from "@/data/plants";
 import type { RegionId } from "@/lib/types";
@@ -50,8 +51,7 @@ export function KoleksiView() {
                   className={`relative rounded-3xl border-3 bg-white p-3 text-center transition before:pointer-events-none before:absolute before:inset-1.5 before:rounded-[18px] before:border-2 before:border-dashed before:border-tanah-300 enabled:cursor-pointer enabled:hover:-translate-y-1 enabled:hover:-rotate-1 enabled:hover:border-kunyit-400 ${selected === p.id && owned ? "border-kunyit-400" : "border-krem-tua"}`}
                 >
                   <span className={`grid h-28 place-items-center rounded-[18px] bg-daun-100 bg-kawung bg-size-[28px_28px] text-5xl ${owned ? "" : "opacity-30 brightness-35 grayscale"}`}>
-                    {/* PLACEHOLDER: emoji diganti ilustrasi SVG di Fase 4 */}
-                    {p.emoji}
+                    <PlantThumb plant={p} size={104} />
                   </span>
                   <b className="mt-2 block font-display">{owned ? p.name : "???"}</b>
                   <small className="font-bold text-tinta-redup">{region.name}</small>
@@ -66,7 +66,9 @@ export function KoleksiView() {
             <Card className="border-kunyit-400!">
               {detail ? (
                 <>
-                  <div className="mb-3.5 grid h-48 place-items-center rounded-[22px] bg-tanah-100 bg-kawung bg-size-[34px_34px] text-8xl">{detail.emoji}</div>
+                  <div className="mb-3.5 grid h-48 place-items-center rounded-[22px] bg-tanah-100 bg-kawung bg-size-[34px_34px] ">
+                    <PlantThumb plant={detail} size={180} />
+                  </div>
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <h2 className="font-display text-2xl font-semibold">{detail.name}</h2>

@@ -1,4 +1,4 @@
-import type { PlantSpecies, Region } from "@/lib/types";
+import type { GrowthStage, PlantSpecies, Region } from "@/lib/types";
 
 // VERIFY: semua fakta tanaman di bawah wajib dicek manual oleh pemilik proyek sebelum lomba.
 export const PLANTS: PlantSpecies[] = [
@@ -64,6 +64,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "eboni",
+    matureLabel: "Dewasa",
     color: "#3b2a20",
     name: "Eboni",
     latinName: "Diospyros celebica",
@@ -84,6 +85,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "cendana",
+    matureLabel: "Dewasa",
     color: "#c98a4b",
     name: "Cendana",
     latinName: "Santalum album",
@@ -94,6 +96,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "majegau",
+    matureLabel: "Dewasa",
     color: "#d9a441",
     name: "Majegau",
     latinName: "Dysoxylum densiflorum",
@@ -104,6 +107,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "pala",
+    matureLabel: "Berbuah",
     color: "#e2b04a",
     name: "Pala",
     latinName: "Myristica fragrans",
@@ -114,6 +118,7 @@ export const PLANTS: PlantSpecies[] = [
   },
   {
     id: "matoa",
+    matureLabel: "Berbuah",
     color: "#8a4b2a",
     name: "Matoa",
     latinName: "Pometia pinnata",
@@ -137,3 +142,9 @@ export const REGIONS: Region[] = [
 export const PLANT_ORDER = REGIONS.flatMap((r) => r.plantIds);
 
 export const getPlant = (id: string) => PLANTS.find((p) => p.id === id);
+
+const STAGE_LABEL: Record<GrowthStage, string> = { bibit: "Bibit", tunas: "Tunas", tumbuh: "Tumbuh", berbunga: "Berbunga" };
+
+/** Nama tahap untuk ditampilkan. Tahap akhir pohon disebut "Dewasa", tanaman buah "Berbuah". */
+export const stageLabel = (plant: PlantSpecies, stage: GrowthStage) =>
+  stage === "berbunga" ? (plant.matureLabel ?? STAGE_LABEL.berbunga) : STAGE_LABEL[stage];
