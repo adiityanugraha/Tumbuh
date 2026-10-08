@@ -47,9 +47,8 @@ export function KebunView() {
     >
       <div className="grid items-start gap-5 md:grid-cols-2 xl:grid-cols-[290px_1fr_330px]">
         {/* Kebun di tengah (paling atas di layar kecil) */}
-        <div className="relative flex min-h-[520px] flex-col items-center justify-end overflow-hidden rounded-[32px] border-3 border-krem-tua bg-linear-to-b from-langit-300/60 via-langit-100 via-55% to-daun-100 to-55% md:col-span-2 xl:col-span-1 xl:col-start-2 xl:row-start-1">
+        <div className="relative flex min-h-[520px] flex-col items-center justify-end overflow-hidden rounded-[32px] border-3 border-krem-tua bg-linear-to-b from-langit-300/60 to-langit-100 md:col-span-2 xl:col-span-1 xl:col-start-2 xl:row-start-1">
           <MegaMendung className="absolute inset-x-0 top-0 h-28 w-full" />
-          <div className="absolute inset-x-0 bottom-0 h-[45%] bg-kawung opacity-40" />
           <Tag className="absolute top-4 right-4 z-10 bg-white! px-3! py-1! text-sm! text-daun-800!">
             {wilted ? "Layu" : `Tahap: ${stageLabel(plant, stage)}`}
           </Tag>

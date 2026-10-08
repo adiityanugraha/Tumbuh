@@ -22,14 +22,18 @@ const ILLUSTRATED: Record<string, [number, number]> = {
   matoa: [880, 585],
 };
 const POT_PX = 300;
+/** Pohon sudah membawa gundukan tanah + rumput di gambarnya; tanaman pot diberi alas rumput tanah.webp. */
+const TREES = new Set(["eboni", "cendana", "majegau", "pala", "matoa"]);
+const GROUND: [number, number] = [880, 210]; // public/tanaman/tanah.webp, lebar sama dengan petak rumput pohon
+const POT_LIFT = 0.35; // dasar pot berdiri di 35% tinggi alas rumput
 
 const src = (id: string, stage: GrowthStage) => `/tanaman/${id}-${stage}.webp`;
 
 /** Hitung ukuran tampil: pot selebar potWidth, tapi tidak lebih tinggi dari maxHeight. */
-function fit([w, h]: [number, number], potWidth: number, maxHeight: number) {
-  const k = Math.min(potWidth / POT_PX, maxHeight / h);
-  return { width: Math.round(w * k), height: Math.round(h * k) };
+function scaleOf([, h]: [number, number], potWidth: number, maxHeight: number) {
+  return Math.min(potWidth / POT_PX, maxHeight / h);
 }
+const sized = ([w, h]: [number, number], k: number) => ({ width: Math.round(w * k), height: Math.round(h * k) });
 
 /** Tanaman di pot sesuai tahap. Tanpa ilustrasi: SVG sementara. Layu: warna pudar dan sedikit merunduk. */
 export function PlantVisual({
@@ -47,14 +51,23 @@ export function PlantVisual({
 }) {
   const dims = ILLUSTRATED[plant.id];
   if (dims) {
-    return (
+    const k = scaleOf(dims, potWidth, maxHeight);
+    const plantImg = (
       <Image
         src={src(plant.id, stage)}
         alt={`${plant.name}, tahap ${stage}${wilted ? ", sedang layu" : ""}`}
-        {...fit(dims, potWidth, maxHeight)}
+        {...sized(dims, k)}
         priority
-        className={`origin-bottom ${wilted ? "-rotate-3 saturate-[.35] sepia-[.4]" : "animate-breathe"}`}
+        className={`relative origin-bottom ${wilted ? "-rotate-3 saturate-[.35] sepia-[.4]" : "animate-breathe"}`}
       />
+    );
+    if (TREES.has(plant.id)) return plantImg;
+    const ground = sized(GROUND, k);
+    return (
+      <div className="relative flex justify-center" style={{ paddingBottom: Math.round(ground.height * POT_LIFT) }}>
+        <Image src="/tanaman/tanah.webp" alt="" {...ground} className="absolute bottom-0 left-1/2 max-w-none -translate-x-1/2" />
+        {plantImg}
+      </div>
     );
   }
   // PLACEHOLDER: ilustrasi SVG umum sampai aset tanaman ini tersedia.

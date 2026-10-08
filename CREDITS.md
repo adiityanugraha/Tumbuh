@@ -20,6 +20,7 @@ Daftar sumber dan lisensi setiap aset yang dipakai.
 | Eboni 4 tahap (pohon tanpa pot, dengan gundukan tanah dan rumput) | `public/tanaman/eboni-*.webp` | Dibuat peserta dengan AI image generator (bibit: `asset/eboni bibit.jpg`, tumbuh: `asset/eboni dewasa.jpg`, tunas dan dewasa: gambar yang dikirim peserta di chat), langit dibuang, rumput dipudarkan di tepi | Hasil generasi AI milik peserta |
 | Anggrek Bulan 4 tahap | `public/tanaman/anggrek-bulan-*.webp` | Dibuat peserta dengan AI image generator (`asset/anggrek bulan.jpg`, 4 panel), dipotong per tanaman mulai dari pot | Hasil generasi AI milik peserta |
 | Cendana, Majegau, Pala, Matoa (pohon tanpa pot) | `public/tanaman/{cendana,majegau,pala,matoa}-*.webp` | Dibuat peserta dengan AI image generator (`asset/*cendana*`, `*Majegau*`, `*pala*`, `*matoa*`, 1 file per tahap), langit dibuang, rumput dipudarkan, satu skala bersama per tanaman | Hasil generasi AI milik peserta |
+| Alas rumput di bawah pot | `public/tanaman/tanah.webp` | Dibuat peserta dengan AI image generator (`asset/tanah.jpg`), langit dibuang, tepi kiri-kanan dipudarkan | Hasil generasi AI milik peserta |
 | Mask wilayah peta | `public/peta/*.png` | Dibuat otomatis dari bentuk daratan pada peta di atas (Python: PIL, NumPy, SciPy) | Turunan aset peta |
 | Maskot Kumbi, ilustrasi tanaman, pot, awan mega mendung | `src/components/art.tsx` | Dibuat sendiri (SVG) | Milik peserta |
 
