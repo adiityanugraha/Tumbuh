@@ -21,7 +21,8 @@ function entriesOf(file) {
   for (const line of readFileSync(file, "utf8").split("\n")) {
     if (!line.trim()) continue;
     const o = JSON.parse(line);
-    if (o.type !== "user" || o.isMeta) continue;
+    // Lewati pesan sistem dan ringkasan hasil /compact (tersimpan sebagai pesan "user").
+    if (o.type !== "user" || o.isMeta || o.isCompactSummary) continue;
     const content = o.message?.content;
     if (typeof content === "string") {
       if (!content.startsWith("<")) entries.push({ time: o.timestamp, kind: "prompt", text: content });
