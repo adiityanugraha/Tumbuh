@@ -6,7 +6,8 @@ import type { Question } from "@/lib/types";
 // Animasi dimatikan: elemen motion dirender sebagai elemen HTML biasa.
 vi.mock("motion/react", () => {
   const strip = ({ initial, animate, exit, transition, ...rest }: Record<string, unknown>) => (void [initial, animate, exit, transition], rest);
-  const motion = new Proxy({}, { get: (_, tag: string) => (props: Record<string, unknown>) => createElement(tag, strip(props)) });
+  const cache: Record<string, unknown> = {};
+  const motion = new Proxy({}, { get: (_, tag: string) => (cache[tag] ??= (props: Record<string, unknown>) => createElement(tag, strip(props))) });
   const Pass = ({ children }: { children: ReactNode }) => createElement(Fragment, null, children);
   return { motion, AnimatePresence: Pass, MotionConfig: Pass };
 });
@@ -50,7 +51,6 @@ describe("QuizSession", () => {
         student: { nickname: "Uji", avatar: "🐰", grade: 3, createdAt: "2026-10-06" },
         garden: { activePlantId: "rafflesia", water: 0, fertilizer: 0, collection: [], streak: 0, lastStudyDate: null },
         sessions: [],
-        challenges: [],
         encouragements: [],
       }),
     );

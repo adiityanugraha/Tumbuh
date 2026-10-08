@@ -59,3 +59,15 @@ describe("tanaman dan wilayah", () => {
     }
   });
 });
+
+describe("data Mode Demo", () => {
+  it("riwayat seminggu tanpa hari ini, kebun sudah punya koleksi", async () => {
+    const { createDemoData } = await import("./demo");
+    const { student, garden, sessions } = createDemoData("2026-10-08");
+    expect(student.demo).toBe(true);
+    expect(sessions.every((s) => s.date < "2026-10-08" && s.date >= "2026-10-02")).toBe(true);
+    expect(sessions.every((s) => s.results.length === 5)).toBe(true);
+    expect(garden.collection.length).toBeGreaterThan(0);
+    expect(garden.lastStudyDate).toBe("2026-10-07");
+  });
+});

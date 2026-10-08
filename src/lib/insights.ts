@@ -1,6 +1,6 @@
 import { isWithinLastWeek } from "./date";
 import { sessionReward } from "./garden";
-import type { ClassChallenge, Classroom, ClassmateSummary, DateKey, GrowthStage, Session, Subject } from "./types";
+import type { ClassChallenge, Classroom, DateKey, GrowthStage, Session, Subject } from "./types";
 
 export interface TopicStat {
   topic: string;
@@ -24,11 +24,23 @@ export function topicStats(sessions: Session[]): TopicStat[] {
 }
 
 /** Dikuasai: minimal 3 soal dan 80% benar di percobaan pertama. Perlu latihan: di bawah 60%. */
-export function masteryOf(stat: TopicStat): "dikuasai" | "perlu-latihan" | "berkembang" {
+export type Mastery = "dikuasai" | "berkembang" | "perlu-latihan";
+
+export function masteryOf(stat: TopicStat): Mastery {
   const ratio = stat.correctFirstTry / stat.total;
   if (stat.total >= 3 && ratio >= 0.8) return "dikuasai";
   if (ratio < 0.6) return "perlu-latihan";
   return "berkembang";
+}
+
+/** Topik per mapel dikelompokkan menurut penguasaan, untuk laporan orang tua. */
+export function masteryBySubject(sessions: Session[]) {
+  const out = {} as Record<Subject, Record<Mastery, string[]>>;
+  for (const subject of ["matematika", "ipas", "inggris"] as Subject[]) {
+    out[subject] = { dikuasai: [], berkembang: [], "perlu-latihan": [] };
+  }
+  for (const stat of topicStats(sessions)) out[stat.subject][masteryOf(stat)].push(stat.topic);
+  return out;
 }
 
 export function weeklySummary(sessions: Session[], today: DateKey) {
@@ -39,6 +51,7 @@ export function weeklySummary(sessions: Session[], today: DateKey) {
     sessions: week.length,
     activeDays: new Set(week.map((s) => s.date)).size,
     questions: week.reduce((n, s) => n + s.results.length, 0),
+    firstTry: week.reduce((n, s) => n + s.results.filter((r) => r.correctFirstTry).length, 0),
     bySubject,
   };
 }
@@ -48,14 +61,6 @@ export const totalGrowthPoints = (sessions: Session[]) =>
     const r = sessionReward(s.results);
     return n + r.water + r.fertilizer;
   }, 0);
-
-export type ClassmateStatus = "aktif" | "layu" | "butuh-perhatian";
-
-export function classmateStatus(c: Pick<ClassmateSummary, "lastStudyDaysAgo">): ClassmateStatus {
-  if (c.lastStudyDaysAgo >= 7) return "butuh-perhatian";
-  if (c.lastStudyDaysAgo >= 3) return "layu";
-  return "aktif";
-}
 
 /** Poin minimal untuk tiap tahap pohon Kebun Kelas. */
 export const CLASS_TREE_THRESHOLDS: Record<GrowthStage, number> = {
@@ -91,21 +96,3 @@ export function classGarden(classroom: Classroom, ownSessions: Session[], today:
 
 export const challengeProgress = (challenge: ClassChallenge, sessionsThisWeek: number) =>
   Math.min(100, Math.round((sessionsThisWeek / challenge.targetSessions) * 100));
-
-/** Topik dengan rasio salah tertinggi, gabungan data kelas dan sesi anak ini. */
-export function hardestTopics(classroom: Classroom, ownSessions: Session[], limit = 5) {
-  const merged = new Map(Object.entries(classroom.topicMistakes).map(([k, v]) => [k, { ...v }]));
-  for (const s of ownSessions) {
-    for (const r of s.results) {
-      const stat = merged.get(r.topic) ?? { wrong: 0, total: 0 };
-      stat.total += 1;
-      if (!r.correctFirstTry) stat.wrong += 1;
-      merged.set(r.topic, stat);
-    }
-  }
-  return [...merged.entries()]
-    .filter(([, v]) => v.total > 0)
-    .map(([topic, v]) => ({ topic, ...v, rate: v.wrong / v.total }))
-    .sort((a, b) => b.rate - a.rate)
-    .slice(0, limit);
-}

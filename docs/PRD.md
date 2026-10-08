@@ -6,7 +6,7 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 
 - Lomba: M-ONE Telkomsel Coding Competition, Kategori Umum.
 - Tema: "Innovating Education Through Technology", subtema "Web Education for Kids (untuk anak SD)".
-- Masalah: anak SD cepat bosan belajar mandiri, latihan terasa seperti ujian, dan orang tua/guru sulit melihat bagian mana yang belum dikuasai anak.
+- Masalah: anak SD cepat bosan belajar mandiri, latihan terasa seperti ujian, dan orang tua sulit melihat bagian mana yang belum dikuasai anak.
 - Solusi: anak merawat kebun virtual dengan cara belajar singkat setiap hari. Jawaban benar menghasilkan air dan pupuk. Tanaman yang tumbuh penuh masuk koleksi Tanaman Nusantara dan membuka wilayah baru di Peta Nusantara.
 
 ## 2. Prinsip Desain
@@ -21,7 +21,6 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 | Peran | Kebutuhan utama |
 |---|---|
 | Anak SD kelas 1-6 (utama) | Belajar singkat tiap hari, merasa dihargai, melihat kebun tumbuh |
-| Guru | Melihat progres kelas, membuat tantangan kelas, tahu materi tersulit |
 | Orang tua | Melihat progres anak dengan bahasa sederhana, memberi semangat |
 
 ## 4. Konsep Inti: Kebun + Peta Nusantara
@@ -50,27 +49,26 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 5. **Layu**: tidak belajar 3 hari > tanaman tampak layu. Satu sesi selesai > langsung pulih. Tidak ada kondisi mati.
 6. **Peta Nusantara**: wilayah terbuka/terkunci, tanaman per wilayah, posisi progres saat ini.
 7. **Koleksi**: kartu fakta tanaman yang sudah tumbuh penuh, tanaman terkunci tampil sebagai siluet.
-8. **Kebun Kelas**: pohon bersama yang tumbuh dari kontribusi semua murid, progres tantangan dari guru.
+8. **Kebun Kelas**: pohon bersama yang tumbuh dari kontribusi semua murid, progres tantangan kelas (data contoh).
 9. **Narasi suara**: Web Speech API. Soal Matematika dan IPAS dibacakan `id-ID`, soal Bahasa Inggris memakai `en-US` untuk kata/kalimat Inggris. Bila suara tidak tersedia, tombol speaker disembunyikan atau memberi pesan ramah, tidak error.
 10. **Maskot**: karakter orisinal (kumbang tukang kebun) yang menyapa, menyemangati, dan memberi petunjuk.
 
-### B. Sisi Guru (sederhana)
+### B. Sisi Guru
 
-1. Ringkasan kelas: murid aktif hari ini, rata-rata streak, kondisi Kebun Kelas.
-2. Daftar murid dengan status (aktif, tanaman layu, butuh perhatian).
-3. Materi tersulit: topik dengan tingkat jawaban salah tertinggi.
-4. Buat tantangan kelas: target dan hadiah. Tantangan langsung tampil di Kebun Kelas anak.
+Tidak dibuat (keputusan peserta, 8 Okt 2026). Dipindah ke rencana pengembangan (bagian 13).
 
 ### C. Sisi Orang Tua (sederhana)
 
 1. Progres anak minggu ini dalam bahasa sederhana.
 2. Materi yang sudah dikuasai vs perlu latihan, per mapel.
-3. Tombol "Kirim Semangat": pesan/stiker yang muncul di Kebunku anak.
+3. Tombol "Kirim Semangat": pengirim (Ibu, Ayah, ...), stiker, dan pesan singkat (maks. 80 huruf) yang muncul di Kebunku anak, dengan status sudah/belum dibaca.
 4. Dilindungi gerbang orang tua sederhana (soal hitungan) agar anak tidak iseng masuk.
 
 ### D. Mode Demo
 
-Pengalih peran Anak / Guru / Orang Tua yang selalu terlihat, tanpa login, agar juri bisa mencoba semua sisi. Data murid lain adalah data dummy dan diberi label "Data contoh" di UI.
+- Pengalih peran Anak / Orang Tua di header, tanpa login, agar juri bisa mencoba kedua sisi. Di layar di bawah 1100px pindah ke dialog profil.
+- Tombol "Buka Mode Demo" di onboarding (dan di halaman orang tua bila belum ada profil): membuat anak contoh "Dewi" kelas 3 dengan riwayat belajar seminggu, sehingga kebun, koleksi, peta, dan laporan orang tua langsung terisi. Hari ini sengaja kosong agar juri bisa mencoba sesi sendiri.
+- Semua data dummy (teman sekelas, tantangan kelas, anak contoh) diberi label "Data contoh" di UI.
 
 ## 7. Halaman (route)
 
@@ -82,7 +80,6 @@ Pengalih peran Anak / Guru / Orang Tua yang selalu terlihat, tanpa login, agar j
 | `/peta/` | Peta Nusantara |
 | `/koleksi/` | Koleksi Tanaman Nusantara |
 | `/kebun-kelas/` | Kebun Kelas |
-| `/guru/` | Dashboard guru |
 | `/orang-tua/` | Halaman orang tua |
 
 ## 8. Arahan Teknis
@@ -124,11 +121,12 @@ Acuan visual lengkap: `docs/UI.md` dan prototipe `docs/mockup/index.html` (gaya 
 
 - Lighthouse mobile: Performance, Accessibility, Best Practices, SEO minimal 90.
 - SEO dasar: metadata per halaman, `lang="id"`, favicon, robots dan sitemap.
-- Halaman guru/orang tua di-lazy load. Aset gambar SVG/WebP.
-- Satu alur demo lengkap tanpa error: onboarding > belajar > tanaman tumbuh > koleksi terbuka > wilayah peta terbuka > lihat dari sisi guru dan orang tua.
+- Halaman orang tua terpisah per route (code splitting otomatis). Aset gambar SVG/WebP.
+- Satu alur demo lengkap tanpa error: onboarding > belajar > tanaman tumbuh > koleksi terbuka > wilayah peta terbuka > lihat dari sisi orang tua > kirim semangat > pesan muncul di Kebunku.
 
 ## 13. Di Luar Cakupan (rencana pengembangan)
 
+- Dashboard guru: ringkasan kelas, status murid, materi tersulit, membuat tantangan kelas.
 - Login dan sinkronisasi cloud agar orang tua/guru bisa memantau dari perangkat lain.
 - PWA offline.
 - Asisten AI ramah anak untuk petunjuk soal.

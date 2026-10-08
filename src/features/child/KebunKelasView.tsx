@@ -43,9 +43,8 @@ function ClassTree({ stage }: { stage: GrowthStage }) {
 }
 
 export function KebunKelasView() {
-  const { sessions, today, challenges, student } = useApp();
+  const { sessions, today, student } = useApp();
   const cls = classGarden(DEMO_CLASSROOM, sessions, today);
-  const list = challenges.length ? challenges : [DEMO_CHALLENGE];
   const nextStage = (Object.entries(CLASS_TREE_THRESHOLDS) as [GrowthStage, number][]).find(([, v]) => v > cls.points);
   const learnedToday = DEMO_CLASSROOM.classmates.filter((c) => c.lastStudyDaysAgo === 0);
 
@@ -70,18 +69,16 @@ export function KebunKelasView() {
         </div>
 
         <div className="grid gap-5">
-          {list.map((ch) => (
-            <Card batik key={ch.id}>
-              <h2 className="font-display text-xl font-semibold">Tantangan dari Guru</h2>
-              <p className="mt-1 font-bold">{ch.title}</p>
-              <div className="mt-3">
-                <Bar value={challengeProgress(ch, cls.sessionsThisWeek)} motif={false} label="Progres tantangan" />
-              </div>
-              <p className="mt-2 text-sm font-extrabold text-tinta-redup">
-                {cls.sessionsThisWeek} / {ch.targetSessions} sesi · Hadiah: {ch.reward}
-              </p>
-            </Card>
-          ))}
+          <Card batik>
+            <h2 className="font-display text-xl font-semibold">Tantangan Kelas</h2>
+            <p className="mt-1 font-bold">{DEMO_CHALLENGE.title}</p>
+            <div className="mt-3">
+              <Bar value={challengeProgress(DEMO_CHALLENGE, cls.sessionsThisWeek)} motif={false} label="Progres tantangan" />
+            </div>
+            <p className="mt-2 text-sm font-extrabold text-tinta-redup">
+              {cls.sessionsThisWeek} / {DEMO_CHALLENGE.targetSessions} sesi · Hadiah: {DEMO_CHALLENGE.reward}
+            </p>
+          </Card>
           <Card>
             <h2 className="font-display text-xl font-semibold">Sudah belajar hari ini</h2>
             <p className="mt-1 text-sm font-bold text-tinta-redup">{cls.activeToday} anak menyiram kebun kelas hari ini.</p>

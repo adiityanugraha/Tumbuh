@@ -34,18 +34,9 @@ export const DEMO_CLASSROOM: Classroom = {
     c("Tiara", "🐥", 6, 0, 5, 44),
     c("Joko", "🐮", 0, 3, 2, 14),
   ],
-  topicMistakes: {
-    "Perkalian": { wrong: 34, total: 80 },
-    "Pecahan sederhana": { wrong: 41, total: 70 },
-    "Pengukuran panjang": { wrong: 18, total: 60 },
-    "Bagian tumbuhan": { wrong: 12, total: 66 },
-    "Wujud benda": { wrong: 20, total: 58 },
-    "Days of the week": { wrong: 9, total: 50 },
-    "Classroom objects": { wrong: 15, total: 52 },
-  },
 };
 
-// DUMMY: tantangan awal agar Kebun Kelas tidak kosong saat demo.
+// DUMMY: tantangan kelas contoh agar Kebun Kelas tidak kosong saat demo.
 export const DEMO_CHALLENGE: ClassChallenge = {
   id: "tantangan-awal",
   title: "Belajar 90 sesi bersama minggu ini",

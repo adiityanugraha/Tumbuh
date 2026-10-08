@@ -1,4 +1,4 @@
-import type { ClassChallenge, Encouragement, Garden, Session, Student } from "@/lib/types";
+import type { Encouragement, Garden, Session, Student } from "@/lib/types";
 
 /**
  * Antarmuka penyimpanan. Komponen hanya memakai ini, tidak menyentuh localStorage langsung,
@@ -12,8 +12,6 @@ export interface Repository {
   saveGarden(garden: Garden): Promise<void>;
   getSessions(): Promise<Session[]>;
   addSession(session: Session): Promise<void>;
-  getChallenges(): Promise<ClassChallenge[]>;
-  addChallenge(challenge: ClassChallenge): Promise<void>;
   getEncouragements(): Promise<Encouragement[]>;
   addEncouragement(encouragement: Encouragement): Promise<void>;
   markEncouragementsRead(): Promise<void>;
@@ -25,7 +23,6 @@ interface StoredState {
   student: Student | null;
   garden: Garden | null;
   sessions: Session[];
-  challenges: ClassChallenge[];
   encouragements: Encouragement[];
 }
 
@@ -35,7 +32,6 @@ const empty = (): StoredState => ({
   student: null,
   garden: null,
   sessions: [],
-  challenges: [],
   encouragements: [],
 });
 
@@ -67,8 +63,6 @@ export function createLocalRepository(storage: Storage): Repository {
     saveGarden: async (garden) => update((s) => void (s.garden = garden)),
     getSessions: async () => read().sessions,
     addSession: async (session) => update((s) => void s.sessions.push(session)),
-    getChallenges: async () => read().challenges,
-    addChallenge: async (challenge) => update((s) => void s.challenges.push(challenge)),
     getEncouragements: async () => read().encouragements,
     addEncouragement: async (e) => update((s) => void s.encouragements.push(e)),
     markEncouragementsRead: async () =>

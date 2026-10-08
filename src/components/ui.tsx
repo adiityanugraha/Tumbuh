@@ -40,7 +40,7 @@ export function Tag({ className = "", ...props }: ComponentProps<"span">) {
 }
 
 /** Label wajib untuk tampilan yang memakai data dummy. */
-export const DemoTag = () => <Tag title="Data teman sekelas adalah contoh untuk demo">Data contoh</Tag>;
+export const DemoTag = () => <Tag title="Data ini contoh untuk Mode Demo, bukan data asli">Data contoh</Tag>;
 
 /** Bar progres. Motif parang untuk progres tanaman, polos untuk lainnya. */
 export function Bar({ value, motif = true, label }: { value: number; motif?: boolean; label: string }) {

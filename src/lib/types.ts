@@ -75,6 +75,8 @@ export interface Student {
   avatar: string;
   grade: Grade;
   createdAt: DateKey;
+  /** true bila profil dibuat dari Mode Demo (riwayat belajar contoh). */
+  demo?: boolean;
 }
 
 export interface Garden {
@@ -114,6 +116,8 @@ export interface ClassChallenge {
 
 export interface Encouragement {
   id: string;
+  /** Pengirim, misalnya "Ibu" atau "Ayah". */
+  from?: string;
   message: string;
   sticker: string;
   createdAt: DateKey;
@@ -133,6 +137,4 @@ export interface Classroom {
   name: string;
   grade: Grade;
   classmates: ClassmateSummary[];
-  /** Jumlah salah per topik dari teman sekelas, untuk "materi tersulit". */
-  topicMistakes: Record<string, { wrong: number; total: number }>;
 }

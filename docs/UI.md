@@ -31,8 +31,8 @@ Warna sogan (`#8a5a2b`) dipakai untuk garis motif dan label. Palet lain mengikut
 
 ## 4. Navigasi
 
-- **Desktop**: header sticky berisi logo, menu (Kebunku, Belajar, Peta, Koleksi), pengalih Mode Demo (Anak / Guru / Orang Tua), streak, avatar.
-- **HP (di bawah 760px)**: menu pindah ke tab bawah 4 ikon, pengalih Mode Demo disembunyikan dari header.
+- **Desktop**: header sticky berisi logo, menu (Kebunku, Belajar, Peta, Koleksi), pengalih Mode Demo (Anak / Orang Tua), streak, avatar.
+- **HP (di bawah 760px)**: menu pindah ke tab bawah 4 ikon, pengalih Mode Demo disembunyikan dari header (pindah ke dialog profil).
 - Header dan menu disembunyikan di layar onboarding.
 
 ## 5. Layout per Halaman

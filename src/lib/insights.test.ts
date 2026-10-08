@@ -2,8 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   challengeProgress,
   classGarden,
-  classmateStatus,
-  hardestTopics,
+  masteryBySubject,
   masteryOf,
   topicStats,
   weeklySummary,
@@ -26,7 +25,6 @@ const classroom: Classroom = {
     { nickname: "A", avatar: "", streak: 1, lastStudyDaysAgo: 0, sessionsThisWeek: 3, growthPoints: 20 },
     { nickname: "B", avatar: "", streak: 0, lastStudyDaysAgo: 8, sessionsThisWeek: 0, growthPoints: 5 },
   ],
-  topicMistakes: { Pecahan: { wrong: 5, total: 10 }, Jam: { wrong: 1, total: 10 } },
 };
 
 describe("insights", () => {
@@ -36,22 +34,20 @@ describe("insights", () => {
     expect(byTopic).toEqual({ Perkalian: "dikuasai", Pecahan: "perlu-latihan" });
   });
 
+  it("mengelompokkan topik per mapel untuk laporan orang tua", () => {
+    const m = masteryBySubject([s("2026-10-05", "Perkalian", [true, true, true]), s("2026-10-05", "Hewan", [true, false], "ipas")]);
+    expect(m.matematika.dikuasai).toEqual(["Perkalian"]);
+    expect(m.ipas["perlu-latihan"]).toEqual(["Hewan"]);
+    expect(m.inggris).toEqual({ dikuasai: [], berkembang: [], "perlu-latihan": [] });
+  });
+
   it("ringkasan mingguan hanya 7 hari terakhir", () => {
     const sessions = [s("2026-10-05", "x", [true]), s("2026-10-05", "y", [true], "ipas"), s("2026-09-29", "z", [true]), s("2026-09-28", "z", [true])];
     const w = weeklySummary(sessions, "2026-10-05");
     expect(w.sessions).toBe(3);
     expect(w.activeDays).toBe(2);
     expect(w.bySubject).toEqual({ matematika: 2, ipas: 1, inggris: 0 });
-  });
-
-  it("status teman: aktif, layu, butuh perhatian", () => {
-    expect([0, 2, 3, 6, 7].map((d) => classmateStatus({ lastStudyDaysAgo: d }))).toEqual([
-      "aktif",
-      "aktif",
-      "layu",
-      "layu",
-      "butuh-perhatian",
-    ]);
+    expect(w.firstTry).toBe(3);
   });
 
   it("kebun kelas menggabungkan kontribusi teman dan anak ini", () => {
@@ -62,11 +58,6 @@ describe("insights", () => {
     expect(g.activeToday).toBe(2);
     expect(challengeProgress({ id: "c", title: "", targetSessions: 8, reward: "", createdAt: "" }, 4)).toBe(50);
     expect(challengeProgress({ id: "c", title: "", targetSessions: 2, reward: "", createdAt: "" }, 4)).toBe(100);
-  });
-
-  it("materi tersulit diurutkan dari rasio salah tertinggi", () => {
-    const top = hardestTopics(classroom, [s("2026-10-05", "Jam", [false, false, false, false, false, false, false, false, false, false])]);
-    expect(top.map((t) => t.topic)).toEqual(["Jam", "Pecahan"]);
   });
 });
 

@@ -14,7 +14,7 @@ Dokumen ini adalah acuan untuk setiap AI Agent yang mengerjakan task di reposito
 
 ## Tujuan
 
-Web edukasi untuk anak SD kelas 1-6: anak merawat kebun virtual dan menjelajah Peta Nusantara dengan belajar Matematika, IPAS, dan Bahasa Inggris setiap hari. Ada sisi guru dan orang tua. Spesifikasi lengkap: `docs/PRD.md` (sumber kebenaran fitur). Acuan visual: `docs/UI.md` dan `docs/mockup/index.html`, wajib diikuti saat membangun UI.
+Web edukasi untuk anak SD kelas 1-6: anak merawat kebun virtual dan menjelajah Peta Nusantara dengan belajar Matematika, IPAS, dan Bahasa Inggris setiap hari. Ada sisi orang tua (laporan mingguan dan Kirim Semangat). Sisi guru tidak dibuat. Spesifikasi lengkap: `docs/PRD.md` (sumber kebenaran fitur). Acuan visual: `docs/UI.md` dan `docs/mockup/index.html`, wajib diikuti saat membangun UI.
 
 ## Stack
 
@@ -34,7 +34,6 @@ src/
   components/     komponen UI bersama (Button, SpeakButton, Mascot, ...)
   features/
     child/        komponen sisi anak
-    teacher/      komponen sisi guru
     parent/       komponen sisi orang tua
   lib/            pure function logika inti + test (*.test.ts di sebelahnya)
   services/       repository interface + implementasi localStorage
@@ -72,6 +71,6 @@ Folder dibuat saat pertama kali dibutuhkan, bukan diisi file kosong.
 0. Setup: scaffold, token desain, font, dokumen acuan, README, CREDITS.
 1. Model data & logika inti: tipe, repository, pure function + unit test, seed tanaman, bank soal kelas 1-6, data kelas dummy.
 2. Sisi anak: onboarding, Kebunku, sesi belajar, peta, koleksi, Kebun Kelas, narasi suara, maskot.
-3. Sisi guru & orang tua + Mode Demo.
+3. Sisi orang tua + Mode Demo (sisi guru dibatalkan).
 4. Aksesibilitas, performa, SEO (target Lighthouse mobile minimal 90).
 5. Finalisasi: README, CREDITS, DEMO.md, build untuk hosting panitia.

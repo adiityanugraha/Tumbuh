@@ -12,7 +12,7 @@ export const AVATARS = ["🦁", "🐰", "🐼", "🦊", "🐸", "🐢", "🐨", 
 const GRADES: Grade[] = [1, 2, 3, 4, 5, 6];
 
 export function Onboarding() {
-  const { ready, student, createStudent } = useApp();
+  const { ready, student, createStudent, loadDemo } = useApp();
   const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [avatar, setAvatar] = useState(AVATARS[1]);
@@ -106,6 +106,21 @@ export function Onboarding() {
           <Button type="submit" disabled={!canStart} className="mt-auto">
             Mulai Berkebun
           </Button>
+          <p className="text-center text-sm font-bold text-tinta-redup">
+            Ingin melihat contoh dulu?{" "}
+            <button
+              type="button"
+              onClick={async () => {
+                await loadDemo();
+                router.push("/kebun/");
+              }}
+              className="min-h-10 cursor-pointer text-daun-800 underline"
+            >
+              Buka Mode Demo
+            </button>
+            <br />
+            Berisi anak contoh dengan riwayat belajar seminggu.
+          </p>
         </form>
       </motion.div>
     </main>

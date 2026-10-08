@@ -16,7 +16,7 @@ import { challengeProgress, classGarden } from "@/lib/insights";
 export const SUBJECT_BG = { matematika: "bg-kunyit-100", ipas: "bg-daun-100", inggris: "bg-langit-100" } as const;
 
 export function KebunView() {
-  const { student, garden, sessions, today, challenges, encouragements, markEncouragementsRead } = useApp();
+  const { student, garden, sessions, today, encouragements, markEncouragementsRead } = useApp();
   if (!student || !garden) return null;
 
   const plant = getPlant(garden.activePlantId)!;
@@ -31,7 +31,7 @@ export function KebunView() {
 
   const latest = [...encouragements].sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0];
   const cls = classGarden(DEMO_CLASSROOM, sessions, today);
-  const challenge = challenges.at(-1) ?? DEMO_CHALLENGE;
+  const challenge = DEMO_CHALLENGE;
   const region = REGIONS.find((r) => getRegionStatus(r, garden) === "aktif") ?? REGIONS.at(-1)!;
 
   const status = wilted
@@ -79,7 +79,7 @@ export function KebunView() {
               </span>
               <div>
                 <p className="font-display text-2xl font-semibold">Hai, {student.nickname}!</p>
-                <Tag>Kelas {student.grade}</Tag>
+                <Tag>Kelas {student.grade}</Tag> {student.demo && <DemoTag />}
               </div>
             </div>
             <ol className="mt-4 grid grid-cols-7 gap-1.5 text-center text-xs font-extrabold text-tinta-redup" aria-label="Belajar 7 hari terakhir">
@@ -107,7 +107,7 @@ export function KebunView() {
             <div className="flex-1">
               {latest ? (
                 <>
-                  Pesan dari orang tua{!latest.read && <Tag className="ml-2 bg-kunyit-400! text-tinta!">Baru</Tag>}
+                  Pesan dari {latest.from ?? "orang tua"}{!latest.read && <Tag className="ml-2 bg-kunyit-400! text-tinta!">Baru</Tag>}
                   <p className="font-semibold">&ldquo;{latest.message}&rdquo;</p>
                   {!latest.read && (
                     <button type="button" onClick={markEncouragementsRead} className="mt-1 min-h-10 cursor-pointer text-sm text-sogan underline">

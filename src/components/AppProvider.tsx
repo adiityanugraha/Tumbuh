@@ -2,10 +2,11 @@
 
 import { MotionConfig } from "motion/react";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createDemoData } from "@/data/demo";
 import { PLANT_ORDER } from "@/data/plants";
 import { toDateKey } from "@/lib/date";
 import { applySession, createGarden, type SessionOutcome } from "@/lib/garden";
-import type { ClassChallenge, Encouragement, Garden, Grade, Session, Student } from "@/lib/types";
+import type { Encouragement, Garden, Grade, Session, Student } from "@/lib/types";
 import { getRepository } from "@/services/repository";
 
 interface AppState {
@@ -14,12 +15,13 @@ interface AppState {
   student: Student | null;
   garden: Garden | null;
   sessions: Session[];
-  challenges: ClassChallenge[];
   encouragements: Encouragement[];
   createStudent: (s: Omit<Student, "createdAt">) => Promise<void>;
   setGrade: (grade: Grade) => Promise<void>;
   completeSession: (s: Omit<Session, "id" | "date">) => Promise<SessionOutcome>;
   markEncouragementsRead: () => Promise<void>;
+  sendEncouragement: (e: Pick<Encouragement, "from" | "message" | "sticker">) => Promise<void>;
+  loadDemo: () => Promise<void>;
   reset: () => Promise<void>;
 }
 
@@ -38,22 +40,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [student, setStudent] = useState<Student | null>(null);
   const [garden, setGarden] = useState<Garden | null>(null);
   const [sessions, setSessions] = useState<Session[]>([]);
-  const [challenges, setChallenges] = useState<ClassChallenge[]>([]);
   const [encouragements, setEncouragements] = useState<Encouragement[]>([]);
 
   const load = useCallback(async () => {
     const repo = getRepository();
-    const [st, g, se, ch, en] = await Promise.all([
+    const [st, g, se, en] = await Promise.all([
       repo.getStudent(),
       repo.getGarden(),
       repo.getSessions(),
-      repo.getChallenges(),
       repo.getEncouragements(),
     ]);
     setStudent(st);
     setGarden(g);
     setSessions(se);
-    setChallenges(ch);
     setEncouragements(en);
     setToday(toDateKey());
     setReady(true);
@@ -100,6 +99,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setEncouragements((prev) => prev.map((e) => ({ ...e, read: true })));
   };
 
+  const sendEncouragement: AppState["sendEncouragement"] = async (e) => {
+    const item: Encouragement = { ...e, id: `${Date.now()}`, createdAt: toDateKey(), read: false };
+    await getRepository().addEncouragement(item);
+    setEncouragements((prev) => [...prev, item]);
+  };
+
+  /** Mode Demo: ganti data di perangkat ini dengan anak contoh beserta riwayat belajar seminggu. */
+  const loadDemo = async () => {
+    const repo = getRepository();
+    const demo = createDemoData(toDateKey());
+    await repo.reset();
+    await repo.saveStudent(demo.student);
+    await repo.saveGarden(demo.garden);
+    for (const s of demo.sessions) await repo.addSession(s);
+    await load();
+  };
+
   const reset = async () => {
     await getRepository().reset();
     await load();
@@ -113,12 +129,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         student,
         garden,
         sessions,
-        challenges,
         encouragements,
         createStudent,
         setGrade,
         completeSession,
         markEncouragementsRead,
+        sendEncouragement,
+        loadDemo,
         reset,
       }}
     >

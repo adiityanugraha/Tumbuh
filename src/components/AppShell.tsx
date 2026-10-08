@@ -7,7 +7,8 @@ import { currentStreak } from "@/lib/garden";
 import type { Grade } from "@/lib/types";
 import { useApp } from "./AppProvider";
 import { Icon, Mascot, MegaMendung } from "./art";
-import { Button } from "./ui";
+import { RoleSwitch } from "./RoleSwitch";
+import { Button, ButtonLink } from "./ui";
 
 const NAV = [
   { href: "/kebun/", label: "Kebunku", icon: "kebun" },
@@ -74,6 +75,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
           <div className="ml-auto flex items-center gap-3">
+            {/* Di layar kecil pengalih peran ada di dialog profil. */}
+            <RoleSwitch active="anak" className="hidden min-[1100px]:flex" />
             <span
               className="rounded-full border-2 border-tanah-300 bg-tanah-100 px-3.5 py-1.5 font-display text-lg font-semibold whitespace-nowrap text-tanah-700"
               title="Hari belajar berturut-turut"
@@ -136,6 +139,10 @@ function ProfileDialog({ dialogRef }: { dialogRef: React.RefObject<HTMLDialogEle
           </button>
         ))}
       </div>
+      <p className="mt-5 font-extrabold text-sogan">Untuk orang tua</p>
+      <ButtonLink href="/orang-tua/" variant="ghost" className="mt-2 w-full text-lg">
+        Buka halaman orang tua
+      </ButtonLink>
       <div className="mt-6 flex flex-wrap justify-between gap-3">
         {confirmReset ? (
           <Button
