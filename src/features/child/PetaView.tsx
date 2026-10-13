@@ -115,6 +115,7 @@ export function PetaView() {
               alt="Peta kepulauan Indonesia"
               fill
               priority
+              className="object-cover"
               sizes="(min-width: 1024px) 860px, 100vw"
             />
             <Sea />
@@ -436,8 +437,7 @@ function Timeline({
               type="button"
               onClick={() => onSelect(r.id)}
               aria-pressed={r.id === selected}
-              aria-label={`${i + 1}. ${r.name}, ${STATUS_LABEL[st]}`}
-              className={`flex h-full w-full cursor-pointer flex-col items-center gap-1.5 rounded-[22px] border-3 bg-white p-3 text-center transition hover:-translate-y-0.5 ${
+              className={`relative flex h-full w-full cursor-pointer flex-col items-center gap-1.5 rounded-[22px] border-3 bg-white p-3 text-center transition hover:-translate-y-0.5 ${
                 r.id === selected
                   ? "border-daun-500"
                   : "border-krem-tua hover:border-daun-300"
@@ -456,6 +456,7 @@ function Timeline({
               </span>
               <span className="text-sm leading-tight font-extrabold">
                 {r.name}
+                <span className="sr-only">, {STATUS_LABEL[st]}</span>
               </span>
               <span className="flex h-11 items-end justify-center gap-1">
                 {r.plantIds.map((id) => {

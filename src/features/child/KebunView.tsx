@@ -103,6 +103,7 @@ export function KebunView() {
                     })}
                     <span
                       className={`mt-1 grid h-8.5 place-items-center rounded-xl ${done ? "bg-daun-500 text-white" : "bg-krem-tua"} ${d === today ? "outline-kunyit-400 outline-3" : ""}`}
+                      role="img"
                       aria-label={done ? "sudah belajar" : "belum belajar"}
                     >
                       {done ? "✓" : ""}

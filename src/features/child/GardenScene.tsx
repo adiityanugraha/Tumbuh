@@ -7,7 +7,7 @@ import { useApp } from "@/components/AppProvider";
 import { Mascot, MegaMendung } from "@/components/art";
 import { PlantVisual } from "@/components/PlantVisual";
 import { Bar, Tag } from "@/components/ui";
-import { getPlant, stageLabel } from "@/data/plants";
+import { stageLabel } from "@/data/plants";
 import { timeOfDay, type TimeOfDay } from "@/lib/date";
 import { bloomProgress, currentStreak, STAGE_THRESHOLDS } from "@/lib/garden";
 import type { GrowthStage, PlantSpecies } from "@/lib/types";
@@ -28,7 +28,7 @@ const STARS = [
   [36, 40],
 ];
 
-/** Kebun utama di Kebunku: tanaman aktif diapit koleksi, langit mengikuti jam, Kumbi bisa diajak bicara. */
+/** Kebun utama di Kebunku: hanya tanaman yang sedang tumbuh, langit mengikuti jam, Kumbi bisa diajak bicara. */
 export function GardenScene({
   plant,
   stage,
@@ -70,27 +70,7 @@ export function GardenScene({
     "Ketuk tanaman untuk tahu fakta uniknya!",
   ];
   const tapKumbi = () => say(kumbiLines[greet.current++ % kumbiLines.length]);
-  const tapPlant = (p: PlantSpecies) => say(`${p.name}: ${p.fact}`);
-
-  // Koleksi terbaru paling dekat dengan tanaman aktif. Di HP hanya 1 per sisi.
-  const recent = garden.collection
-    .filter((id) => id !== plant.id)
-    .slice(-4)
-    .reverse()
-    .map((id) => getPlant(id)!);
-  const right = [recent[0], recent[2]].filter(Boolean);
-  const left = [recent[1], recent[3]].filter(Boolean);
-  const side = (p: PlantSpecies, i: number) => (
-    <button
-      key={p.id}
-      type="button"
-      onClick={() => tapPlant(p)}
-      aria-label={`${p.name} di koleksimu, ketuk untuk fakta`}
-      className={`-mx-4 cursor-pointer transition hover:-translate-y-1 ${i > 0 ? "max-sm:hidden" : ""}`}
-    >
-      <PlantVisual plant={p} stage="berbunga" potWidth={58} maxHeight={150} />
-    </button>
-  );
+  const tapPlant = () => say(`${plant.name}: ${plant.fact}`);
 
   const night = tod === "malam";
   return (
@@ -178,16 +158,14 @@ export function GardenScene({
       </button>
 
       <div className="relative z-10 -mb-2 flex w-full items-end justify-center">
-        {[...left].reverse().map((p, i) => side(p, left.length - 1 - i))}
         <button
           type="button"
-          onClick={() => tapPlant(plant)}
+          onClick={tapPlant}
           aria-label={`${plant.name}, ketuk untuk fakta`}
           className="relative z-10 cursor-pointer"
         >
           <PlantVisual plant={plant} stage={stage} wilted={wilted} />
         </button>
-        {right.map((p, i) => side(p, i))}
       </div>
 
       <div className="relative z-10 w-full bg-white/85 px-6 pt-4 pb-5">

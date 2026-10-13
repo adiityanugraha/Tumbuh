@@ -88,7 +88,8 @@ export function PlantThumb({ plant, size }: { plant: PlantSpecies; size: number 
   const dims = ILLUSTRATED[plant.id];
   if (dims) {
     const k = size / Math.max(...dims);
-    return <Image src={src(plant.id, "berbunga")} alt="" width={Math.round(dims[0] * k)} height={Math.round(dims[1] * k)} />;
+    // Versi kecil 300px (public/tanaman/kecil/) agar koleksi dan peta tidak memuat gambar ukuran penuh.
+    return <Image src={`/tanaman/kecil/${plant.id}.webp`} alt="" width={Math.round(dims[0] * k)} height={Math.round(dims[1] * k)} />;
   }
   // PLACEHOLDER: emoji sampai ilustrasi tersedia.
   return <span style={{ fontSize: size * 0.55 }}>{plant.emoji}</span>;

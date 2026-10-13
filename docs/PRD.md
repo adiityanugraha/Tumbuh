@@ -44,7 +44,7 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 
 1. **Onboarding**: nama panggilan, avatar (pilihan bawaan), kelas. Tanpa data pribadi lain.
 2. **Kebunku**: tanaman aktif di tengah, streak harian, tombol besar "Ayo Belajar!", akses ke Peta dan Koleksi, kartu Lencanaku. Pesan semangat dari orang tua muncul di sini.
-   - Kebun hidup: tanaman koleksi terbaru berjejer di kiri-kanan tanaman aktif (2 per sisi, 1 di HP), langit mengikuti jam lokal (pagi, siang, sore, malam berbintang), kupu-kupu, dan Kumbi yang bisa diketuk untuk sapaan. Mengetuk tanaman menampilkan fakta uniknya. Animasi mati bila `prefers-reduced-motion`.
+   - Kebun hidup: hanya tanaman yang sedang tumbuh yang tampil (tanaman yang sudah penuh ada di Koleksi), langit mengikuti jam lokal (pagi, siang, sore, malam berbintang), kupu-kupu, dan Kumbi yang bisa diketuk untuk sapaan. Mengetuk tanaman menampilkan fakta uniknya. Animasi mati bila `prefers-reduced-motion`.
    - Kartu "Hari ini": sesi dan soal benar hari ini, total soal benar, pengingat Siram Ulang.
    - Kartu "Tahukah kamu?" (kolom kiri): fakta satu tanaman Nusantara yang berganti setiap hari, bisa dibacakan.
 3. **Sesi belajar**: pilih mapel, 5 soal campuran tipe. Umpan balik langsung yang ramah (animasi, suara). Jawaban salah diberi petunjuk dan boleh coba lagi. Layar hasil merayakan progres (air/pupuk yang didapat, tanaman naik tahap).

@@ -1,5 +1,9 @@
 import { AppShell } from "@/components/AppShell";
 
-export default function AnakLayout({ children }: { children: React.ReactNode }) {
+export default function AnakLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <AppShell>{children}</AppShell>;
 }

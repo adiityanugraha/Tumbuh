@@ -4,11 +4,18 @@ import { SUBJECTS } from "@/data/questions";
 import { QuizSession } from "@/features/child/QuizSession";
 
 export const dynamicParams = false;
-export const generateStaticParams = () => SUBJECTS.map((s) => ({ mapel: s.id }));
+export const generateStaticParams = () =>
+  SUBJECTS.map((s) => ({ mapel: s.id }));
 
-export async function generateMetadata({ params }: PageProps<"/belajar/[mapel]">): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps<"/belajar/[mapel]">): Promise<Metadata> {
   const { mapel } = await params;
-  return { title: `Belajar ${SUBJECTS.find((s) => s.id === mapel)?.name ?? ""}` };
+  const name = SUBJECTS.find((s) => s.id === mapel)?.name ?? "";
+  return {
+    title: `Belajar ${name}`,
+    description: `5 soal ${name} kelas 1-6 dengan petunjuk dan suara.`,
+  };
 }
 
 export default async function Page({ params }: PageProps<"/belajar/[mapel]">) {

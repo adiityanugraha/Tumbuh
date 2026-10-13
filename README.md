@@ -28,7 +28,24 @@ npm run preview    # menyajikan folder out/ secara lokal
 
 ## Deploy
 
-Jalankan `npm run build`, lalu unggah seluruh isi folder `out/` ke direktori publik hosting (misalnya `public_html`). Tidak butuh Node.js di server.
+1. Set alamat situs agar sitemap, robots, dan Open Graph memakai domain yang benar (PowerShell):
+   ```powershell
+   $env:NEXT_PUBLIC_SITE_URL = "https://domain-hosting-panitia"; npm run build
+   ```
+   Tanpa variabel ini dipakai placeholder `https://tumbuh.example.com` (VERIFY, lihat `src/lib/site.ts`).
+2. Unggah seluruh isi folder `out/` ke direktori publik hosting (misalnya `public_html`). Tidak butuh Node.js di server.
+3. Untuk hosting Apache/cPanel, `out/.htaccess` ikut terunggah: kompresi, cache aset, dan halaman 404. Server lain mengabaikannya.
+
+`npm run build` juga menjalankan `scripts/fix-segments.mjs`, yang menyalin file prefetch Next ke nama yang diminta browser (tanpa ini muncul error 404 di konsol pada build Windows).
+
+## Kualitas (Lighthouse mobile, build statis, Mode Demo)
+
+| Halaman | Performa | Aksesibilitas | Best Practices | SEO |
+|---|---|---|---|---|
+| Onboarding `/` | 100 | 100 | 100 | 100 |
+| Kebunku, Belajar, Sesi belajar, Peta, Koleksi, Kartu Kata, Memori, Orang Tua | 93-100 | 100 | 100 | 100 |
+
+Diukur 13 Okt 2026 dengan Lighthouse 12 (Edge headless) di laptop pengembang; angka performa bisa berbeda di server hosting.
 
 ## Status Dummy dan Placeholder
 
@@ -37,5 +54,6 @@ Jalankan `npm run build`, lalu unggah seluruh isi folder `out/` ke direktori pub
 - `src/data/demo.ts`: anak contoh "Dewi" beserta riwayat belajar seminggu beserta tantangan dari Ibu adalah DUMMY untuk tombol "Buka Mode Demo". Berlabel "Data contoh" di UI.
 - `src/data/plants.ts`: fakta 12 tanaman Nusantara bertanda VERIFY, wajib dicek manual.
 - `src/data/culture.ts`: fakta budaya 6 wilayah (rumah adat, tarian, makanan, ungkapan) bertanda VERIFY, wajib dicek manual.
+- `src/lib/site.ts`: alamat situs placeholder `https://tumbuh.example.com` (VERIFY), ganti lewat `NEXT_PUBLIC_SITE_URL` saat build.
 - `src/data/vocab.ts`: 79 kosakata Kartu Kata (8 tema), perlu ditinjau ulang oleh manusia.
 - `src/data/questions/`: 288 soal (16 per mapel per kelas) disusun mengacu Kurikulum Merdeka, perlu ditinjau ulang oleh manusia sebelum lomba.

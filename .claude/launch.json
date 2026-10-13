@@ -4,14 +4,35 @@
     {
       "name": "dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
     },
     {
       "name": "mockup",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "serve", "docs/mockup", "-l", "4000"],
+      "runtimeArgs": [
+        "--yes",
+        "serve",
+        "docs/mockup",
+        "-l",
+        "4000"
+      ],
       "port": 4000
+    },
+    {
+      "name": "out",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "--yes",
+        "serve",
+        "out",
+        "-l",
+        "4173"
+      ],
+      "port": 4173
     }
   ]
 }

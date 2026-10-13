@@ -97,7 +97,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="h-1 bg-parang" />
       </header>
       <MegaMendung className="pointer-events-none -mb-10 block h-16 w-full" />
-      <main id="isi" className="relative mx-auto max-w-7xl px-4 pb-28 md:px-6 md:pb-12">
+      <main id="isi" className="relative mx-auto max-w-7xl overflow-x-clip px-4 pb-28 md:px-6 md:pb-12">
         {children}
       </main>
       <ProfileDialog dialogRef={profileRef} />

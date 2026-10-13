@@ -1,0 +1,20 @@
+# Untuk hosting Apache (cPanel). Diabaikan oleh server lain.
+ErrorDocument 404 /404.html
+DirectoryIndex index.html
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_headers.c>
+  # File di _next/static punya hash di namanya, aman disimpan lama.
+  <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+  <FilesMatch "\.(webp|png|svg|woff2)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(html|txt)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
