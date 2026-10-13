@@ -3,7 +3,7 @@
 Disalin otomatis dari transkrip Claude Code oleh `scripts/prompt-log.mjs`, kata per kata, tanpa diedit.
 Termasuk jawaban peserta atas pertanyaan pilihan dari AI. Waktu dalam WIB.
 
-Terakhir diperbarui: 13 Okt 2026, 12.20.48 WIB
+Terakhir diperbarui: 13 Okt 2026, 12.34.17 WIB
 
 ## Sesi 6371c798
 
@@ -411,17 +411,28 @@ saya ingin menambahkan beberapa fitur/card pada bagian koleksi, beri saya bebera
 - **Tambahan apa yang mau dipasang di halaman Koleksi? (boleh lebih dari satu)**
   - Jawaban: Info lengkap tanaman
 
+### 65. Prompt - 13 Okt 2026, 12.25.44 WIB
+
+```text
+pada bagian belajar juga masih terasa sepi, beri saya ide card atau perbanyak pelajarannya
+```
+
+### 66. Jawaban pilihan - 13 Okt 2026, 12.26.29 WIB
+
+- **Tambahan apa yang mau dipasang di halaman Belajar? (boleh lebih dari satu)**
+  - Jawaban: Progres per mapel (Recommended),Soal Hari Ini,Latihan per topik,Mapel baru: Bahasa Indonesia
+
 ## Sesi c3376cb6
 
 Mulai: 9 Okt 2026, 12.19.33 WIB
 
-### 65. Prompt - 9 Okt 2026, 12.19.33 WIB
+### 67. Prompt - 9 Okt 2026, 12.19.33 WIB
 
 ```text
 cara download almalinux di vbox
 ```
 
-### 66. Prompt - 9 Okt 2026, 12.22.28 WIB
+### 68. Prompt - 9 Okt 2026, 12.22.28 WIB
 
 ```text
 sebaiknya download yang mana untuk tugas?

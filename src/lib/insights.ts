@@ -1,5 +1,5 @@
 import { isWithinLastWeek } from "./date";
-import type { DateKey, Session, Subject } from "./types";
+import type { DateKey, Grade, Session, Subject } from "./types";
 
 export interface TopicStat {
   topic: string;
@@ -13,7 +13,12 @@ export function topicStats(sessions: Session[]): TopicStat[] {
   for (const s of sessions) {
     for (const r of s.results) {
       const key = `${s.subject}:${r.topic}`;
-      const stat = map.get(key) ?? { topic: r.topic, subject: s.subject, correctFirstTry: 0, total: 0 };
+      const stat = map.get(key) ?? {
+        topic: r.topic,
+        subject: s.subject,
+        correctFirstTry: 0,
+        total: 0,
+      };
       stat.total += 1;
       if (r.correctFirstTry) stat.correctFirstTry += 1;
       map.set(key, stat);
@@ -32,25 +37,59 @@ export function masteryOf(stat: TopicStat): Mastery {
   return "berkembang";
 }
 
+/** Penguasaan setiap topik satu mapel di kelas tertentu. "belum" bila topik belum pernah dilatih. */
+export function topicProgress(
+  sessions: Session[],
+  subject: Subject,
+  grade: Grade,
+  topics: string[],
+) {
+  const stats = topicStats(
+    sessions.filter((s) => s.subject === subject && s.grade === grade),
+  );
+  return topics.map((topic) => {
+    const stat = stats.find((t) => t.topic === topic);
+    return {
+      topic,
+      mastery: stat ? masteryOf(stat) : ("belum" as const),
+      answered: stat?.total ?? 0,
+    };
+  });
+}
+
 /** Topik per mapel dikelompokkan menurut penguasaan, untuk laporan orang tua. */
 export function masteryBySubject(sessions: Session[]) {
   const out = {} as Record<Subject, Record<Mastery, string[]>>;
-  for (const subject of ["matematika", "ipas", "inggris"] as Subject[]) {
+  for (const subject of [
+    "matematika",
+    "indonesia",
+    "ipas",
+    "inggris",
+  ] as Subject[]) {
     out[subject] = { dikuasai: [], berkembang: [], "perlu-latihan": [] };
   }
-  for (const stat of topicStats(sessions)) out[stat.subject][masteryOf(stat)].push(stat.topic);
+  for (const stat of topicStats(sessions))
+    out[stat.subject][masteryOf(stat)].push(stat.topic);
   return out;
 }
 
 export function weeklySummary(sessions: Session[], today: DateKey) {
   const week = sessions.filter((s) => isWithinLastWeek(s.date, today));
-  const bySubject: Record<Subject, number> = { matematika: 0, ipas: 0, inggris: 0 };
+  const bySubject: Record<Subject, number> = {
+    matematika: 0,
+    indonesia: 0,
+    ipas: 0,
+    inggris: 0,
+  };
   for (const s of week) bySubject[s.subject] += 1;
   return {
     sessions: week.length,
     activeDays: new Set(week.map((s) => s.date)).size,
     questions: week.reduce((n, s) => n + s.results.length, 0),
-    firstTry: week.reduce((n, s) => n + s.results.filter((r) => r.correctFirstTry).length, 0),
+    firstTry: week.reduce(
+      (n, s) => n + s.results.filter((r) => r.correctFirstTry).length,
+      0,
+    ),
     bySubject,
   };
 }

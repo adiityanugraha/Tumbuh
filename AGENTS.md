@@ -14,7 +14,7 @@ Dokumen ini adalah acuan untuk setiap AI Agent yang mengerjakan task di reposito
 
 ## Tujuan
 
-Web edukasi untuk anak SD kelas 1-6: anak merawat kebun virtual dan menjelajah Peta Nusantara dengan belajar Matematika, IPAS, dan Bahasa Inggris setiap hari. Ada sisi orang tua (laporan mingguan dan Kirim Semangat). Sisi guru tidak dibuat. Spesifikasi lengkap: `docs/PRD.md` (sumber kebenaran fitur). Acuan visual: `docs/UI.md` dan `docs/mockup/index.html`, wajib diikuti saat membangun UI.
+Web edukasi untuk anak SD kelas 1-6: anak merawat kebun virtual dan menjelajah Peta Nusantara dengan belajar Matematika, Bahasa Indonesia, IPAS, dan Bahasa Inggris setiap hari. Ada sisi orang tua (laporan mingguan dan Kirim Semangat). Sisi guru tidak dibuat. Spesifikasi lengkap: `docs/PRD.md` (sumber kebenaran fitur). Acuan visual: `docs/UI.md` dan `docs/mockup/index.html`, wajib diikuti saat membangun UI.
 
 ## Stack
 

@@ -15,7 +15,7 @@ const PLAN: [number, Subject][] = [
   [5, "inggris"],
   [4, "matematika"],
   [4, "inggris"],
-  [2, "ipas"],
+  [2, "indonesia"],
   [1, "matematika"],
   [1, "ipas"],
 ];

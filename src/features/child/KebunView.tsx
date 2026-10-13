@@ -23,6 +23,7 @@ import { GardenScene } from "./GardenScene";
 
 export const SUBJECT_BG = {
   matematika: "bg-kunyit-100",
+  indonesia: "bg-tanah-100",
   ipas: "bg-daun-100",
   inggris: "bg-langit-100",
 } as const;

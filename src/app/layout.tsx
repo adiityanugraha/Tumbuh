@@ -8,7 +8,7 @@ const fredoka = Fredoka({ variable: "--font-fredoka", subsets: ["latin"] });
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 
 const DESCRIPTION =
-  "Belajar Matematika, IPAS, dan Bahasa Inggris untuk anak SD kelas 1-6 sambil merawat kebun virtual dan menjelajah Peta Nusantara.";
+  "Belajar Matematika, Bahasa Indonesia, IPAS, dan Bahasa Inggris untuk anak SD kelas 1-6 sambil merawat kebun virtual dan menjelajah Peta Nusantara.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -23,6 +23,7 @@ export const metadata: Metadata = {
     "Kurikulum Merdeka",
     "Matematika",
     "IPAS",
+    "Bahasa Indonesia",
     "Bahasa Inggris",
     "kebun virtual",
     "Nusantara",

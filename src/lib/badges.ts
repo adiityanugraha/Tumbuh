@@ -45,7 +45,7 @@ const RULES: (Badge & { earned: (p: Progress) => boolean })[] = [
     id: "serba-bisa",
     emoji: "📚",
     name: "Serba Bisa",
-    how: "Coba ketiga mapel",
+    how: "Coba 3 mapel yang berbeda",
     earned: (p) => new Set(p.sessions.map((s) => s.subject)).size >= 3,
   },
   { id: "bunga", emoji: "🌸", name: "Tanaman Pertama", how: "Tumbuhkan 1 tanaman sampai penuh", earned: (p) => p.garden.collection.length >= 1 },

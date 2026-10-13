@@ -1,5 +1,5 @@
 export type Grade = 1 | 2 | 3 | 4 | 5 | 6;
-export type Subject = "matematika" | "ipas" | "inggris";
+export type Subject = "matematika" | "indonesia" | "ipas" | "inggris";
 export type GrowthStage = "bibit" | "tunas" | "tumbuh" | "berbunga";
 export type RegionId =
   | "sumatra"
@@ -103,6 +103,8 @@ export interface Session {
   subject: Subject;
   grade: Grade;
   results: AnswerResult[];
+  /** true untuk Soal Hari Ini (1 soal), dihitung seperti sesi biasa. */
+  daily?: boolean;
 }
 
 export interface Encouragement {

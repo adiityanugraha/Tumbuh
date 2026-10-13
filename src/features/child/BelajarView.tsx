@@ -3,12 +3,16 @@
 import Link from "next/link";
 import { useApp } from "@/components/AppProvider";
 import { Page } from "@/components/Page";
-import { reviewCounts, SUBJECTS } from "@/data/questions";
+import { Bar, ButtonLink } from "@/components/ui";
+import { reviewCounts, SUBJECTS, topicsOf } from "@/data/questions";
+import { topicProgress } from "@/lib/insights";
 import { mistakeIds } from "@/lib/session";
+import { DailyCard } from "./DailyCard";
 import { SUBJECT_BG } from "./KebunView";
 
 const DESC = {
   matematika: "Berhitung, bentuk, dan ukuran",
+  indonesia: "Membaca, kosakata, ejaan, dan kalimat",
   ipas: "Alam, tubuh, dan lingkungan sekitar",
   inggris: "Kosakata dan kalimat, dengan suara",
 } as const;
@@ -17,7 +21,7 @@ export function BelajarView() {
   const { student, sessions, today } = useApp();
   if (!student) return null;
   const doneToday = new Set(
-    sessions.filter((s) => s.date === today).map((s) => s.subject),
+    sessions.filter((s) => s.date === today && !s.daily).map((s) => s.subject),
   );
   const toReview = reviewCounts(student.grade, mistakeIds(sessions)).filter(
     (s) => s.count > 0,
@@ -27,29 +31,73 @@ export function BelajarView() {
       title="Mau belajar apa hari ini?"
       subtitle={`Setiap sesi berisi 5 soal kelas ${student.grade}. Jawaban benar menyiram tanamanmu.`}
     >
-      <div className="grid gap-5 md:grid-cols-3">
-        {SUBJECTS.map((s) => (
-          <Link
-            key={s.id}
-            href={`/belajar/${s.id}/`}
-            className="batik-line group rounded-blob border-krem-tua hover:border-daun-300 flex flex-col items-center gap-3 border-3 bg-white p-8 text-center transition hover:-translate-y-1.5"
-          >
-            <span
-              className={`grid size-24 place-items-center rounded-[28px] text-5xl transition group-hover:rotate-6 ${SUBJECT_BG[s.id]}`}
+      <DailyCard />
+
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        {SUBJECTS.map((s) => {
+          const topics = topicProgress(
+            sessions,
+            s.id,
+            student.grade,
+            topicsOf(student.grade, s.id),
+          );
+          const mastered = topics.filter(
+            (t) => t.mastery === "dikuasai",
+          ).length;
+          const count = sessions.filter(
+            (x) => x.subject === s.id && !x.daily,
+          ).length;
+          return (
+            <div
+              key={s.id}
+              className="batik-line rounded-blob border-krem-tua flex flex-col items-center gap-2.5 border-3 bg-white p-6 text-center"
             >
-              {s.emoji}
-            </span>
-            <span className="font-display text-2xl font-semibold">
-              {s.name}
-            </span>
-            <span className="text-tinta-redup font-bold">{DESC[s.id]}</span>
-            {doneToday.has(s.id) && (
-              <span className="bg-daun-100 text-daun-800 rounded-full px-3 py-1 text-sm font-extrabold">
-                ✓ Sudah hari ini
+              <span
+                className={`grid size-20 place-items-center rounded-[26px] text-4xl ${SUBJECT_BG[s.id]}`}
+                aria-hidden="true"
+              >
+                {s.emoji}
               </span>
-            )}
-          </Link>
-        ))}
+              <h2 className="font-display text-2xl font-semibold">{s.name}</h2>
+              <p className="text-tinta-redup text-sm font-bold">{DESC[s.id]}</p>
+              <p
+                className="text-lg tracking-wider"
+                aria-label={`${mastered} dari ${topics.length} topik dikuasai`}
+              >
+                {topics
+                  .map((t) => (t.mastery === "dikuasai" ? "⭐" : "☆"))
+                  .join("")}
+              </p>
+              <div className="w-full">
+                <Bar
+                  value={(mastered / Math.max(1, topics.length)) * 100}
+                  motif={false}
+                  label={`Topik ${s.name} yang dikuasai`}
+                />
+                <p className="text-tinta-redup mt-1.5 text-xs font-extrabold">
+                  {mastered}/{topics.length} topik dikuasai · {count} sesi
+                </p>
+              </div>
+              {doneToday.has(s.id) && (
+                <span className="bg-daun-100 text-daun-800 rounded-full px-3 py-1 text-sm font-extrabold">
+                  ✓ Sudah hari ini
+                </span>
+              )}
+              <ButtonLink
+                href={`/belajar/${s.id}/`}
+                className="mt-auto w-full text-lg"
+              >
+                Mulai 5 soal
+              </ButtonLink>
+              <Link
+                href={`/belajar/${s.id}/topik/`}
+                className="text-daun-800 min-h-10 content-center font-bold underline"
+              >
+                Pilih topik
+              </Link>
+            </div>
+          );
+        })}
       </div>
 
       {toReview.length > 0 && (

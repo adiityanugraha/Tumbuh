@@ -4,7 +4,7 @@ import { BelajarView } from "@/features/child/BelajarView";
 export const metadata: Metadata = {
   title: "Belajar",
   description:
-    "Pilih mapel Matematika, IPAS, atau Bahasa Inggris, ulangi soal yang salah, dan belajar sambil bermain.",
+    "Soal Hari Ini, 4 mapel (Matematika, Bahasa Indonesia, IPAS, Bahasa Inggris), latihan per topik, dan belajar sambil bermain.",
 };
 
 export default function Page() {

@@ -33,8 +33,8 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 ## 5. Konten
 
 - **Kelas**: 1, 2, 3, 4, 5, 6. Dipilih saat onboarding, bisa diganti di profil. Soal yang muncul sesuai kelas yang dipilih.
-- **Mapel**: Matematika, IPAS, Bahasa Inggris. Di Kurikulum Merdeka, IPAS resmi mulai kelas 3; untuk kelas 1-2 isinya pengenalan lingkungan sekitar (tubuh, hewan, tumbuhan, cuaca).
-- **Bank soal**: mengacu capaian pembelajaran Kurikulum Merdeka per kelas. Minimal 15 soal per mapel per kelas, saat ini 16 (6 x 3 x 16 = 288 soal). Disimpan sebagai JSON per kelas per mapel, contoh `src/data/questions/kelas-3/matematika.json`.
+- **Mapel**: Matematika, Bahasa Indonesia, IPAS, Bahasa Inggris. Di Kurikulum Merdeka, IPAS resmi mulai kelas 3; untuk kelas 1-2 isinya pengenalan lingkungan sekitar (tubuh, hewan, tumbuhan, cuaca).
+- **Bank soal**: mengacu capaian pembelajaran Kurikulum Merdeka per kelas. Minimal 15 soal per mapel per kelas, saat ini 16 (6 x 4 x 16 = 384 soal; Bahasa Indonesia ditambahkan 13 Okt 2026: huruf dan suku kata, kata sifat dan kerja, sinonim dan antonim, kata baku, imbuhan, fakta dan opini, puisi, iklan, majas, teks prosedur, surat, kalimat langsung). Disimpan sebagai JSON per kelas per mapel, contoh `src/data/questions/kelas-3/matematika.json`.
 - **Tipe soal**: pilihan ganda (boleh bergambar), isian angka, mencocokkan, mengurutkan.
 - **Tanaman**: 2 per wilayah (12 total), contoh Rafflesia arnoldii, Bunga Bangkai, Edelweis Jawa, Melati, Anggrek Hitam, Kantong Semar, Anggrek Bulan, Cendana, Matoa. Fakta wajib singkat dan ditandai `// VERIFY` untuk dicek manual.
 
@@ -47,7 +47,7 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
    - Kebun hidup: hanya tanaman yang sedang tumbuh yang tampil (tanaman yang sudah penuh ada di Koleksi), langit mengikuti jam lokal (pagi, siang, sore, malam berbintang), kupu-kupu, dan Kumbi yang bisa diketuk untuk sapaan. Mengetuk tanaman menampilkan fakta uniknya. Animasi mati bila `prefers-reduced-motion`.
    - Kartu "Hari ini": sesi dan soal benar hari ini, total soal benar, pengingat Siram Ulang.
    - Kartu "Tahukah kamu?" (kolom kiri): fakta satu tanaman Nusantara yang berganti setiap hari, bisa dibacakan.
-3. **Sesi belajar**: pilih mapel, 5 soal campuran tipe. Umpan balik langsung yang ramah (animasi, suara). Jawaban salah diberi petunjuk dan boleh coba lagi. Layar hasil merayakan progres (air/pupuk yang didapat, tanaman naik tahap).
+3. **Sesi belajar**: pilih mapel, 5 soal campuran tipe. Kartu mapel menampilkan bintang per topik yang dikuasai, bar progres, dan jumlah sesi. **Latihan per topik** (`/belajar/[mapel]/topik/`): daftar topik kelas ini dengan status (dikuasai, berkembang, perlu latihan, belum dicoba), pilih satu topik untuk latihan khusus. **Soal Hari Ini**: satu soal per hari dari mapel bergiliran di atas halaman Belajar, disimpan sebagai sesi 1 soal (ikut menyiram tanaman dan streak). Umpan balik langsung yang ramah (animasi, suara). Jawaban salah diberi petunjuk dan boleh coba lagi. Layar hasil merayakan progres (air/pupuk yang didapat, tanaman naik tahap).
 4. **Pertumbuhan**: air dan pupuk dari jawaban benar menaikkan progres tanaman. Benar di percobaan pertama memberi lebih banyak daripada benar setelah petunjuk.
 5. **Layu**: tidak belajar 3 hari > tanaman tampak layu. Satu sesi selesai > langsung pulih. Tidak ada kondisi mati.
 6. **Peta Nusantara**: wilayah terbuka/terkunci, tanaman per wilayah, posisi progres saat ini.
@@ -91,6 +91,7 @@ Tidak dibuat (keputusan peserta, 8 Okt 2026). Dipindah ke rencana pengembangan (
 | `/belajar/` | Pilih mapel, Siram Ulang, dan permainan |
 | `/belajar/[mapel]/` | Sesi belajar 5 soal |
 | `/belajar/[mapel]/ulang/` | Siram Ulang: soal yang pernah salah |
+| `/belajar/[mapel]/topik/` | Latihan per topik |
 | `/kartu-kata/` | Kartu Kata Bahasa Inggris |
 | `/memori/` | Memori Nusantara |
 | `/peta/` | Peta Nusantara |

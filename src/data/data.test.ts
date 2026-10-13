@@ -34,8 +34,8 @@ describe("bank soal", () => {
     Object.entries(subjects).map(([subject, qs]) => ({ grade, subject, qs })),
   );
 
-  it("ada 6 kelas x 3 mapel", () => {
-    expect(all).toHaveLength(18);
+  it("ada 6 kelas x 4 mapel", () => {
+    expect(all).toHaveLength(24);
   });
 
   it.each(all)("kelas $grade $subject valid dan cukup", ({ qs }) => {
@@ -93,5 +93,15 @@ describe("info lengkap tanaman", () => {
       expect(info.benefit && info.statusLabel && info.sizeOf).toBeTruthy();
       expect(info.sizeCm).toBeGreaterThan(0);
     }
+  });
+});
+
+describe("Soal Hari Ini", () => {
+  it("sama sepanjang hari, mapel bergiliran setiap hari", async () => {
+    const { getDailyQuestion, SUBJECTS } = await import("./questions");
+    const a = getDailyQuestion(3, "2026-10-13");
+    expect(getDailyQuestion(3, "2026-10-13")).toEqual(a);
+    const subjects = new Set(["2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16"].map((d) => getDailyQuestion(3, d).subject));
+    expect(subjects.size).toBe(SUBJECTS.length);
   });
 });

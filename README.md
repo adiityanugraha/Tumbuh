@@ -1,6 +1,6 @@
 # Tumbuh
 
-Web edukasi untuk anak SD kelas 1-6. Anak merawat kebun virtual dan menjelajah Peta Nusantara dengan belajar Matematika, IPAS, dan Bahasa Inggris setiap hari. Orang tua bisa melihat laporan belajar mingguan dan mengirim semangat.
+Web edukasi untuk anak SD kelas 1-6. Anak merawat kebun virtual dan menjelajah Peta Nusantara dengan belajar Matematika, Bahasa Indonesia, IPAS, dan Bahasa Inggris setiap hari. Orang tua bisa melihat laporan belajar mingguan dan mengirim semangat.
 
 Karya untuk M-ONE Telkomsel Coding Competition, Kategori Umum, tema "Innovating Education Through Technology", subtema "Web Education for Kids (untuk anak SD)".
 
@@ -57,4 +57,4 @@ Diukur 13 Okt 2026 dengan Lighthouse 12 (Edge headless) di laptop pengembang; an
 - `src/data/culture.ts`: fakta budaya 6 wilayah (rumah adat, tarian, makanan, ungkapan) bertanda VERIFY, wajib dicek manual.
 - `src/lib/site.ts`: alamat situs placeholder `https://tumbuh.example.com` (VERIFY), ganti lewat `NEXT_PUBLIC_SITE_URL` saat build.
 - `src/data/vocab.ts`: 79 kosakata Kartu Kata (8 tema), perlu ditinjau ulang oleh manusia.
-- `src/data/questions/`: 288 soal (16 per mapel per kelas) disusun mengacu Kurikulum Merdeka, perlu ditinjau ulang oleh manusia sebelum lomba.
+- `src/data/questions/`: 384 soal (16 per mapel per kelas, termasuk 96 soal Bahasa Indonesia baru) disusun mengacu Kurikulum Merdeka, perlu ditinjau ulang oleh manusia sebelum lomba.

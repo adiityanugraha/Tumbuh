@@ -1,0 +1,18 @@
+[
+  {"id": "b1-01", "type": "pilihan", "topic": "Huruf vokal", "prompt": "Mana yang termasuk huruf vokal?", "options": ["a", "b", "k"], "answer": 0, "hint": "Huruf vokal ada lima: a, i, u, e, o."},
+  {"id": "b1-02", "type": "pilihan", "topic": "Huruf vokal", "prompt": "Kata 'ibu' diawali dengan huruf...", "options": ["i", "b", "u"], "answer": 0, "hint": "Ucapkan pelan-pelan: i-bu. Bunyi pertamanya apa?"},
+  {"id": "b1-03", "type": "isian", "topic": "Huruf vokal", "prompt": "Berapa huruf vokal pada kata 'buku'?", "answer": 2, "hint": "Eja b-u-k-u, lalu hitung huruf a, i, u, e, o.", "image": "📘"},
+  {"id": "b1-04", "type": "pilihan", "topic": "Huruf vokal", "prompt": "Huruf apa yang hilang? b _ l a", "options": ["o", "a", "i"], "answer": 0, "hint": "Benda bulat yang ditendang saat main sepak bola.", "image": "⚽"},
+  {"id": "b1-05", "type": "isian", "topic": "Suku kata", "prompt": "Berapa suku kata pada kata 'sepatu'?", "answer": 3, "hint": "Tepuk tangan sambil mengucapkan: se-pa-tu.", "image": "👟"},
+  {"id": "b1-06", "type": "pilihan", "topic": "Suku kata", "prompt": "Pemenggalan kata 'kelinci' yang benar adalah...", "options": ["ke-lin-ci", "kel-in-ci", "ke-li-nci"], "answer": 0, "hint": "Ucapkan pelan: ke... lin... ci.", "image": "🐰"},
+  {"id": "b1-07", "type": "urutkan", "topic": "Suku kata", "prompt": "Susun suku kata menjadi nama kendaraan beroda dua.", "items": ["se", "pe", "da"], "hint": "Kendaraan yang dikayuh dengan kaki.", "image": "🚲"},
+  {"id": "b1-08", "type": "isian", "topic": "Suku kata", "prompt": "Berapa suku kata pada kata 'mata'?", "answer": 2, "hint": "Tepuk tangan: ma-ta.", "image": "👀"},
+  {"id": "b1-09", "type": "pilihan", "topic": "Benda di sekitar", "prompt": "Benda ini bernama...", "options": ["kursi", "meja", "lemari"], "answer": 0, "hint": "Benda untuk duduk.", "image": "🪑"},
+  {"id": "b1-10", "type": "pilihan", "topic": "Benda di sekitar", "prompt": "Buah ini bernama...", "options": ["pisang", "mangga", "jeruk"], "answer": 0, "hint": "Buah panjang berwarna kuning.", "image": "🍌"},
+  {"id": "b1-11", "type": "cocokkan", "topic": "Benda di sekitar", "prompt": "Cocokkan gambar dengan namanya!", "pairs": [["🐱", "kucing"], ["🐔", "ayam"], ["🐟", "ikan"]], "hint": "Hewan yang mengeong adalah kucing."},
+  {"id": "b1-12", "type": "pilihan", "topic": "Benda di sekitar", "prompt": "Tempat untuk tidur adalah...", "options": ["kasur", "piring", "sepatu"], "answer": 0, "hint": "Benda empuk di kamar tidur.", "image": "🛏️"},
+  {"id": "b1-13", "type": "urutkan", "topic": "Menyusun kata", "prompt": "Susun huruf menjadi kata TOPI.", "items": ["t", "o", "p", "i"], "hint": "Baca pelan: t-o-p-i.", "image": "👒"},
+  {"id": "b1-14", "type": "urutkan", "topic": "Menyusun kata", "prompt": "Susun kata menjadi kalimat yang benar.", "items": ["Ini", "bola", "adik"], "hint": "Kalimat diawali kata 'Ini'."},
+  {"id": "b1-15", "type": "pilihan", "topic": "Menyusun kata", "prompt": "Lengkapi kalimat: Saya ... nasi.", "options": ["makan", "tidur", "mandi"], "answer": 0, "hint": "Nasi itu dimakan.", "image": "🍚"},
+  {"id": "b1-16", "type": "urutkan", "topic": "Menyusun kata", "prompt": "Susun suku kata menjadi nama mainan.", "items": ["bo", "ne", "ka"], "hint": "Mainan berbentuk orang atau hewan yang lucu.", "image": "🧸"}
+]

@@ -8,7 +8,12 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { Button, ButtonLink, Card } from "@/components/ui";
 import { getQuestions, SUBJECTS } from "@/data/questions";
 import { MAX_ATTEMPTS, type SessionOutcome } from "@/lib/garden";
-import { checkAnswer, mistakeIds, pickQuestions, type AnswerValue } from "@/lib/session";
+import {
+  checkAnswer,
+  mistakeIds,
+  pickQuestions,
+  type AnswerValue,
+} from "@/lib/session";
 import { playCorrect, playWrong } from "@/lib/sound";
 import type { AnswerResult, Garden, Question, Subject } from "@/lib/types";
 import { QuestionInput, type QuestionStatus } from "./QuestionInput";
@@ -16,7 +21,7 @@ import { ResultView } from "./ResultView";
 
 const PRAISE = ["Hebat!", "Pintar sekali!", "Betul!", "Keren!", "Mantap!"];
 
-function revealText(q: Question) {
+export function revealText(q: Question) {
   switch (q.type) {
     case "pilihan":
       return q.options[q.answer];
@@ -27,14 +32,24 @@ function revealText(q: Question) {
   }
 }
 
-/** review: hanya soal yang pernah salah (Siram Ulang). */
-export function QuizSession({ subject, review = false }: { subject: Subject; review?: boolean }) {
+/** review: hanya soal yang pernah salah (Siram Ulang). topic: hanya soal satu topik (Latihan per topik). */
+export function QuizSession({
+  subject,
+  review = false,
+  topic,
+}: {
+  subject: Subject;
+  review?: boolean;
+  topic?: string;
+}) {
   const { student, garden, sessions, completeSession } = useApp();
   const meta = SUBJECTS.find((s) => s.id === subject)!;
   // AppShell baru merender halaman ini setelah data dimuat di browser, jadi aman mengacak di sini.
   const draw = () => {
     if (!student) return [];
-    const bank = getQuestions(student.grade, subject);
+    const bank = getQuestions(student.grade, subject).filter(
+      (q) => !topic || q.topic === topic,
+    );
     if (!review) return pickQuestions(bank);
     const wrong = mistakeIds(sessions);
     return pickQuestions(bank.filter((q) => wrong.has(q.id)));
@@ -45,18 +60,29 @@ export function QuizSession({ subject, review = false }: { subject: Subject; rev
   const [attempts, setAttempts] = useState(0);
   const [status, setStatus] = useState<QuestionStatus>("answering");
   const [results, setResults] = useState<AnswerResult[]>([]);
-  const [message, setMessage] = useState("Baca soalnya baik-baik, ya. Tekan tombol biru kalau mau soalnya dibacakan!");
-  const [finished, setFinished] = useState<{ outcome: SessionOutcome; before: Garden } | null>(null);
+  const [message, setMessage] = useState(
+    "Baca soalnya baik-baik, ya. Tekan tombol biru kalau mau soalnya dibacakan!",
+  );
+  const [finished, setFinished] = useState<{
+    outcome: SessionOutcome;
+    before: Garden;
+  } | null>(null);
 
   if (!student || !garden) return null;
   if (questions.length === 0) {
     return (
       <Card batik className="mx-auto mt-8 max-w-lg text-center">
         <Mascot size={110} className="mx-auto" />
-        <h1 className="mt-2 font-display text-3xl font-semibold">Tidak ada soal untuk diulang</h1>
-        <p className="mt-2 font-bold text-tinta-redup">Semua soal {meta.name} sudah kamu jawab dengan benar. Hebat!</p>
+        <h1 className="font-display mt-2 text-3xl font-semibold">
+          Tidak ada soal untuk diulang
+        </h1>
+        <p className="text-tinta-redup mt-2 font-bold">
+          Semua soal {meta.name} sudah kamu jawab dengan benar. Hebat!
+        </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <ButtonLink href={`/belajar/${subject}/`}>Belajar soal baru</ButtonLink>
+          <ButtonLink href={`/belajar/${subject}/`}>
+            Belajar soal baru
+          </ButtonLink>
           <ButtonLink href="/belajar/" variant="ghost">
             Kembali
           </ButtonLink>
@@ -95,7 +121,9 @@ export function QuizSession({ subject, review = false }: { subject: Subject; rev
     if (checkAnswer(q, value)) {
       playCorrect();
       setStatus("correct");
-      setMessage(`${PRAISE[index % PRAISE.length]} ${tries === 1 ? "Tanamanmu dapat 1 air dan 1 pupuk." : "Tanamanmu dapat 1 air."}`);
+      setMessage(
+        `${PRAISE[index % PRAISE.length]} ${tries === 1 ? "Tanamanmu dapat 1 air dan 1 pupuk." : "Tanamanmu dapat 1 air."}`,
+      );
       record({ correctFirstTry: tries === 1, solved: true, attempts: tries });
       return true;
     }
@@ -103,7 +131,9 @@ export function QuizSession({ subject, review = false }: { subject: Subject; rev
     setAttempts(tries);
     if (tries >= MAX_ATTEMPTS) {
       setStatus("revealed");
-      setMessage(`Tidak apa-apa! Jawabannya ${revealText(q)}. Kita coba lagi lain kali, ya.`);
+      setMessage(
+        `Tidak apa-apa! Jawabannya ${revealText(q)}. Kita coba lagi lain kali, ya.`,
+      );
       record({ correctFirstTry: false, solved: false, attempts: tries });
     } else {
       setMessage(`Hampir! Petunjuk: ${q.hint}`);
@@ -120,32 +150,56 @@ export function QuizSession({ subject, review = false }: { subject: Subject; rev
       return;
     }
     const before = garden;
-    const outcome = await completeSession({ subject, grade: student.grade, results });
+    const outcome = await completeSession({
+      subject,
+      grade: student.grade,
+      results,
+    });
     setFinished({ outcome, before });
   };
 
-  const speech = [{ text: q.prompt, lang: "id-ID" as const }, ...(q.say ? [{ text: q.say, lang: "en-US" as const }] : [])];
-  const earned = results.reduce((n, r) => n + (r.solved ? 1 : 0) + (r.correctFirstTry ? 1 : 0), 0);
+  const speech = [
+    { text: q.prompt, lang: "id-ID" as const },
+    ...(q.say ? [{ text: q.say, lang: "en-US" as const }] : []),
+  ];
+  const earned = results.reduce(
+    (n, r) => n + (r.solved ? 1 : 0) + (r.correctFirstTry ? 1 : 0),
+    0,
+  );
 
   return (
     <section>
       <div className="relative mt-2 mb-5 flex flex-wrap items-center gap-x-5 gap-y-2">
-        <h1 className="font-display text-2xl font-semibold whitespace-nowrap text-daun-800 md:text-3xl">
-          {meta.emoji} {review ? `Siram Ulang ${meta.name}` : meta.name}
+        <h1 className="font-display text-daun-800 text-2xl font-semibold whitespace-nowrap md:text-3xl">
+          {meta.emoji}{" "}
+          {review
+            ? `Siram Ulang ${meta.name}`
+            : topic
+              ? `${meta.name}: ${topic}`
+              : meta.name}
         </h1>
-        <ol className="order-last flex w-full gap-2 md:order-none md:w-auto md:flex-1" aria-label={`Soal ${index + 1} dari ${questions.length}`}>
+        <ol
+          className="order-last flex w-full gap-2 md:order-none md:w-auto md:flex-1"
+          aria-label={`Soal ${index + 1} dari ${questions.length}`}
+        >
           {questions.map((x, i) => (
-            <li key={x.id} className={`h-3.5 flex-1 rounded-full ${i < index || (i === index && status !== "answering") ? "bg-daun-500" : i === index ? "bg-kunyit-400" : "bg-krem-tua"}`} />
+            <li
+              key={x.id}
+              className={`h-3.5 flex-1 rounded-full ${i < index || (i === index && status !== "answering") ? "bg-daun-500" : i === index ? "bg-kunyit-400" : "bg-krem-tua"}`}
+            />
           ))}
         </ol>
-        <span className="ml-auto font-extrabold whitespace-nowrap text-tinta-redup md:ml-0">
+        <span className="text-tinta-redup ml-auto font-extrabold whitespace-nowrap md:ml-0">
           Soal {index + 1} dari {questions.length}
         </span>
       </div>
 
       <div className="grid items-start gap-6 lg:grid-cols-[280px_1fr]">
         <aside className="flex items-center gap-3 lg:sticky lg:top-28 lg:flex-col lg:text-center">
-          <Mascot size={120} className="flex-none animate-sway max-lg:size-20" />
+          <Mascot
+            size={120}
+            className="animate-sway flex-none max-lg:size-20"
+          />
           <AnimatePresence mode="wait">
             <motion.p
               key={message}
@@ -153,30 +207,50 @@ export function QuizSession({ subject, review = false }: { subject: Subject; rev
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               role="status"
-              className="rounded-[22px] border-2 border-kunyit-400 bg-kunyit-100 px-4 py-3 text-left font-bold"
+              className="border-kunyit-400 bg-kunyit-100 rounded-[22px] border-2 px-4 py-3 text-left font-bold"
             >
               {message}
             </motion.p>
           </AnimatePresence>
-          <p className="hidden text-sm font-extrabold text-tinta-redup lg:block">Poin sesi ini: {earned} 🌱</p>
+          <p className="text-tinta-redup hidden text-sm font-extrabold lg:block">
+            Poin sesi ini: {earned} 🌱
+          </p>
         </aside>
 
         <AnimatePresence mode="wait">
-          <motion.div key={`${round}-${q.id}`} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.3 }}>
+          <motion.div
+            key={`${round}-${q.id}`}
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -24 }}
+            transition={{ duration: 0.3 }}
+          >
             <Card batik className="mb-6">
-              <p className="text-xs font-extrabold tracking-wide text-tanah-500 uppercase">{q.topic}</p>
+              <p className="text-tanah-500 text-xs font-extrabold tracking-wide uppercase">
+                {q.topic}
+              </p>
               <div className="mt-2 flex items-start justify-between gap-4">
-                <h2 className="font-display text-2xl leading-tight font-semibold md:text-3xl">{q.prompt}</h2>
+                <h2 className="font-display text-2xl leading-tight font-semibold md:text-3xl">
+                  {q.prompt}
+                </h2>
                 <SpeakButton parts={speech} label="Bacakan soal" />
               </div>
               {q.image && (
-                <p className="pt-4 pb-1 text-center text-6xl tracking-widest" aria-hidden="true">
+                <p
+                  className="pt-4 pb-1 text-center text-6xl tracking-widest"
+                  aria-hidden="true"
+                >
                   {q.image}
                 </p>
               )}
             </Card>
 
-            <QuestionInput key={`${round}-${q.id}`} question={q} status={status} onAnswer={onAnswer} />
+            <QuestionInput
+              key={`${round}-${q.id}`}
+              question={q}
+              status={status}
+              onAnswer={onAnswer}
+            />
 
             <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
               <ButtonLink href="/kebun/" variant="ghost">
@@ -188,11 +262,12 @@ export function QuizSession({ subject, review = false }: { subject: Subject; rev
                 </Button>
               )}
             </div>
-            <p className="mt-3 text-sm font-bold text-tinta-redup">Air dan pupuk ditambahkan ke tanaman setelah sesi selesai.</p>
+            <p className="text-tinta-redup mt-3 text-sm font-bold">
+              Air dan pupuk ditambahkan ke tanaman setelah sesi selesai.
+            </p>
           </motion.div>
         </AnimatePresence>
       </div>
     </section>
   );
 }
-

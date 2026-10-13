@@ -1,0 +1,18 @@
+[
+  {"id": "b3-01", "type": "pilihan", "topic": "Kata kerja", "prompt": "Kata kerja pada kalimat 'Dina menulis surat' adalah...", "options": ["menulis", "Dina", "surat"], "answer": 0, "hint": "Kata kerja menunjukkan kegiatan."},
+  {"id": "b3-02", "type": "pilihan", "topic": "Kata kerja", "prompt": "Kegiatan pada gambar adalah...", "options": ["berenang", "berlari", "memasak"], "answer": 0, "hint": "Kegiatan di dalam air.", "image": "🏊"},
+  {"id": "b3-03", "type": "cocokkan", "topic": "Kata kerja", "prompt": "Cocokkan gambar dengan kata kerjanya!", "pairs": [["🍳", "memasak"], ["📖", "membaca"], ["🎨", "melukis"]], "hint": "Buku itu untuk dibaca."},
+  {"id": "b3-04", "type": "pilihan", "topic": "Kata kerja", "prompt": "Lengkapi kalimat: Ibu ... sayur di dapur.", "options": ["memasak", "membaca", "menulis"], "answer": 0, "hint": "Kegiatan yang dilakukan di dapur.", "image": "🥬"},
+  {"id": "b3-05", "type": "pilihan", "topic": "Tanda baca", "prompt": "Siapa namamu_ Tanda baca yang tepat di akhir kalimat ini adalah...", "options": ["?", ".", "!"], "answer": 0, "hint": "Kalimat ini sedang bertanya."},
+  {"id": "b3-06", "type": "pilihan", "topic": "Tanda baca", "prompt": "Ayo, buang sampah pada tempatnya_ Tanda baca yang tepat adalah...", "options": ["!", "?", ","], "answer": 0, "hint": "Kalimat ajakan atau perintah memakai tanda seru."},
+  {"id": "b3-07", "type": "pilihan", "topic": "Tanda baca", "prompt": "Tanda koma dipakai untuk...", "options": ["memisahkan daftar benda, misalnya apel, jeruk, dan mangga", "mengakhiri kalimat berita", "mengakhiri pertanyaan"], "answer": 0, "hint": "Koma muncul di antara benda yang disebutkan satu per satu."},
+  {"id": "b3-08", "type": "pilihan", "topic": "Tanda baca", "prompt": "Kalimat dengan tanda baca yang benar adalah...", "options": ["Di mana rumahmu?", "Di mana rumahmu.", "Di mana, rumahmu"], "answer": 0, "hint": "Kalimat bertanya diakhiri tanda tanya."},
+  {"id": "b3-09", "type": "pilihan", "topic": "Sinonim", "prompt": "Sinonim (persamaan kata) dari 'pandai' adalah...", "options": ["pintar", "bodoh", "malas"], "answer": 0, "hint": "Sinonim artinya sama."},
+  {"id": "b3-10", "type": "pilihan", "topic": "Sinonim", "prompt": "Sinonim dari 'gembira' adalah...", "options": ["senang", "sedih", "marah"], "answer": 0, "hint": "Perasaan saat mendapat hadiah.", "image": "😄"},
+  {"id": "b3-11", "type": "cocokkan", "topic": "Sinonim", "prompt": "Cocokkan kata dengan sinonimnya!", "pairs": [["indah", "cantik"], ["cepat", "lekas"], ["melihat", "memandang"]], "hint": "Indah dan cantik artinya sama."},
+  {"id": "b3-12", "type": "pilihan", "topic": "Sinonim", "prompt": "Sinonim dari 'rumah' adalah...", "options": ["tempat tinggal", "sekolah", "pasar"], "answer": 0, "hint": "Tempat kita tidur dan berkumpul bersama keluarga.", "image": "🏠"},
+  {"id": "b3-13", "type": "pilihan", "topic": "Antonim", "prompt": "Antonim (lawan kata) dari 'rajin' adalah...", "options": ["malas", "pintar", "giat"], "answer": 0, "hint": "Antonim artinya berlawanan."},
+  {"id": "b3-14", "type": "cocokkan", "topic": "Antonim", "prompt": "Cocokkan kata dengan lawan katanya!", "pairs": [["siang", "malam"], ["naik", "turun"], ["kaya", "miskin"]], "hint": "Lawan dari siang adalah malam."},
+  {"id": "b3-15", "type": "pilihan", "topic": "Antonim", "prompt": "Lawan kata 'gelap' adalah...", "options": ["terang", "hitam", "malam"], "answer": 0, "hint": "Keadaan saat lampu dinyalakan.", "image": "💡"},
+  {"id": "b3-16", "type": "pilihan", "topic": "Antonim", "prompt": "Lawan kata 'berat' adalah...", "options": ["ringan", "besar", "kuat"], "answer": 0, "hint": "Bulu ayam terasa ... saat diangkat.", "image": "🪶"}
+]

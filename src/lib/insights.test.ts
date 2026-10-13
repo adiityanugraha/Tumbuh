@@ -35,7 +35,7 @@ describe("insights", () => {
     const w = weeklySummary(sessions, "2026-10-05");
     expect(w.sessions).toBe(3);
     expect(w.activeDays).toBe(2);
-    expect(w.bySubject).toEqual({ matematika: 2, ipas: 1, inggris: 0 });
+    expect(w.bySubject).toEqual({ matematika: 2, indonesia: 0, ipas: 1, inggris: 0 });
     expect(w.firstTry).toBe(3);
   });
 });
@@ -59,5 +59,17 @@ describe("session", () => {
     const items = [1, 2, 3, 4, 5, 6, 7];
     expect([...shuffle(items)].sort()).toEqual(items);
     expect(pickQuestions([choice, match, order], 2)).toHaveLength(2);
+  });
+});
+
+describe("progres topik", () => {
+  it("menandai topik dikuasai, perlu latihan, dan belum dilatih", async () => {
+    const { topicProgress } = await import("./insights");
+    const sessions = [s("2026-10-05", "Perkalian", [true, true, true]), s("2026-10-05", "Pecahan", [false, false]), { ...s("2026-10-05", "Jam", [true, true, true]), grade: 2 as const }];
+    expect(topicProgress(sessions, "matematika", 3, ["Perkalian", "Pecahan", "Jam"])).toEqual([
+      { topic: "Perkalian", mastery: "dikuasai", answered: 3 },
+      { topic: "Pecahan", mastery: "perlu-latihan", answered: 2 },
+      { topic: "Jam", mastery: "belum", answered: 0 },
+    ]);
   });
 });

@@ -40,7 +40,7 @@ Warna sogan (`#8a5a2b`) dipakai untuk garis motif dan label. Palet lain mengikut
 | Halaman | Desktop | Layar kecil |
 |---|---|---|
 | Onboarding | Layar terbagi: ilustrasi Kumbi + mega mendung (kiri), formulir nama/avatar/kelas (kanan) | Satu kolom |
-| Kebunku | 3 kolom: profil + kalender 7 hari + pesan semangat + Lencanaku / kebun besar / kartu Ayo Belajar (3 mapel) + Jelajah Nusantara | 2 kolom lalu 1 kolom, kebun paling atas |
+| Kebunku | 3 kolom: profil + kalender 7 hari + pesan semangat + Lencanaku / kebun besar / kartu Ayo Belajar (4 mapel) + Jelajah Nusantara | 2 kolom lalu 1 kolom, kebun paling atas |
 | Sesi belajar | Panel maskot sticky (kiri), kartu soal + pilihan jawaban 3 kolom (kanan), tombol Berhenti dan Berikutnya | Maskot di atas, pilihan 1 kolom |
 | Hasil sesi | Kartu lebar 2 kolom: tanaman dalam lingkaran kawung berputar / teks, air dan pupuk, tanaman baru, tombol | Satu kolom |
 | Peta | Peta 16:9 dengan pulau bisa diklik + kompas (kiri), panel detail wilayah (kanan) | Panel di bawah peta |

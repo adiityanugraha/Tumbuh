@@ -238,7 +238,7 @@ function Report() {
               Dihitung dari semua latihan. Sudah dikuasai: minimal 3 soal dan
               80% benar di percobaan pertama.
             </p>
-            <div className="mt-4 grid gap-4 md:grid-cols-3">
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
               {SUBJECTS.map((s) => {
                 const m = mastery[s.id];
                 const empty = MASTERY.every((g) => !m[g.id].length);
