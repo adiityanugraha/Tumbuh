@@ -1,16 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import { Icon, Mascot } from "@/components/art";
 import { Page } from "@/components/Page";
 import { PlantThumb } from "@/components/PlantVisual";
 import { RoleSwitch } from "@/components/RoleSwitch";
-import { FamilySyncCard, JoinFamilyForm } from "./FamilySync";
 import { Button, ButtonLink, Card, DemoTag, Tag } from "@/components/ui";
 import { getPlant, PLANT_ORDER, REGIONS, stageLabel } from "@/data/plants";
 import { SUBJECTS } from "@/data/questions";
+import { authErrorText } from "@/lib/account";
 import { addDays, keyToDate } from "@/lib/date";
 import { badgeStatus } from "@/lib/badges";
 import { challengeLabel, challengeStatus } from "@/lib/challenge";
@@ -22,18 +23,20 @@ import {
   STAGE_THRESHOLDS,
 } from "@/lib/garden";
 import { masteryBySubject, weeklySummary, type Mastery } from "@/lib/insights";
-import type { Encouragement, ParentChallenge } from "@/lib/types";
+import type { Encouragement, Grade, ParentChallenge } from "@/lib/types";
 
 export function ParentView() {
-  const { ready, student } = useApp();
+  const { ready, student, account, logout } = useApp();
+  const router = useRouter();
   const [unlocked, setUnlocked] = useState(false);
+  const isParent = account?.role === "ortu";
 
   return (
     <>
       <header className="sticky top-0 z-30 bg-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5 md:px-6">
           <Link
-            href="/kebun/"
+            href={account ? "/orang-tua/" : "/kebun/"}
             className="font-display text-daun-800 flex items-center gap-2 text-3xl font-bold"
           >
             <span className="text-daun-600">
@@ -42,12 +45,39 @@ export function ParentView() {
             Tumbuh
           </Link>
           <Tag className="text-sm!">Untuk Orang Tua</Tag>
-          <RoleSwitch active="orang-tua" className="ml-auto flex" />
+          {isParent ? (
+            <div className="ml-auto flex items-center gap-3">
+              <span className="text-tinta-redup text-sm font-extrabold">
+                Masuk sebagai {account.username}
+              </span>
+              <Button
+                variant="ghost"
+                className="min-h-11 px-4 text-base"
+                onClick={async () => {
+                  await logout();
+                  router.replace("/");
+                }}
+              >
+                Keluar
+              </Button>
+            </div>
+          ) : (
+            !account && (
+              <RoleSwitch active="orang-tua" className="ml-auto flex" />
+            )
+          )}
         </div>
         <div className="bg-parang h-1" />
       </header>
       <main id="isi" className="mx-auto max-w-7xl px-4 pt-4 pb-12 md:px-6">
-        {!ready ? null : !student ? (
+        {!ready ? null : account?.role === "anak" ? (
+          <ChildAccountNotice />
+        ) : isParent ? (
+          <>
+            <ParentToolbar />
+            {student ? <Report /> : <AddChildForm />}
+          </>
+        ) : !student ? (
           <NoStudent />
         ) : unlocked ? (
           <Report />
@@ -65,24 +95,173 @@ function NoStudent() {
     <Card className="mx-auto mt-10 max-w-lg text-center">
       <Mascot size={110} className="mx-auto" />
       <h1 className="font-display mt-2 text-3xl font-semibold">
-        Belum ada profil anak
+        {cloudAvailable ? "Masuk sebagai orang tua" : "Belum ada profil anak"}
       </h1>
       <p className="text-tinta-redup mt-2 font-bold">
-        Minta anak membuat profil dulu, atau lihat contoh laporan dengan Mode
-        Demo.
+        {cloudAvailable
+          ? "Masuk atau daftar dengan akun orang tua, lalu hubungkan dengan kode keluarga anak."
+          : "Minta anak membuat profil dulu, atau lihat contoh laporan dengan Mode Demo."}
       </p>
       <div className="mt-5 flex flex-wrap justify-center gap-3">
-        <ButtonLink href="/">Buat profil anak</ButtonLink>
+        <ButtonLink href="/">
+          {cloudAvailable ? "Masuk atau daftar" : "Buat profil anak"}
+        </ButtonLink>
         <Button variant="ghost" onClick={loadDemo}>
           Buka Mode Demo
         </Button>
       </div>
-      {cloudAvailable && (
-        <div className="border-krem-tua mt-6 border-t-3 pt-5 text-left">
-          <JoinFamilyForm />
+    </Card>
+  );
+}
+
+/** Akun anak membuka halaman orang tua: arahkan kembali, karena orang tua memakai akunnya sendiri. */
+function ChildAccountNotice() {
+  return (
+    <Card className="mx-auto mt-10 max-w-lg text-center">
+      <Mascot size={110} className="mx-auto" />
+      <h1 className="font-display mt-2 text-3xl font-semibold">
+        Halaman ini khusus orang tua
+      </h1>
+      <p className="text-tinta-redup mt-2 font-bold">
+        Orang tua masuk dari perangkatnya sendiri dengan akun orang tua dan kode
+        keluargamu.
+      </p>
+      <ButtonLink href="/kebun/" className="mt-5">
+        Kembali ke kebun
+      </ButtonLink>
+    </Card>
+  );
+}
+
+/** Akun orang tua: pilih anak, tambah anak, ganti kelas anak, dan status sinkron. */
+function ParentToolbar() {
+  const { account, student, switchChild, setGrade, syncStatus, syncNow } =
+    useApp();
+  const [adding, setAdding] = useState(false);
+  if (account?.role !== "ortu") return null;
+  const kids = account.children ?? [];
+  return (
+    <Card className="mb-5">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-sogan mr-1 text-sm font-extrabold">Anak:</span>
+        {kids.map((c) => (
+          <button
+            key={c.id}
+            type="button"
+            aria-pressed={c.id === account.activeChildId}
+            onClick={() => c.id !== account.activeChildId && switchChild(c.id)}
+            className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-full border-3 px-3.5 font-bold transition ${c.id === account.activeChildId ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-white"}`}
+          >
+            <span aria-hidden="true">{c.avatar}</span>
+            {c.nickname}
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={() => setAdding((v) => !v)}
+          aria-expanded={adding}
+          className="border-daun-300 text-daun-800 hover:bg-daun-50 min-h-11 cursor-pointer rounded-full border-3 border-dashed px-3.5 font-bold"
+        >
+          + Tambah anak
+        </button>
+        {student && (
+          <label className="text-sogan ml-auto flex items-center gap-2 text-sm font-extrabold">
+            Kelas {student.nickname}
+            <select
+              value={student.grade}
+              onChange={(e) => setGrade(Number(e.target.value) as Grade)}
+              className="border-krem-tua font-display text-tinta min-h-11 rounded-full border-3 bg-white px-3 text-lg"
+            >
+              {[1, 2, 3, 4, 5, 6].map((g) => (
+                <option key={g} value={g}>
+                  Kelas {g}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+      </div>
+      <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-bold">
+        <span
+          role="status"
+          className={
+            syncStatus === "error" ? "text-tanah-700" : "text-daun-800"
+          }
+        >
+          {syncStatus === "syncing"
+            ? "Menyinkronkan..."
+            : syncStatus === "error"
+              ? "Gagal tersambung. Periksa internet."
+              : "Data tersinkron dengan perangkat anak ✓"}
+        </span>
+        <button
+          type="button"
+          onClick={syncNow}
+          className="text-sogan min-h-10 cursor-pointer underline"
+        >
+          Perbarui
+        </button>
+      </div>
+      {adding && (
+        <div className="border-krem-tua mt-3 border-t-3 pt-3">
+          <AddChildForm onDone={() => setAdding(false)} />
         </div>
       )}
     </Card>
+  );
+}
+
+/** Hubungkan anak lain lewat kode keluarga. */
+function AddChildForm({ onDone }: { onDone?: () => void }) {
+  const { addChild } = useApp();
+  const [code, setCode] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    setError(null);
+    try {
+      await addChild(code);
+      onDone?.();
+    } catch (err) {
+      setError(authErrorText(err));
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <form onSubmit={submit} className="flex flex-wrap items-end gap-3">
+      <label className="flex flex-col gap-1.5">
+        <span className="text-sogan text-sm font-extrabold">
+          Kode keluarga anak
+        </span>
+        <input
+          value={code}
+          onChange={(e) =>
+            setCode(e.target.value.toUpperCase().replace(/[^0-9A-Z]/g, ""))
+          }
+          maxLength={6}
+          autoComplete="off"
+          placeholder="3FA9C1"
+          className="border-krem-tua font-display focus:border-langit-500 min-h-12 w-44 rounded-[18px] border-3 px-3 text-center text-xl tracking-[0.3em] uppercase outline-none"
+        />
+      </label>
+      <Button
+        type="submit"
+        variant="kunyit"
+        disabled={code.length !== 6 || busy}
+        className="min-h-12 text-lg"
+      >
+        {busy ? "Menghubungkan..." : "Hubungkan"}
+      </Button>
+      <p className="text-tinta-redup w-full text-xs font-bold">
+        Kode ada di profil akun anak: ketuk avatar di pojok kanan atas.
+      </p>
+      <p role="status" className="text-tanah-700 w-full text-sm font-bold">
+        {error}
+      </p>
+    </form>
   );
 }
 
@@ -295,7 +474,6 @@ function Report() {
         <div className="grid gap-5">
           <GardenCard />
           <ChallengeEditor />
-          <FamilySyncCard />
         </div>
       </div>
     </Page>

@@ -1,8 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { SyncState } from "@/lib/types";
+import { usernameToEmail } from "@/lib/account";
+import type { Account, ChildSummary, SyncState } from "@/lib/types";
 
 /**
- * Sinkronisasi opsional lewat Supabase (lihat supabase/schema.sql).
+ * Akun dan sinkronisasi lewat Supabase (lihat supabase/schema.sql).
  * Aktif hanya bila NEXT_PUBLIC_SUPABASE_URL dan NEXT_PUBLIC_SUPABASE_ANON_KEY diisi saat build.
  * Anon key memang publik: keamanan data dijaga Row Level Security di database.
  */
@@ -10,24 +11,26 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 export const isCloudConfigured = Boolean(SUPABASE_URL && KEY);
 
-const CODE_KEY = "tumbuh:keluarga";
+const ACCOUNT_KEY = "tumbuh:akun";
 
-/** Kode keluarga perangkat ini (disimpan lokal). Hanya dipanggil di client. */
-export const familyCode = {
-  get: (): string | null => {
+/** Akun yang sedang masuk di perangkat ini. Hanya dipanggil di client. */
+export const accountStore = {
+  get: (): Account | null => {
     try {
-      return localStorage.getItem(CODE_KEY);
+      const raw = localStorage.getItem(ACCOUNT_KEY);
+      return raw ? (JSON.parse(raw) as Account) : null;
     } catch {
       return null;
     }
   },
-  set: (code: string) => localStorage.setItem(CODE_KEY, code),
-  clear: () => localStorage.removeItem(CODE_KEY),
+  set: (account: Account) =>
+    localStorage.setItem(ACCOUNT_KEY, JSON.stringify(account)),
+  clear: () => localStorage.removeItem(ACCOUNT_KEY),
 };
 
 let client: Promise<SupabaseClient> | null = null;
 
-/** Library Supabase dimuat hanya saat sinkronisasi dipakai, agar halaman lain tetap ringan. */
+/** Library Supabase dimuat hanya saat akun dipakai, agar Mode Demo dan halaman awal tetap ringan. */
 function db() {
   client ??= import("@supabase/supabase-js").then(({ createClient }) =>
     createClient(SUPABASE_URL!, KEY!, {
@@ -37,52 +40,139 @@ function db() {
   return client;
 }
 
-/** Login anonim: tanpa email atau kata sandi, sesi disimpan di perangkat ini. */
-async function signedIn() {
-  const sb = await db();
-  const { data } = await sb.auth.getSession();
-  if (!data.session) {
-    const { error } = await sb.auth.signInAnonymously();
-    if (error) throw error;
-  }
-  return sb;
-}
-
-export async function createFamily(state: SyncState): Promise<string> {
-  const sb = await signedIn();
-  const { data, error } = await sb.rpc("create_family", { initial: state });
+async function must<T>(
+  p: PromiseLike<{ data: T; error: unknown }>,
+): Promise<T> {
+  const { data, error } = await p;
   if (error) throw error;
-  return data as string;
+  return data;
 }
 
-export async function joinFamily(code: string): Promise<SyncState> {
-  const sb = await signedIn();
-  const { data, error } = await sb.rpc("join_family", {
-    family_code: code.trim().toUpperCase(),
+/**
+ * Buat akun baru. Bila username sudah terdaftar tapi profilnya belum jadi (pendaftaran sebelumnya terputus),
+ * lanjutkan dengan masuk memakai kata sandi yang sama.
+ */
+export async function signUpOrResume(
+  username: string,
+  password: string,
+): Promise<{ userId: string; hasProfile: boolean }> {
+  const sb = await db();
+  const email = usernameToEmail(username);
+  const signUp = await sb.auth.signUp({ email, password });
+  if (
+    signUp.error &&
+    !signUp.error.message.toLowerCase().includes("already registered")
+  )
+    throw signUp.error;
+  let userId = signUp.data.session?.user.id;
+  if (!userId) {
+    const signIn = await sb.auth.signInWithPassword({ email, password });
+    if (signIn.error) throw signUp.error ?? signIn.error;
+    userId = signIn.data.user.id;
+  }
+  return { userId, hasProfile: Boolean(await getMyProfile()) };
+}
+
+export async function signIn(
+  username: string,
+  password: string,
+): Promise<string> {
+  const sb = await db();
+  const { data, error } = await sb.auth.signInWithPassword({
+    email: usernameToEmail(username),
+    password,
   });
   if (error) throw error;
-  return data as SyncState;
+  return data.user.id;
 }
 
-export async function pullFamily(code: string): Promise<SyncState | null> {
-  const sb = await signedIn();
-  const { data, error } = await sb
-    .from("families")
-    .select("data")
-    .eq("code", code)
-    .maybeSingle();
-  if (error) throw error;
-  return (data?.data as SyncState | undefined) ?? null;
+export async function signOut() {
+  if (!isCloudConfigured) return;
+  await (await db()).auth.signOut();
 }
 
-export async function pushFamily(
+export async function getMyProfile(): Promise<{
+  role: Account["role"];
+  username: string;
+} | null> {
+  const sb = await db();
+  const { data: auth } = await sb.auth.getUser();
+  if (!auth.user) return null;
+  return must(
+    sb
+      .from("profiles")
+      .select("role, username")
+      .eq("id", auth.user.id)
+      .maybeSingle(),
+  );
+}
+
+export async function registerChild(
+  username: string,
+  initial: SyncState,
+): Promise<string> {
+  return must(
+    (await db()).rpc("register_child", { p_username: username, initial }),
+  ) as Promise<string>;
+}
+
+export async function registerParent(
+  username: string,
   code: string,
+): Promise<string> {
+  return must(
+    (await db()).rpc("register_parent", { p_username: username, p_code: code }),
+  ) as Promise<string>;
+}
+
+export async function linkChild(code: string): Promise<string> {
+  return must(
+    (await db()).rpc("link_child", { p_code: code }),
+  ) as Promise<string>;
+}
+
+export async function getFamilyCode(childId: string): Promise<string> {
+  const row = await must(
+    (await db())
+      .from("children")
+      .select("family_code")
+      .eq("id", childId)
+      .single(),
+  );
+  return (row as { family_code: string }).family_code;
+}
+
+/** Anak-anak yang terhubung dengan akun orang tua ini (dibatasi RLS). */
+export async function listMyChildren(): Promise<ChildSummary[]> {
+  const rows = (await must(
+    (await db()).from("children").select("id, data"),
+  )) as { id: string; data: SyncState }[];
+  return rows
+    .filter((r) => r.data.student)
+    .map((r) => ({
+      id: r.id,
+      nickname: r.data.student!.nickname,
+      avatar: r.data.student!.avatar,
+      grade: r.data.student!.grade,
+    }));
+}
+
+export async function pullChild(childId: string): Promise<SyncState | null> {
+  const row = await must(
+    (await db())
+      .from("children")
+      .select("data")
+      .eq("id", childId)
+      .maybeSingle(),
+  );
+  return (row as { data: SyncState } | null)?.data ?? null;
+}
+
+export async function pushChild(
+  childId: string,
   state: SyncState,
 ): Promise<void> {
-  const sb = await signedIn();
-  const { error } = await sb
-    .from("families")
-    .update({ data: state, updated_at: new Date().toISOString() })
-    .eq("code", code);
-  if (error) throw error;
+  await must(
+    (await db()).from("children").update({ data: state }).eq("id", childId),
+  );
 }

@@ -1,44 +1,91 @@
--- Skema sinkronisasi Tumbuh. Jalankan sekali di Supabase: Dashboard > SQL Editor > New query > Run.
--- Syarat: Authentication > Sign In / Providers > "Allow anonymous sign-ins" diaktifkan.
+-- Skema akun Tumbuh. Jalankan sekali di Supabase: Dashboard > SQL Editor > New query > Run.
+-- Syarat: Authentication > Sign In / Providers > Email: matikan "Confirm email".
+-- (Username dipetakan ke email internal <username>@tumbuh.app, jadi tidak ada email sungguhan yang bisa dikonfirmasi.)
 --
--- Satu keluarga = satu anak. Data keluarga disimpan utuh sebagai JSON (sama dengan isi localStorage).
--- Perangkat yang tahu kode keluarga menjadi anggota, dan hanya anggota yang bisa membaca/mengubah datanya (RLS).
+-- Peran: anak (punya data belajar + kode keluarga) dan ortu (terhubung ke satu atau beberapa anak lewat kode keluarga).
 
-create table if not exists public.families (
-  code text primary key,
+-- Hapus skema kode keluarga anonim versi sebelumnya (hanya berisi data uji).
+drop function if exists public.create_family(jsonb);
+drop function if exists public.join_family(text);
+drop table if exists public.families cascade;
+drop table if exists public.family_members cascade;
+
+create table if not exists public.profiles (
+  id uuid primary key references auth.users (id) on delete cascade,
+  role text not null check (role in ('anak', 'ortu')),
+  username text not null unique,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.children (
+  id uuid primary key references public.profiles (id) on delete cascade,
+  family_code text not null unique,
   data jsonb not null,
   updated_at timestamptz not null default now()
 );
 
-create table if not exists public.family_members (
-  family_code text not null references public.families (code) on delete cascade,
-  user_id uuid not null default auth.uid(),
-  joined_at timestamptz not null default now(),
-  primary key (family_code, user_id)
+create table if not exists public.parent_links (
+  parent_id uuid not null references public.profiles (id) on delete cascade,
+  child_id uuid not null references public.children (id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (parent_id, child_id)
 );
 
-alter table public.families enable row level security;
-alter table public.family_members enable row level security;
+alter table public.profiles enable row level security;
+alter table public.children enable row level security;
+alter table public.parent_links enable row level security;
 
-drop policy if exists "anggota membaca keluarga" on public.families;
-create policy "anggota membaca keluarga" on public.families
-  for select to authenticated
-  using (exists (select 1 from public.family_members m where m.family_code = families.code and m.user_id = auth.uid()));
+create or replace function public.is_linked_parent(child uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (select 1 from parent_links where parent_id = auth.uid() and child_id = child);
+$$;
 
-drop policy if exists "anggota mengubah keluarga" on public.families;
-create policy "anggota mengubah keluarga" on public.families
+drop policy if exists "profil sendiri" on public.profiles;
+create policy "profil sendiri" on public.profiles
+  for select to authenticated using (id = auth.uid());
+
+drop policy if exists "anak sendiri atau orang tuanya membaca" on public.children;
+create policy "anak sendiri atau orang tuanya membaca" on public.children
+  for select to authenticated using (id = auth.uid() or public.is_linked_parent(id));
+
+drop policy if exists "anak sendiri atau orang tuanya mengubah" on public.children;
+create policy "anak sendiri atau orang tuanya mengubah" on public.children
   for update to authenticated
-  using (exists (select 1 from public.family_members m where m.family_code = families.code and m.user_id = auth.uid()))
-  with check (exists (select 1 from public.family_members m where m.family_code = families.code and m.user_id = auth.uid()));
+  using (id = auth.uid() or public.is_linked_parent(id))
+  with check (id = auth.uid() or public.is_linked_parent(id));
 
-drop policy if exists "melihat keanggotaan sendiri" on public.family_members;
-create policy "melihat keanggotaan sendiri" on public.family_members
-  for select to authenticated
-  using (user_id = auth.uid());
+drop policy if exists "tautan sendiri" on public.parent_links;
+create policy "tautan sendiri" on public.parent_links
+  for select to authenticated using (parent_id = auth.uid());
 
--- Buat keluarga baru dari data perangkat ini, kembalikan kode 6 karakter.
--- Batas: 16 juta kombinasi kode (heksadesimal). Cukup untuk lomba; tambah panjang kode atau rate limit bila dipakai luas.
-create or replace function public.create_family(initial jsonb)
+-- Hanya orang tua yang boleh mengganti kelas: perubahan kelas dari akun anak dikembalikan ke nilai lama.
+create or replace function public.lock_child_grade()
+returns trigger
+language plpgsql
+as $$
+begin
+  if auth.uid() = old.id
+     and old.data -> 'student' -> 'grade' is not null
+     and (new.data -> 'student' -> 'grade') is distinct from (old.data -> 'student' -> 'grade') then
+    new.data := jsonb_set(new.data, '{student,grade}', old.data -> 'student' -> 'grade');
+  end if;
+  new.updated_at := now();
+  return new;
+end;
+$$;
+
+drop trigger if exists lock_child_grade on public.children;
+create trigger lock_child_grade before update on public.children
+  for each row execute function public.lock_child_grade();
+
+-- Daftarkan akun anak yang baru dibuat: profil + data awal + kode keluarga 6 karakter.
+-- Batas: 16 juta kombinasi kode (heksadesimal); tambah panjang kode bila dipakai luas.
+create or replace function public.register_child(p_username text, initial jsonb)
 returns text
 language plpgsql
 security definer
@@ -50,41 +97,62 @@ begin
   if auth.uid() is null then
     raise exception 'perlu login';
   end if;
+  insert into profiles (id, role, username) values (auth.uid(), 'anak', lower(p_username));
   loop
     new_code := upper(substr(md5(random()::text || clock_timestamp()::text), 1, 6));
-    exit when not exists (select 1 from families where code = new_code);
+    exit when not exists (select 1 from children where family_code = new_code);
   end loop;
-  insert into families (code, data) values (new_code, initial);
-  insert into family_members (family_code, user_id) values (new_code, auth.uid());
+  insert into children (id, family_code, data) values (auth.uid(), new_code, initial);
   return new_code;
 end;
 $$;
 
--- Bergabung dengan kode keluarga, kembalikan data keluarga.
-create or replace function public.join_family(family_code text)
-returns jsonb
+-- Hubungkan akun orang tua dengan anak lewat kode keluarga. Bisa dipanggil berkali-kali untuk beberapa anak.
+create or replace function public.link_child(p_code text)
+returns uuid
 language plpgsql
 security definer
 set search_path = public
 as $$
 declare
-  found jsonb;
+  child uuid;
+begin
+  if not exists (select 1 from profiles where id = auth.uid() and role = 'ortu') then
+    raise exception 'bukan akun orang tua';
+  end if;
+  select id into child from children where family_code = upper(trim(p_code));
+  if child is null then
+    raise exception 'kode tidak ditemukan';
+  end if;
+  insert into parent_links (parent_id, child_id) values (auth.uid(), child) on conflict do nothing;
+  return child;
+end;
+$$;
+
+-- Daftarkan akun orang tua yang baru dibuat, lalu hubungkan dengan anak pertama.
+create or replace function public.register_parent(p_username text, p_code text)
+returns uuid
+language plpgsql
+security definer
+set search_path = public
+as $$
 begin
   if auth.uid() is null then
     raise exception 'perlu login';
   end if;
-  select data into found from families where code = upper(join_family.family_code);
-  if found is null then
+  if not exists (select 1 from children where family_code = upper(trim(p_code))) then
     raise exception 'kode tidak ditemukan';
   end if;
-  insert into family_members (family_code, user_id)
-  values (upper(join_family.family_code), auth.uid())
-  on conflict do nothing;
-  return found;
+  insert into profiles (id, role, username) values (auth.uid(), 'ortu', lower(p_username)) on conflict (id) do nothing;
+  return public.link_child(p_code);
 end;
 $$;
 
-revoke all on function public.create_family(jsonb) from public, anon;
-revoke all on function public.join_family(text) from public, anon;
-grant execute on function public.create_family(jsonb) to authenticated;
-grant execute on function public.join_family(text) to authenticated;
+revoke all on function public.register_child(text, jsonb) from public, anon;
+revoke all on function public.register_parent(text, text) from public, anon;
+revoke all on function public.link_child(text) from public, anon;
+revoke all on function public.is_linked_parent(uuid) from public, anon;
+grant execute on function public.register_child(text, jsonb) to authenticated;
+grant execute on function public.register_parent(text, text) to authenticated;
+grant execute on function public.link_child(text) to authenticated;
+grant execute on function public.is_linked_parent(uuid) to authenticated;

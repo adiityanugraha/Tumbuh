@@ -11,25 +11,21 @@ import {
 } from "react";
 import { createDemoData } from "@/data/demo";
 import { PLANT_ORDER } from "@/data/plants";
+import { normalizeUsername } from "@/lib/account";
 import { toDateKey } from "@/lib/date";
 import { applySession, createGarden, type SessionOutcome } from "@/lib/garden";
 import { mergeStates } from "@/lib/sync";
 import type {
+  Account,
   Encouragement,
   Garden,
   Grade,
   ParentChallenge,
   Session,
   Student,
+  SyncState,
 } from "@/lib/types";
-import {
-  createFamily,
-  familyCode,
-  isCloudConfigured,
-  joinFamily,
-  pullFamily,
-  pushFamily,
-} from "@/services/cloud";
+import * as cloud from "@/services/cloud";
 import { getRepository } from "@/services/repository";
 
 interface AppState {
@@ -40,6 +36,7 @@ interface AppState {
   sessions: Session[];
   encouragements: Encouragement[];
   challenge: ParentChallenge | null;
+  /** Profil lokal tanpa akun (dipakai bila Supabase tidak dikonfigurasi). */
   createStudent: (s: Omit<Student, "createdAt">) => Promise<void>;
   setGrade: (grade: Grade) => Promise<void>;
   completeSession: (s: Omit<Session, "id" | "date">) => Promise<SessionOutcome>;
@@ -50,13 +47,29 @@ interface AppState {
   loadDemo: () => Promise<void>;
   setChallenge: (c: ParentChallenge | null) => Promise<void>;
   reset: () => Promise<void>;
-  /** Sinkronisasi antarperangkat (opsional, butuh konfigurasi Supabase). */
+  /** Akun (butuh konfigurasi Supabase). */
   cloudAvailable: boolean;
-  family: string | null;
+  account: Account | null;
   syncStatus: SyncStatus;
-  connectFamily: () => Promise<string>;
-  joinWithCode: (code: string) => Promise<void>;
-  disconnectFamily: () => void;
+  registerChild: (input: {
+    nickname: string;
+    password: string;
+    avatar: string;
+    grade: Grade;
+  }) => Promise<void>;
+  registerParent: (input: {
+    nickname: string;
+    password: string;
+    code: string;
+  }) => Promise<void>;
+  login: (
+    role: Account["role"],
+    nickname: string,
+    password: string,
+  ) => Promise<void>;
+  logout: () => Promise<void>;
+  switchChild: (childId: string) => Promise<void>;
+  addChild: (code: string) => Promise<void>;
   syncNow: () => Promise<void>;
 }
 
@@ -70,6 +83,10 @@ export function useApp() {
   return ctx;
 }
 
+/** Akun anak menyinkronkan datanya sendiri; akun orang tua menyinkronkan anak yang sedang dilihat. */
+const syncTarget = (acc: Account | null) =>
+  acc?.role === "anak" ? acc.userId : acc?.activeChildId;
+
 /** Memuat data dari repository saat aplikasi dibuka di browser, lalu menyimpan setiap perubahan. */
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
@@ -79,7 +96,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [encouragements, setEncouragements] = useState<Encouragement[]>([]);
   const [challenge, setChallengeState] = useState<ParentChallenge | null>(null);
-  const [family, setFamily] = useState<string | null>(null);
+  const [account, setAccount] = useState<Account | null>(null);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>("off");
   const syncing = useRef(false);
 
@@ -97,24 +114,26 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setSessions(se);
     setEncouragements(en);
     setChallengeState(ch);
-    setFamily(isCloudConfigured ? familyCode.get() : null);
+    setAccount(cloud.isCloudConfigured ? cloud.accountStore.get() : null);
     setToday(toDateKey());
     setReady(true);
   }, []);
 
-  /** Tarik data keluarga, gabungkan dengan data lokal, lalu kirim balik. Aman dipanggil kapan saja. */
+  /** Tarik data dari server, gabungkan dengan data lokal, lalu kirim balik. Aman dipanggil kapan saja. */
   const syncNow = useCallback(async () => {
-    const code = isCloudConfigured ? familyCode.get() : null;
+    const target = cloud.isCloudConfigured
+      ? syncTarget(cloud.accountStore.get())
+      : undefined;
     // ponytail: satu sinkron pada satu waktu; perubahan di tengah jalan ikut terkirim pada sinkron berikutnya.
-    if (!code || syncing.current) return;
+    if (!target || syncing.current) return;
     syncing.current = true;
     setSyncStatus("syncing");
     try {
       const repo = getRepository();
-      const remote = await pullFamily(code);
+      const remote = await cloud.pullChild(target);
       const local = await repo.exportState();
       const merged = remote ? mergeStates(local, remote, PLANT_ORDER) : local;
-      await pushFamily(code, merged);
+      await cloud.pushChild(target, merged);
       // Gabung lagi dengan data lokal terbaru agar sesi yang selesai selama sinkron tidak tertimpa.
       await repo.importState(
         mergeStates(await repo.exportState(), merged, PLANT_ORDER),
@@ -132,7 +151,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     // Data hanya ada di localStorage, jadi dimuat setelah halaman tampil di browser.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     load().then(syncNow);
-    if (!isCloudConfigured) return;
+    if (!cloud.isCloudConfigured) return;
     // Sinkron saat aplikasi dibuka lagi dan tiap menit selama terlihat, agar pesan orang tua cepat sampai.
     const whenVisible = () =>
       document.visibilityState === "visible" && void syncNow();
@@ -144,6 +163,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     };
   }, [load, syncNow]);
 
+  /** Ganti seluruh data lokal dengan data dari server lalu simpan akun. */
+  const applyRemote = async (acc: Account, state: SyncState | null) => {
+    const repo = getRepository();
+    await repo.reset();
+    if (state) await repo.importState(state);
+    cloud.accountStore.set(acc);
+    await load();
+    setSyncStatus("ok");
+  };
+
   const createStudent: AppState["createStudent"] = async (s) => {
     const repo = getRepository();
     const st: Student = { ...s, createdAt: toDateKey() };
@@ -152,14 +181,24 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     await repo.saveGarden(g);
     setStudent(st);
     setGarden(g);
-    void syncNow();
   };
 
+  /** Akun anak tidak boleh mengganti kelas (juga dikunci di database). Orang tua, Mode Demo, dan profil lokal boleh. */
   const setGrade: AppState["setGrade"] = async (grade) => {
-    if (!student) return;
+    if (!student || account?.role === "anak") return;
     const st = { ...student, grade };
     await getRepository().saveStudent(st);
     setStudent(st);
+    if (account?.role === "ortu") {
+      const acc = {
+        ...account,
+        children: account.children?.map((c) =>
+          c.id === account.activeChildId ? { ...c, grade } : c,
+        ),
+      };
+      cloud.accountStore.set(acc);
+      setAccount(acc);
+    }
     void syncNow();
   };
 
@@ -199,9 +238,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     void syncNow();
   };
 
-  /** Mode Demo: ganti data di perangkat ini dengan anak contoh beserta riwayat belajar seminggu. */
+  /** Mode Demo: ganti data di perangkat ini dengan anak contoh beserta riwayat belajar seminggu (tanpa akun). */
   const loadDemo = async () => {
-    disconnectFamily(); // data contoh tidak boleh terkirim ke keluarga yang tersambung
+    cloud.accountStore.clear();
     const repo = getRepository();
     const demo = createDemoData(toDateKey());
     await repo.reset();
@@ -218,37 +257,127 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     void syncNow();
   };
 
+  /** Hapus data di perangkat ini (Mode Demo / profil lokal). Data akun di server tidak terhapus. */
   const reset = async () => {
-    disconnectFamily(); // hanya memutus perangkat ini, data keluarga di server tetap ada
+    cloud.accountStore.clear();
     await getRepository().reset();
     await load();
   };
 
-  /** Perangkat ini membuat kode keluarga baru dari datanya sendiri. */
-  const connectFamily = async () => {
-    const code = await createFamily(await getRepository().exportState());
-    familyCode.set(code);
-    setFamily(code);
-    setSyncStatus("ok");
-    return code;
+  const registerChild: AppState["registerChild"] = async ({
+    nickname,
+    password,
+    avatar,
+    grade,
+  }) => {
+    const username = normalizeUsername(nickname);
+    const { userId, hasProfile } = await cloud.signUpOrResume(
+      username,
+      password,
+    );
+    if (hasProfile) {
+      await cloud.signOut();
+      throw new Error("sudah dipakai");
+    }
+    const state: SyncState = {
+      student: {
+        nickname: nickname.trim(),
+        avatar,
+        grade,
+        createdAt: toDateKey(),
+      },
+      studentAt: Date.now(),
+      garden: createGarden(PLANT_ORDER),
+      sessions: [],
+      encouragements: [],
+      challenge: null,
+    };
+    const familyCode = await cloud.registerChild(username, state);
+    await applyRemote({ role: "anak", username, userId, familyCode }, state);
   };
 
-  /** Perangkat lain bergabung: data di perangkat ini diganti data keluarga. */
-  const joinWithCode = async (code: string) => {
-    const remote = await joinFamily(code);
-    const repo = getRepository();
-    await repo.reset();
-    await repo.importState(remote);
-    familyCode.set(code.trim().toUpperCase());
-    await load();
-    setSyncStatus("ok");
+  /** Ambil daftar anak orang tua, lalu tampilkan anak pilihan (atau anak pertama). */
+  const openParent = async (
+    username: string,
+    userId: string,
+    preferChild?: string,
+  ) => {
+    const kids = await cloud.listMyChildren();
+    const active = kids.find((c) => c.id === preferChild)?.id ?? kids[0]?.id;
+    const acc: Account = {
+      role: "ortu",
+      username,
+      userId,
+      children: kids,
+      activeChildId: active,
+    };
+    await applyRemote(acc, active ? await cloud.pullChild(active) : null);
   };
 
-  function disconnectFamily() {
-    if (isCloudConfigured) familyCode.clear();
-    setFamily(null);
+  const registerParent: AppState["registerParent"] = async ({
+    nickname,
+    password,
+    code,
+  }) => {
+    const username = normalizeUsername(nickname);
+    const { userId, hasProfile } = await cloud.signUpOrResume(
+      username,
+      password,
+    );
+    if (hasProfile) {
+      await cloud.signOut();
+      throw new Error("sudah dipakai");
+    }
+    const childId = await cloud.registerParent(username, code);
+    await openParent(username, userId, childId);
+  };
+
+  const login: AppState["login"] = async (role, nickname, password) => {
+    const username = normalizeUsername(nickname);
+    const userId = await cloud.signIn(username, password);
+    const profile = await cloud.getMyProfile();
+    if (!profile || profile.role !== role) {
+      await cloud.signOut();
+      throw new Error(
+        profile?.role === "ortu"
+          ? "akun orang tua"
+          : profile
+            ? "akun anak"
+            : "Invalid login credentials",
+      );
+    }
+    if (role === "anak") {
+      const familyCode = await cloud.getFamilyCode(userId);
+      await applyRemote(
+        { role, username, userId, familyCode },
+        await cloud.pullChild(userId),
+      );
+    } else {
+      await openParent(username, userId);
+    }
+  };
+
+  const logout = async () => {
+    await cloud.signOut().catch(() => undefined);
+    cloud.accountStore.clear();
+    await getRepository().reset();
     setSyncStatus("off");
-  }
+    await load();
+  };
+
+  const switchChild: AppState["switchChild"] = async (childId) => {
+    if (account?.role !== "ortu") return;
+    await applyRemote(
+      { ...account, activeChildId: childId },
+      await cloud.pullChild(childId),
+    );
+  };
+
+  const addChild: AppState["addChild"] = async (code) => {
+    if (account?.role !== "ortu") return;
+    const childId = await cloud.linkChild(code);
+    await openParent(account.username, account.userId, childId);
+  };
 
   return (
     <AppContext.Provider
@@ -268,12 +397,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         loadDemo,
         setChallenge,
         reset,
-        cloudAvailable: isCloudConfigured,
-        family,
+        cloudAvailable: cloud.isCloudConfigured,
+        account,
         syncStatus,
-        connectFamily,
-        joinWithCode,
-        disconnectFamily,
+        registerChild,
+        registerParent,
+        login,
+        logout,
+        switchChild,
+        addChild,
         syncNow,
       }}
     >

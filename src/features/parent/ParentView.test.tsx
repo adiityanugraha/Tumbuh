@@ -28,6 +28,8 @@ vi.mock("motion/react", () => {
   return { motion, AnimatePresence: Pass, MotionConfig: Pass };
 });
 
+vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn(), replace: vi.fn() }) }));
+
 const { AppProvider } = await import("@/components/AppProvider");
 const { ParentView } = await import("./ParentView");
 const { createDemoData } = await import("@/data/demo");

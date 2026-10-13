@@ -138,3 +138,22 @@ export interface SyncState {
   studentAt?: number;
   challengeAt?: number;
 }
+
+export interface ChildSummary {
+  id: string;
+  nickname: string;
+  avatar: string;
+  grade: Grade;
+}
+
+/** Akun yang sedang masuk di perangkat ini (disimpan lokal, sesi login disimpan oleh Supabase). */
+export interface Account {
+  role: "anak" | "ortu";
+  username: string;
+  userId: string;
+  /** Akun anak: kode keluarga untuk diberikan ke orang tua. */
+  familyCode?: string;
+  /** Akun orang tua: anak-anak yang terhubung dan anak yang sedang dilihat. */
+  children?: ChildSummary[];
+  activeChildId?: string;
+}

@@ -42,7 +42,7 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 
 ### A. Sisi Anak (prioritas tertinggi)
 
-1. **Onboarding**: nama panggilan, avatar (pilihan bawaan), kelas. Tanpa data pribadi lain.
+1. **Layar awal dan akun**: "Kamu siapa?" (Aku Anak / Saya Orang Tua / Mode Demo). Akun anak: daftar dengan nama pengguna, kata sandi, avatar, kelas; masuk dengan nama pengguna + kata sandi; profil menampilkan kode keluarga 6 karakter dan tombol keluar. Tanpa Supabase: profil lokal (nama panggilan, avatar, kelas). Tanpa data pribadi lain.
 2. **Kebunku**: tanaman aktif di tengah, streak harian, tombol besar "Ayo Belajar!", akses ke Peta dan Koleksi, kartu Lencanaku. Pesan semangat dari orang tua muncul di sini.
    - Kebun hidup: hanya tanaman yang sedang tumbuh yang tampil (tanaman yang sudah penuh ada di Koleksi), langit mengikuti jam lokal (pagi, siang, sore, malam berbintang), kupu-kupu, dan Kumbi yang bisa diketuk untuk sapaan. Mengetuk tanaman menampilkan fakta uniknya. Animasi mati bila `prefers-reduced-motion`.
    - Kartu "Hari ini": sesi dan soal benar hari ini, total soal benar, pengingat Siram Ulang.
@@ -74,7 +74,7 @@ Tidak dibuat (keputusan peserta, 8 Okt 2026). Dipindah ke rencana pengembangan (
 2. Materi yang sudah dikuasai vs perlu latihan, per mapel.
 3. Tombol "Kirim Semangat": pengirim (Ibu, Ayah, ...), stiker, dan pesan singkat (maks. 80 huruf) yang muncul di Kebunku anak, dengan status sudah/belum dibaca.
 4. Dilindungi gerbang orang tua sederhana (soal hitungan) agar anak tidak iseng masuk.
-6. **Pantau dari HP Lain** (opsional, aktif bila Supabase dikonfigurasi): perangkat anak membuat kode keluarga 6 karakter, HP orang tua memasukkan kode itu sehingga laporan, tantangan, dan Kirim Semangat tersinkron. Login anonim tanpa email; data keluarga dilindungi Row Level Security. localStorage tetap menjadi penyimpanan utama sehingga aplikasi berjalan tanpa internet.
+6. **Akun orang tua** (aktif bila Supabase dikonfigurasi): daftar dengan nama pengguna, kata sandi, dan kode keluarga anak; masuk dengan nama pengguna + kata sandi. Bisa menghubungkan beberapa anak, berpindah antar anak, dan hanya orang tua yang bisa mengganti kelas anak. Tanpa gerbang soal hitungan karena peran sudah ditentukan saat login.
 5. **Tantangan & Hadiah**: orang tua membuat satu tantangan untuk 7 hari ke depan: target hari belajar (1-7) atau jumlah sesi (1-20), hadiah (maks. 40 huruf), dan pengirim. Progres terlihat di kedua sisi. Bisa dihapus atau diganti setelah selesai/berakhir.
 
 ### D. Mode Demo
@@ -130,7 +130,7 @@ Acuan visual lengkap: `docs/UI.md` dan prototipe `docs/mockup/index.html` (gaya 
 
 ## 11. Privasi Anak
 
-- Bila sinkronisasi dipakai, yang tersimpan di server Supabase hanya nama panggilan, avatar, kelas, dan riwayat belajar. Hal ini dijelaskan di kartu sinkronisasi.
+- Akun memakai nama pengguna dan kata sandi saja (dipetakan ke email internal, tidak ada email sungguhan). Yang tersimpan di server Supabase hanya nama pengguna, avatar, kelas, dan riwayat belajar.
 - Hanya nama panggilan. Tanpa email, nomor telepon, atau foto.
 - Tidak ada chat bebas antar murid.
 - Tidak ada analytics pihak ketiga.

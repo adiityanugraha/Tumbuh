@@ -26,16 +26,25 @@ npm run build      # hasil statis di folder out/
 npm run preview    # menyajikan folder out/ secara lokal
 ```
 
-## Sinkronisasi Antarperangkat (opsional, Supabase)
+## Akun Anak dan Orang Tua (Supabase)
 
-Tanpa konfigurasi ini aplikasi tetap berjalan penuh dengan localStorage. Bila diisi, halaman Orang Tua menampilkan kartu "Pantau dari HP Lain": perangkat anak membuat **kode keluarga** 6 karakter, lalu HP orang tua memasukkan kode itu. Login anonim, tanpa email.
+Bila Supabase dikonfigurasi, layar awal menanyakan **"Kamu siapa?"**:
+
+- **Aku Anak**: daftar dengan nama pengguna, kata sandi, avatar, dan kelas, atau masuk dengan nama pengguna + kata sandi. Profil anak (ketuk avatar) menampilkan **kode keluarga** 6 karakter.
+- **Saya Orang Tua**: daftar dengan nama pengguna, kata sandi, dan kode keluarga anak (ada bantuan cara menemukannya), lalu masuk berikutnya cukup nama pengguna + kata sandi. Satu akun orang tua bisa menghubungkan beberapa anak (tombol "+ Tambah anak").
+- Kelas dipilih anak saat mendaftar. Setelah itu **hanya orang tua** yang bisa menggantinya (juga dikunci trigger di database).
+- **Mode Demo** tetap tersedia tanpa akun untuk juri.
+
+Tanpa konfigurasi Supabase, aplikasi memakai profil lokal tanpa akun seperti versi awal.
+
+Pengaturan:
 
 1. Buat project di [supabase.com](https://supabase.com).
-2. Authentication > Sign In / Providers: aktifkan **Allow anonymous sign-ins**.
-3. SQL Editor: jalankan isi [`supabase/schema.sql`](supabase/schema.sql) (tabel `families` dan `family_members` dengan Row Level Security, fungsi `create_family` dan `join_family`).
+2. Authentication > Sign In / Providers > Email: matikan **Confirm email** (nama pengguna dipetakan ke email internal `nama@tumbuh.app`, tidak ada email sungguhan).
+3. SQL Editor: jalankan isi [`supabase/schema.sql`](supabase/schema.sql) (tabel `profiles`, `children`, `parent_links` dengan Row Level Security, trigger kunci kelas, fungsi `register_child`, `register_parent`, `link_child`).
 4. Salin `.env.example` menjadi `.env.local`, isi `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Project Settings > API), lalu `npm run build`.
 
-Cara kerja: data tetap disimpan di localStorage. Saat tersambung, aplikasi menarik data keluarga, menggabungkannya (`src/lib/sync.ts`: sesi dan pesan digabung per id, profil dan tantangan memakai versi terbaru, kebun dihitung ulang dari sesi), lalu mengirim balik. Sinkron berjalan saat aplikasi dibuka, setelah setiap perubahan, dan tiap menit selama halaman terlihat. Mode Demo dan "Mulai dari awal" otomatis memutus perangkat dari keluarga.
+Cara kerja: localStorage tetap menjadi cache sehingga aplikasi cepat. Saat masuk, data diambil dari server; saat keluar, data di perangkat dihapus. Perubahan disinkronkan dengan menggabungkan data lokal dan server (`src/lib/sync.ts`: sesi dan pesan digabung per id, profil dan tantangan memakai versi terbaru, kebun dihitung ulang dari sesi) saat aplikasi dibuka, setelah setiap perubahan, dan tiap menit selama halaman terlihat. Lupa kata sandi belum didukung (rencana pengembangan).
 
 ## Deploy
 

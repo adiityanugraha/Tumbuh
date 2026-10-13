@@ -22,7 +22,7 @@ Web edukasi untuk anak SD kelas 1-6: anak merawat kebun virtual dan menjelajah P
 - Tailwind CSS v4 (token di `src/app/globals.css` lewat `@theme`).
 - `motion` untuk animasi, import dari `motion/react`.
 - Vitest + Testing Library untuk test.
-- Penyimpanan: localStorage lewat repository layer di `src/services/`. Sinkronisasi opsional antarperangkat lewat Supabase (`src/services/cloud.ts`, `supabase/schema.sql`), hanya dari browser karena situs statis.
+- Penyimpanan: localStorage lewat repository layer di `src/services/`. Akun anak dan orang tua plus sinkronisasi lewat Supabase (`src/services/cloud.ts`, `supabase/schema.sql`), diakses dari browser karena situs statis; tanpa konfigurasi Supabase aplikasi memakai profil lokal.
 
 Larangan teknis karena static export: tidak ada API route, server action, `cookies()`, `headers()`, atau fitur yang butuh server Node.js. Komponen yang memakai localStorage atau Web Speech API harus Client Component dan aman saat prerender (akses `window` hanya di effect/event).
 
