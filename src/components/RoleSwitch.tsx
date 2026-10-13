@@ -15,7 +15,7 @@ export function RoleSwitch({ active, className = "" }: { active: (typeof ROLES)[
           key={r.id}
           href={r.href}
           aria-current={active === r.id ? "page" : undefined}
-          className={`grid min-h-10 place-items-center rounded-full px-3.5 transition ${active === r.id ? "bg-white text-tinta shadow-sm" : "text-tinta-redup hover:text-tinta"}`}
+          className={`grid min-h-10 place-items-center rounded-full px-3.5 transition ${active === r.id ? "bg-kartu text-tinta shadow-sm" : "text-tinta-redup hover:text-tinta"}`}
         >
           {r.label}
         </Link>

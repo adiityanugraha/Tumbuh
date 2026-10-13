@@ -43,7 +43,7 @@ export function SpeakButton({ parts, label = "Bacakan" }: { parts: SpeechPart[];
         <Icon name="speaker" />
       </button>
       {noVoice && (
-        <span role="status" className="absolute top-full right-0 z-10 mt-2 w-52 rounded-2xl bg-white p-2 text-xs font-bold shadow-lg">
+        <span role="status" className="absolute top-full right-0 z-10 mt-2 w-52 rounded-2xl bg-kartu p-2 text-xs font-bold shadow-lg">
           Suara bahasa ini belum terpasang di perangkatmu, jadi suaranya mungkin terdengar berbeda.
         </span>
       )}

@@ -3,8 +3,12 @@
 /* Token desain: palet kebun Nusantara (daun, tanah, kunyit, langit, sogan) di atas latar krem. Acuan: docs/UI.md */
 @theme {
   --color-krem: #fff8ec;
+  /* Permukaan kartu (putih di mode terang). */
+  --color-kartu: #ffffff;
   --color-krem-tua: #f3e4c8;
   --color-tinta: #2a2b2e;
+  /* Teks yang selalu gelap, untuk di atas latar kuning (tetap gelap di mode gelap). */
+  --color-tinta-tetap: #2a2b2e;
   --color-tinta-redup: #5b5a55;
   --color-sogan: #8a5a2b;
   --color-kunci: #c9c2b4;
@@ -40,8 +44,8 @@
 
   --radius-blob: 1.75rem;
 
-  --shadow-daun: 0 5px 0 0 var(--color-daun-800);
-  --shadow-kunyit: 0 5px 0 0 var(--color-kunyit-600);
+  --shadow-daun: 0 5px 0 0 #1d5235;
+  --shadow-kunyit: 0 5px 0 0 #b97f0f;
   --shadow-krem: 0 5px 0 0 var(--color-krem-tua);
 
   --animate-sway: sway 3.5s ease-in-out infinite;
@@ -179,4 +183,56 @@ body::before {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Mode gelap (Pengaturan > Tampilan). Atribut data-theme dipasang di <html> sebelum halaman tampil (lihat layout.tsx).
+   Skala warna dibalik: warna muda untuk latar menjadi gelap, warna tua untuk teks menjadi terang. */
+:root[data-theme="gelap"] {
+  color-scheme: dark;
+  --color-krem: #121a16;
+  --color-kartu: #1c2621;
+  --color-krem-tua: #2d3a33;
+  --color-tinta: #f2eee6;
+  --color-tinta-redup: #c2c8bd;
+  --color-sogan: #e8bd8c;
+  --color-kunci: #5c625d;
+  --color-daun-50: #17251d;
+  --color-daun-100: #1f3a2a;
+  --color-daun-300: #3e8a5c;
+  --color-daun-500: #4caf73;
+  --color-daun-800: #9fdcb3;
+  --color-tanah-100: #3a2419;
+  --color-tanah-300: #a4644a;
+  --color-tanah-700: #f1b08f;
+  --color-kunyit-100: #3a2f12;
+  --color-kunyit-600: #f4c463;
+  --color-langit-100: #182c40;
+  --color-langit-300: #2f5f8f;
+  --color-langit-500: #6fb0ec;
+  --color-langit-700: #a9d1f5;
+}
+:root[data-theme="gelap"] body::before {
+  opacity: 0.04;
+}
+:root[data-theme="gelap"] .mega-mendung {
+  opacity: 0.45;
+}
+:root[data-theme="gelap"] img {
+  /* Gambar sedikit diredupkan agar tidak menyilaukan di latar gelap. */
+  filter: brightness(0.92);
+}
+
+/* Huruf besar (Pengaturan > Tampilan): semua ukuran berbasis rem ikut membesar. */
+:root[data-font="besar"] {
+  font-size: 112.5%;
+}
+
+/* Kurangi animasi (Pengaturan > Tampilan): sama dengan prefers-reduced-motion. */
+:root[data-motion="kurangi"] *,
+:root[data-motion="kurangi"] ::before,
+:root[data-motion="kurangi"] ::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }

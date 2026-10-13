@@ -132,7 +132,7 @@ export function PetaView() {
                   )}
                   {r.id === selected && (
                     <div
-                      className="absolute inset-0 animate-pulse bg-white/20"
+                      className="absolute inset-0 animate-pulse bg-kartu/20"
                       style={maskStyle(r.id)}
                     />
                   )}
@@ -171,7 +171,7 @@ export function PetaView() {
                   />
                   <span
                     aria-hidden="true"
-                    className={`pointer-events-none absolute grid size-[3.2%] min-h-6 min-w-6 -translate-1/2 place-items-center rounded-full border-2 bg-white text-[clamp(10px,1.4vw,18px)] font-bold shadow ${st === "aktif" ? "animate-bob border-daun-500" : st === "selesai" ? "border-kunyit-400 text-kunyit-600" : "border-krem-tua"}`}
+                    className={`pointer-events-none absolute grid size-[3.2%] min-h-6 min-w-6 -translate-1/2 place-items-center rounded-full border-2 bg-kartu text-[clamp(10px,1.4vw,18px)] font-bold shadow ${st === "aktif" ? "animate-bob border-daun-500" : st === "selesai" ? "border-kunyit-400 text-kunyit-600" : "border-krem-tua"}`}
                     style={{ left: `${badge[0]}%`, top: `${badge[1]}%` }}
                   >
                     {BADGE[st]}
@@ -437,7 +437,7 @@ function Timeline({
               type="button"
               onClick={() => onSelect(r.id)}
               aria-pressed={r.id === selected}
-              className={`relative flex h-full w-full cursor-pointer flex-col items-center gap-1.5 rounded-[22px] border-3 bg-white p-3 text-center transition hover:-translate-y-0.5 ${
+              className={`relative flex h-full w-full cursor-pointer flex-col items-center gap-1.5 rounded-[22px] border-3 bg-kartu p-3 text-center transition hover:-translate-y-0.5 ${
                 r.id === selected
                   ? "border-daun-500"
                   : "border-krem-tua hover:border-daun-300"
@@ -446,7 +446,7 @@ function Timeline({
               <span
                 className={`font-display grid size-8 place-items-center rounded-full font-semibold ${
                   st === "selesai"
-                    ? "bg-kunyit-400 text-tinta"
+                    ? "bg-kunyit-400 text-tinta-tetap"
                     : st === "aktif"
                       ? "bg-daun-500 text-white"
                       : "bg-krem-tua text-tinta-redup"
@@ -517,7 +517,7 @@ function Culture({ id, locked }: { id: RegionId; locked: boolean }) {
               className="bg-krem flex items-start gap-3 rounded-[18px] p-2.5"
             >
               <span
-                className="grid size-11 flex-none place-items-center rounded-2xl bg-white text-2xl"
+                className="grid size-11 flex-none place-items-center rounded-2xl bg-kartu text-2xl"
                 aria-hidden="true"
               >
                 {c.icon}

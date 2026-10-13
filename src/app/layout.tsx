@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fredoka, Nunito } from "next/font/google";
 import { AppProvider } from "@/components/AppProvider";
 import { SITE_URL } from "@/lib/site";
+import { SETTINGS_BOOT_SCRIPT } from "@/services/settings";
 import "./globals.css";
 
 const fredoka = Fredoka({ variable: "--font-fredoka", subsets: ["latin"] });
@@ -51,10 +52,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    // suppressHydrationWarning: skrip pengaturan memasang data-theme/data-font di <html> sebelum React berjalan.
     <html
       lang="id"
       className={`${fredoka.variable} ${nunito.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SETTINGS_BOOT_SCRIPT }} />
+      </head>
       <body className="min-h-full font-sans">
         <AppProvider>{children}</AppProvider>
       </body>

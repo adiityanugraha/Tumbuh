@@ -85,7 +85,7 @@ export function TopikView({ subject }: { subject: Subject }) {
               <button
                 type="button"
                 onClick={() => setTopic(t.topic)}
-                className="batik-line rounded-blob border-krem-tua hover:border-daun-300 flex h-full w-full cursor-pointer flex-col items-start gap-2 border-3 bg-white p-5 text-left transition hover:-translate-y-1"
+                className="batik-line rounded-blob border-krem-tua hover:border-daun-300 flex h-full w-full cursor-pointer flex-col items-start gap-2 border-3 bg-kartu p-5 text-left transition hover:-translate-y-1"
               >
                 <span
                   className={`grid size-12 place-items-center rounded-2xl text-2xl ${SUBJECT_BG[subject]}`}

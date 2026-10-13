@@ -35,7 +35,7 @@ export function Welcome() {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="border-krem-tua grid w-full overflow-hidden rounded-[36px] border-3 bg-white md:grid-cols-[1.1fr_1fr]"
+        className="border-krem-tua grid w-full overflow-hidden rounded-[36px] border-3 bg-kartu md:grid-cols-[1.1fr_1fr]"
       >
         <KumbiPanel />
         <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -76,7 +76,7 @@ function PickRole({ onPick }: { onPick: (s: Step) => void }) {
             key={r.id}
             type="button"
             onClick={() => onPick(r.id)}
-            className="border-krem-tua hover:border-daun-300 flex min-h-20 cursor-pointer items-center gap-4 rounded-[24px] border-3 bg-white px-5 text-left transition hover:-translate-y-0.5"
+            className="border-krem-tua hover:border-daun-300 flex min-h-20 cursor-pointer items-center gap-4 rounded-[24px] border-3 bg-kartu px-5 text-left transition hover:-translate-y-0.5"
           >
             <span className="text-4xl" aria-hidden="true">
               {r.emoji}
@@ -181,7 +181,7 @@ function AuthForm({
               setMode(m);
               setError(null);
             }}
-            className={`min-h-11 cursor-pointer rounded-full transition ${mode === m ? "text-tinta bg-white shadow-sm" : "text-tinta-redup"}`}
+            className={`min-h-11 cursor-pointer rounded-full transition ${mode === m ? "text-tinta bg-kartu shadow-sm" : "text-tinta-redup"}`}
           >
             {m === "masuk" ? "Masuk" : "Daftar"}
           </button>
@@ -232,7 +232,7 @@ function AuthForm({
                   onClick={() => setAvatar(a)}
                   aria-pressed={avatar === a}
                   aria-label={`Avatar ${a}`}
-                  className={`aspect-square cursor-pointer rounded-[20px] border-3 text-3xl transition hover:scale-105 ${avatar === a ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-white"}`}
+                  className={`aspect-square cursor-pointer rounded-[20px] border-3 text-3xl transition hover:scale-105 ${avatar === a ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-kartu"}`}
                 >
                   {a}
                 </button>
@@ -251,7 +251,7 @@ function AuthForm({
                   onClick={() => setGrade(g)}
                   aria-pressed={grade === g}
                   aria-label={`Kelas ${g}`}
-                  className={`font-display min-h-14 cursor-pointer rounded-[18px] border-3 text-2xl font-semibold transition ${grade === g ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-white"}`}
+                  className={`font-display min-h-14 cursor-pointer rounded-[18px] border-3 text-2xl font-semibold transition ${grade === g ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-kartu"}`}
                 >
                   {g}
                 </button>

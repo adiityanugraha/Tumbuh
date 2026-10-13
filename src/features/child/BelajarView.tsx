@@ -50,7 +50,7 @@ export function BelajarView() {
           return (
             <div
               key={s.id}
-              className="batik-line rounded-blob border-krem-tua flex flex-col items-center gap-2.5 border-3 bg-white p-6 text-center"
+              className="batik-line rounded-blob border-krem-tua flex flex-col items-center gap-2.5 border-3 bg-kartu p-6 text-center"
             >
               <span
                 className={`grid size-20 place-items-center rounded-[26px] text-4xl ${SUBJECT_BG[s.id]}`}
@@ -114,7 +114,7 @@ export function BelajarView() {
               <Link
                 key={s.id}
                 href={`/belajar/${s.id}/ulang/`}
-                className="border-krem-tua hover:border-daun-300 flex min-h-16 items-center gap-3 rounded-[22px] border-3 bg-white px-4 py-2 font-extrabold transition hover:-translate-y-0.5"
+                className="border-krem-tua hover:border-daun-300 flex min-h-16 items-center gap-3 rounded-[22px] border-3 bg-kartu px-4 py-2 font-extrabold transition hover:-translate-y-0.5"
               >
                 <span
                   className={`grid size-11 place-items-center rounded-2xl text-2xl ${SUBJECT_BG[s.id]}`}
@@ -157,7 +157,7 @@ export function BelajarView() {
             <Link
               key={g.href}
               href={g.href}
-              className="rounded-blob border-krem-tua hover:border-daun-300 flex items-center gap-4 border-3 bg-white p-5 transition hover:-translate-y-1"
+              className="rounded-blob border-krem-tua hover:border-daun-300 flex items-center gap-4 border-3 bg-kartu p-5 transition hover:-translate-y-1"
             >
               <span
                 className={`grid size-16 flex-none place-items-center rounded-[22px] text-4xl ${g.bg}`}

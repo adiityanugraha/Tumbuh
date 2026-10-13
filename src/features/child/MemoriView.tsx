@@ -129,7 +129,7 @@ export function MemoriView() {
                   matched.has(card.key)
                     ? "border-daun-300 bg-daun-100"
                     : shown
-                      ? "border-kunyit-400 bg-white"
+                      ? "border-kunyit-400 bg-kartu"
                       : "border-kunyit-400 bg-kunyit-100 bg-kawung hover:-translate-y-1"
                 }`}
               >

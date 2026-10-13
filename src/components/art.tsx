@@ -109,7 +109,7 @@ export function PlantArt({
 /** Awan mega mendung berlapis, direntangkan selebar wadah. */
 export function MegaMendung({ className = "" }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+    <svg className={`mega-mendung ${className}`} viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
       <path
         d="M0 0h1200v64c-30 0-36-20-66-20-34 0-34 26-70 26-30 0-34-18-64-18s-36 30-76 30-40-24-72-24-34 18-66 18-34-22-64-22-38 28-74 28-36-20-68-20-30 16-62 16-38-26-70-26-34 22-66 22-30-14-60-14-40 26-74 26-34-22-64-22-30 18-60 18-34-24-64-24S20 64 0 64z"
         fill="#ddeffc"

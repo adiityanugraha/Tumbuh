@@ -60,7 +60,7 @@ export function KartuKataView() {
                       )
                   : undefined
               }
-              className={`flex min-h-14 flex-none cursor-pointer items-center gap-2.5 rounded-[20px] border-3 px-3 text-left font-extrabold whitespace-nowrap transition ${d.id === deckId ? "border-daun-600 bg-daun-100 text-daun-800" : "border-krem-tua hover:border-daun-300 bg-white"}`}
+              className={`flex min-h-14 flex-none cursor-pointer items-center gap-2.5 rounded-[20px] border-3 px-3 text-left font-extrabold whitespace-nowrap transition ${d.id === deckId ? "border-daun-600 bg-daun-100 text-daun-800" : "border-krem-tua hover:border-daun-300 bg-kartu"}`}
             >
               <span className="text-2xl" aria-hidden="true">
                 {d.emoji}
@@ -80,7 +80,7 @@ export function KartuKataView() {
             >
               <span
                 aria-hidden={flipped}
-                className="rounded-blob border-krem-tua absolute inset-0 flex flex-col items-center justify-center gap-2 border-3 bg-white backface-hidden"
+                className="rounded-blob border-krem-tua absolute inset-0 flex flex-col items-center justify-center gap-2 border-3 bg-kartu backface-hidden"
               >
                 <span className="text-8xl" aria-hidden="true">
                   {emoji}

@@ -27,6 +27,13 @@ import type {
 } from "@/lib/types";
 import * as cloud from "@/services/cloud";
 import { getRepository } from "@/services/repository";
+import {
+  applySettings,
+  DEFAULT_SETTINGS,
+  getSettings,
+  saveSettings,
+  type Settings,
+} from "@/services/settings";
 
 interface AppState {
   ready: boolean;
@@ -71,6 +78,12 @@ interface AppState {
   switchChild: (childId: string) => Promise<void>;
   addChild: (code: string) => Promise<void>;
   syncNow: () => Promise<void>;
+  /** Pengaturan perangkat (tema, huruf, animasi, suara, sapaan). */
+  settings: Settings;
+  updateSettings: (patch: Partial<Settings>) => void;
+  setAvatar: (avatar: string) => Promise<void>;
+  changePassword: (oldPassword: string, newPassword: string) => Promise<void>;
+  unlinkChild: (childId: string) => Promise<void>;
 }
 
 export type SyncStatus = "off" | "syncing" | "ok" | "error";
@@ -98,6 +111,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [challenge, setChallengeState] = useState<ParentChallenge | null>(null);
   const [account, setAccount] = useState<Account | null>(null);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>("off");
+  const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
   const syncing = useRef(false);
 
   const load = useCallback(async () => {
@@ -115,6 +129,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setEncouragements(en);
     setChallengeState(ch);
     setAccount(cloud.isCloudConfigured ? cloud.accountStore.get() : null);
+    setSettings(getSettings());
     setToday(toDateKey());
     setReady(true);
   }, []);
@@ -133,6 +148,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const remote = await cloud.pullChild(target);
       const local = await repo.exportState();
       const merged = remote ? mergeStates(local, remote, PLANT_ORDER) : local;
+      // Kelas ditentukan orang tua: akun anak selalu memakai kelas dari server.
+      const acc = cloud.accountStore.get();
+      if (acc?.role === "anak" && remote?.student && merged.student)
+        merged.student = { ...merged.student, grade: remote.student.grade };
       await cloud.pushChild(target, merged);
       // Gabung lagi dengan data lokal terbaru agar sesi yang selesai selama sinkron tidak tertimpa.
       await repo.importState(
@@ -151,13 +170,22 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     // Data hanya ada di localStorage, jadi dimuat setelah halaman tampil di browser.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     load().then(syncNow);
-    if (!cloud.isCloudConfigured) return;
+    // Tema "auto" mengikuti perubahan mode gelap perangkat.
+    const scheme =
+      typeof matchMedia === "function"
+        ? matchMedia("(prefers-color-scheme: dark)")
+        : null;
+    const onScheme = () => applySettings(getSettings());
+    scheme?.addEventListener("change", onScheme);
+    if (!cloud.isCloudConfigured)
+      return () => scheme?.removeEventListener("change", onScheme);
     // Sinkron saat aplikasi dibuka lagi dan tiap menit selama terlihat, agar pesan orang tua cepat sampai.
     const whenVisible = () =>
       document.visibilityState === "visible" && void syncNow();
     document.addEventListener("visibilitychange", whenVisible);
     const timer = setInterval(whenVisible, 60_000);
     return () => {
+      scheme?.removeEventListener("change", onScheme);
       document.removeEventListener("visibilitychange", whenVisible);
       clearInterval(timer);
     };
@@ -373,6 +401,39 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
+  const updateSettings: AppState["updateSettings"] = (patch) => {
+    const next = { ...getSettings(), ...patch };
+    saveSettings(next);
+    setSettings(next);
+  };
+
+  /** Avatar boleh diganti anak sendiri; ikut tersinkron ke orang tua. */
+  const setAvatar: AppState["setAvatar"] = async (avatar) => {
+    if (!student) return;
+    const st = { ...student, avatar };
+    await getRepository().saveStudent(st);
+    setStudent(st);
+    void syncNow();
+  };
+
+  const changePassword: AppState["changePassword"] = async (
+    oldPassword,
+    newPassword,
+  ) => {
+    if (!account) return;
+    await cloud.changePassword(account.username, oldPassword, newPassword);
+  };
+
+  const unlinkChild: AppState["unlinkChild"] = async (childId) => {
+    if (account?.role !== "ortu") return;
+    await cloud.unlinkChild(childId);
+    await openParent(
+      account.username,
+      account.userId,
+      account.activeChildId === childId ? undefined : account.activeChildId,
+    );
+  };
+
   const addChild: AppState["addChild"] = async (code) => {
     if (account?.role !== "ortu") return;
     const childId = await cloud.linkChild(code);
@@ -407,9 +468,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         switchChild,
         addChild,
         syncNow,
+        settings,
+        updateSettings,
+        setAvatar,
+        changePassword,
+        unlinkChild,
       }}
     >
-      <MotionConfig reducedMotion="user">{children}</MotionConfig>
+      <MotionConfig reducedMotion={settings.reduceMotion ? "always" : "user"}>
+        {children}
+      </MotionConfig>
     </AppContext.Provider>
   );
 }

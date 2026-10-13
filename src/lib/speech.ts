@@ -1,4 +1,5 @@
-/** Narasi suara lewat Web Speech API. Hanya dipanggil dari event/effect di client. */
+/** Narasi suara lewat Web Speech API. Hanya dipanggil dari event/effect di client. Kecepatan diatur di Pengaturan > Suara. */
+import { getSettings, SPEECH_RATE } from "@/services/settings";
 
 export const isSpeechSupported = () => typeof window !== "undefined" && "speechSynthesis" in window;
 
@@ -25,7 +26,7 @@ export function speak(parts: SpeechPart[], onEnd?: () => void) {
   parts.forEach((part, i) => {
     const u = new SpeechSynthesisUtterance(part.text);
     u.lang = part.lang;
-    u.rate = 0.9;
+    u.rate = SPEECH_RATE[getSettings().speechRate];
     const voice = pickVoice(part.lang);
     if (voice) u.voice = voice;
     if (i === parts.length - 1 && onEnd) u.onend = onEnd;

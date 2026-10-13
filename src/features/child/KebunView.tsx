@@ -124,7 +124,7 @@ export function KebunView() {
                 <>
                   Pesan dari {latest.from ?? "orang tua"}
                   {!latest.read && (
-                    <Tag className="bg-kunyit-400! text-tinta! ml-2">Baru</Tag>
+                    <Tag className="bg-kunyit-400! text-tinta-tetap! ml-2">Baru</Tag>
                   )}
                   <p className="font-semibold">
                     &ldquo;{latest.message}&rdquo;
@@ -167,7 +167,7 @@ export function KebunView() {
                 <Link
                   key={s.id}
                   href={`/belajar/${s.id}/`}
-                  className="border-krem-tua hover:border-daun-300 flex min-h-18 items-center gap-3.5 rounded-[22px] border-3 bg-white px-4 py-2.5 transition hover:translate-x-1"
+                  className="border-krem-tua hover:border-daun-300 flex min-h-18 items-center gap-3.5 rounded-[22px] border-3 bg-kartu px-4 py-2.5 transition hover:translate-x-1"
                 >
                   <span
                     className={`grid size-12 flex-none place-items-center rounded-2xl text-2xl ${SUBJECT_BG[s.id]}`}

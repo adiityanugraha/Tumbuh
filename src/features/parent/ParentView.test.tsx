@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { createElement, Fragment, type ReactNode } from "react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("motion/react", () => {
   const strip = ({
@@ -28,7 +28,9 @@ vi.mock("motion/react", () => {
   return { motion, AnimatePresence: Pass, MotionConfig: Pass };
 });
 
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn(), replace: vi.fn() }) }));
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn() }),
+}));
 
 const { AppProvider } = await import("@/components/AppProvider");
 const { ParentView } = await import("./ParentView");
@@ -45,6 +47,7 @@ function answerGate(correct: boolean) {
 }
 
 describe("ParentView", () => {
+  afterEach(cleanup);
   beforeEach(() => {
     const { student, garden, sessions, challenge } = createDemoData(
       new Date().toLocaleDateString("sv-SE"),
@@ -53,13 +56,29 @@ describe("ParentView", () => {
       "tumbuh:v1",
       JSON.stringify({
         version: 1,
-        student,
+        // Profil lokal (bukan Mode Demo) agar gerbang orang tua ikut teruji.
+        student: { ...student, demo: false },
         garden,
         sessions,
         challenge,
         encouragements: [],
       }),
     );
+  });
+
+  it("Mode Demo langsung membuka laporan tanpa soal gerbang", async () => {
+    const saved = JSON.parse(localStorage.getItem("tumbuh:v1")!);
+    localStorage.setItem(
+      "tumbuh:v1",
+      JSON.stringify({ ...saved, student: { ...saved.student, demo: true } }),
+    );
+    render(
+      <AppProvider>
+        <ParentView />
+      </AppProvider>,
+    );
+    await screen.findByText("Laporan Belajar Dewi");
+    expect(screen.queryByText("Khusus orang tua")).toBeNull();
   });
 
   it("gerbang orang tua, laporan, lalu kirim semangat", async () => {

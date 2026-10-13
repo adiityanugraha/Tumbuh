@@ -1,17 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import { Icon, Mascot } from "@/components/art";
 import { Page } from "@/components/Page";
 import { PlantThumb } from "@/components/PlantVisual";
 import { RoleSwitch } from "@/components/RoleSwitch";
+import { SettingsButton } from "@/components/SettingsDialog";
+import { AddChildForm } from "./AddChildForm";
 import { Button, ButtonLink, Card, DemoTag, Tag } from "@/components/ui";
 import { getPlant, PLANT_ORDER, REGIONS, stageLabel } from "@/data/plants";
 import { SUBJECTS } from "@/data/questions";
-import { authErrorText } from "@/lib/account";
 import { addDays, keyToDate } from "@/lib/date";
 import { badgeStatus } from "@/lib/badges";
 import { challengeLabel, challengeStatus } from "@/lib/challenge";
@@ -26,14 +26,13 @@ import { masteryBySubject, weeklySummary, type Mastery } from "@/lib/insights";
 import type { Encouragement, Grade, ParentChallenge } from "@/lib/types";
 
 export function ParentView() {
-  const { ready, student, account, logout } = useApp();
-  const router = useRouter();
+  const { ready, student, account } = useApp();
   const [unlocked, setUnlocked] = useState(false);
   const isParent = account?.role === "ortu";
 
   return (
     <>
-      <header className="sticky top-0 z-30 bg-white">
+      <header className="bg-kartu sticky top-0 z-30">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5 md:px-6">
           <Link
             href={account ? "/orang-tua/" : "/kebun/"}
@@ -45,27 +44,15 @@ export function ParentView() {
             Tumbuh
           </Link>
           <Tag className="text-sm!">Untuk Orang Tua</Tag>
-          {isParent ? (
-            <div className="ml-auto flex items-center gap-3">
-              <span className="text-tinta-redup text-sm font-extrabold">
+          <div className="ml-auto flex items-center gap-3">
+            {isParent && (
+              <span className="text-tinta-redup text-sm font-extrabold max-sm:hidden">
                 Masuk sebagai {account.username}
               </span>
-              <Button
-                variant="ghost"
-                className="min-h-11 px-4 text-base"
-                onClick={async () => {
-                  await logout();
-                  router.replace("/");
-                }}
-              >
-                Keluar
-              </Button>
-            </div>
-          ) : (
-            !account && (
-              <RoleSwitch active="orang-tua" className="ml-auto flex" />
-            )
-          )}
+            )}
+            {!account && <RoleSwitch active="orang-tua" className="flex" />}
+            <SettingsButton variant="ortu" />
+          </div>
         </div>
         <div className="bg-parang h-1" />
       </header>
@@ -79,7 +66,8 @@ export function ParentView() {
           </>
         ) : !student ? (
           <NoStudent />
-        ) : unlocked ? (
+        ) : unlocked || student.demo ? (
+          // Mode Demo langsung membuka laporan agar juri tidak perlu menjawab soal gerbang.
           <Report />
         ) : (
           <ParentGate onPass={() => setUnlocked(true)} />
@@ -150,7 +138,7 @@ function ParentToolbar() {
             type="button"
             aria-pressed={c.id === account.activeChildId}
             onClick={() => c.id !== account.activeChildId && switchChild(c.id)}
-            className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-full border-3 px-3.5 font-bold transition ${c.id === account.activeChildId ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-white"}`}
+            className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-full border-3 px-3.5 font-bold transition ${c.id === account.activeChildId ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-kartu"}`}
           >
             <span aria-hidden="true">{c.avatar}</span>
             {c.nickname}
@@ -170,7 +158,7 @@ function ParentToolbar() {
             <select
               value={student.grade}
               onChange={(e) => setGrade(Number(e.target.value) as Grade)}
-              className="border-krem-tua font-display text-tinta min-h-11 rounded-full border-3 bg-white px-3 text-lg"
+              className="border-krem-tua font-display text-tinta bg-kartu min-h-11 rounded-full border-3 px-3 text-lg"
             >
               {[1, 2, 3, 4, 5, 6].map((g) => (
                 <option key={g} value={g}>
@@ -208,60 +196,6 @@ function ParentToolbar() {
         </div>
       )}
     </Card>
-  );
-}
-
-/** Hubungkan anak lain lewat kode keluarga. */
-function AddChildForm({ onDone }: { onDone?: () => void }) {
-  const { addChild } = useApp();
-  const [code, setCode] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setBusy(true);
-    setError(null);
-    try {
-      await addChild(code);
-      onDone?.();
-    } catch (err) {
-      setError(authErrorText(err));
-    } finally {
-      setBusy(false);
-    }
-  };
-  return (
-    <form onSubmit={submit} className="flex flex-wrap items-end gap-3">
-      <label className="flex flex-col gap-1.5">
-        <span className="text-sogan text-sm font-extrabold">
-          Kode keluarga anak
-        </span>
-        <input
-          value={code}
-          onChange={(e) =>
-            setCode(e.target.value.toUpperCase().replace(/[^0-9A-Z]/g, ""))
-          }
-          maxLength={6}
-          autoComplete="off"
-          placeholder="3FA9C1"
-          className="border-krem-tua font-display focus:border-langit-500 min-h-12 w-44 rounded-[18px] border-3 px-3 text-center text-xl tracking-[0.3em] uppercase outline-none"
-        />
-      </label>
-      <Button
-        type="submit"
-        variant="kunyit"
-        disabled={code.length !== 6 || busy}
-        className="min-h-12 text-lg"
-      >
-        {busy ? "Menghubungkan..." : "Hubungkan"}
-      </Button>
-      <p className="text-tinta-redup w-full text-xs font-bold">
-        Kode ada di profil akun anak: ketuk avatar di pojok kanan atas.
-      </p>
-      <p role="status" className="text-tanah-700 w-full text-sm font-bold">
-        {error}
-      </p>
-    </form>
   );
 }
 
@@ -336,7 +270,7 @@ const MASTERY: { id: Mastery; label: string; className: string }[] = [
 ];
 
 function Report() {
-  const { student, garden, sessions, today } = useApp();
+  const { student, garden, sessions, today, settings } = useApp();
   if (!student || !garden) return null;
 
   const week = weeklySummary(sessions, today);
@@ -468,12 +402,13 @@ function Report() {
             </div>
           </Card>
 
-          <SendEncouragement />
+          {/* key: form dimuat ulang saat sapaan bawaan di Pengaturan berubah. */}
+          <SendEncouragement key={settings.sender} />
         </div>
 
         <div className="grid gap-5">
           <GardenCard />
-          <ChallengeEditor />
+          <ChallengeEditor key={settings.sender} />
         </div>
       </div>
     </Page>
@@ -522,7 +457,10 @@ function GardenCard() {
   );
 }
 
-const SENDERS = ["Ibu", "Ayah", "Kakak", "Nenek", "Kakek"];
+export const SENDERS = ["Ibu", "Ayah", "Kakak", "Nenek", "Kakek"];
+/** Daftar sapaan, ditambah sapaan bawaan dari Pengaturan bila bukan salah satu pilihan baku. */
+const sendersWith = (own: string) =>
+  SENDERS.includes(own) ? SENDERS : [own, ...SENDERS];
 const STICKERS = ["🌟", "💪", "❤️", "🎉", "🌻", "👍"];
 const PRESETS = [
   "Semangat belajar ya, Nak!",
@@ -532,7 +470,7 @@ const PRESETS = [
 ];
 
 const chip = (on: boolean) =>
-  `min-h-11 cursor-pointer rounded-full border-3 px-3.5 font-bold transition ${on ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua bg-white hover:border-daun-300"}`;
+  `min-h-11 cursor-pointer rounded-full border-3 px-3.5 font-bold transition ${on ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua bg-kartu hover:border-daun-300"}`;
 
 const REWARDS = [
   "Piknik ke taman",
@@ -545,7 +483,8 @@ const LIMIT = { hari: 7, sesi: 20 };
 /** Tantangan mingguan dari orang tua: target hari/sesi belajar dan hadiah, tampil di Kebunku anak. */
 function ChallengeEditor() {
   const { challenge, setChallenge, sessions, today } = useApp();
-  const [from, setFrom] = useState(SENDERS[0]);
+  const { settings } = useApp();
+  const [from, setFrom] = useState(settings.sender);
   const [kind, setKind] = useState<ParentChallenge["kind"]>("hari");
   const [target, setTarget] = useState(5);
   const [reward, setReward] = useState("");
@@ -617,7 +556,7 @@ function ChallengeEditor() {
             Dari
           </legend>
           <div className="flex flex-wrap gap-1.5">
-            {SENDERS.map((s) => (
+            {sendersWith(settings.sender).map((s) => (
               <button
                 key={s}
                 type="button"
@@ -655,7 +594,7 @@ function ChallengeEditor() {
                 type="button"
                 aria-label="Kurangi target"
                 onClick={() => setTarget((t) => Math.max(1, t - 1))}
-                className="border-krem-tua font-display size-11 cursor-pointer rounded-full border-3 bg-white text-xl"
+                className="border-krem-tua font-display bg-kartu size-11 cursor-pointer rounded-full border-3 text-xl"
               >
                 −
               </button>
@@ -669,7 +608,7 @@ function ChallengeEditor() {
                 type="button"
                 aria-label="Tambah target"
                 onClick={() => setTarget((t) => Math.min(LIMIT[kind], t + 1))}
-                className="border-krem-tua font-display size-11 cursor-pointer rounded-full border-3 bg-white text-xl"
+                className="border-krem-tua font-display bg-kartu size-11 cursor-pointer rounded-full border-3 text-xl"
               >
                 +
               </button>
@@ -709,7 +648,8 @@ function ChallengeEditor() {
 
 function SendEncouragement() {
   const { encouragements, sendEncouragement } = useApp();
-  const [from, setFrom] = useState(SENDERS[0]);
+  const { settings } = useApp();
+  const [from, setFrom] = useState(settings.sender);
   const [sticker, setSticker] = useState(STICKERS[0]);
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
@@ -738,7 +678,7 @@ function SendEncouragement() {
                 Dari
               </legend>
               <div className="flex flex-wrap gap-1.5">
-                {SENDERS.map((s) => (
+                {sendersWith(settings.sender).map((s) => (
                   <button
                     key={s}
                     type="button"
@@ -764,7 +704,7 @@ function SendEncouragement() {
                     aria-pressed={sticker === s}
                     aria-label={`Stiker ${s}`}
                     onClick={() => setSticker(s)}
-                    className={`aspect-square min-h-11 cursor-pointer rounded-2xl border-3 text-2xl transition ${sticker === s ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-white"}`}
+                    className={`aspect-square min-h-11 cursor-pointer rounded-2xl border-3 text-2xl transition ${sticker === s ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-kartu"}`}
                   >
                     {s}
                   </button>

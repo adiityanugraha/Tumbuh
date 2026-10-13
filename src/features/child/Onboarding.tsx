@@ -39,7 +39,7 @@ export function Onboarding() {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="border-krem-tua grid w-full overflow-hidden rounded-[36px] border-3 bg-white md:grid-cols-[1.1fr_1fr]"
+        className="border-krem-tua grid w-full overflow-hidden rounded-[36px] border-3 bg-kartu md:grid-cols-[1.1fr_1fr]"
       >
         <KumbiPanel />
 
@@ -75,7 +75,7 @@ export function Onboarding() {
                   onClick={() => setAvatar(a)}
                   aria-pressed={avatar === a}
                   aria-label={`Avatar ${a}`}
-                  className={`aspect-square cursor-pointer rounded-[20px] border-3 text-3xl transition hover:scale-105 ${avatar === a ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-white"}`}
+                  className={`aspect-square cursor-pointer rounded-[20px] border-3 text-3xl transition hover:scale-105 ${avatar === a ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-kartu"}`}
                 >
                   {a}
                 </button>
@@ -95,7 +95,7 @@ export function Onboarding() {
                   onClick={() => setGrade(g)}
                   aria-pressed={grade === g}
                   aria-label={`Kelas ${g}`}
-                  className={`font-display min-h-15 cursor-pointer rounded-[18px] border-3 text-2xl font-semibold transition ${grade === g ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-white"}`}
+                  className={`font-display min-h-15 cursor-pointer rounded-[18px] border-3 text-2xl font-semibold transition ${grade === g ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-kartu"}`}
                 >
                   {g}
                 </button>

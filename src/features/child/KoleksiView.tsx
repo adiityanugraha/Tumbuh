@@ -45,7 +45,7 @@ export function KoleksiView() {
                 type="button"
                 onClick={() => setFilter(r.id)}
                 aria-pressed={filter === r.id}
-                className={`min-h-11 cursor-pointer rounded-full border-2 px-4 font-extrabold transition ${filter === r.id ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-white"}`}
+                className={`min-h-11 cursor-pointer rounded-full border-2 px-4 font-extrabold transition ${filter === r.id ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-kartu"}`}
               >
                 {r.name}
               </button>
@@ -62,7 +62,7 @@ export function KoleksiView() {
                   disabled={!owned}
                   onClick={() => setSelected(p.id)}
                   aria-pressed={selected === p.id}
-                  className={`before:border-tanah-300 enabled:hover:border-kunyit-400 relative rounded-3xl border-3 bg-white p-3 text-center transition before:pointer-events-none before:absolute before:inset-1.5 before:rounded-[18px] before:border-2 before:border-dashed enabled:cursor-pointer enabled:hover:-translate-y-1 enabled:hover:-rotate-1 ${selected === p.id && owned ? "border-kunyit-400" : "border-krem-tua"}`}
+                  className={`before:border-tanah-300 enabled:hover:border-kunyit-400 relative rounded-3xl border-3 bg-kartu p-3 text-center transition before:pointer-events-none before:absolute before:inset-1.5 before:rounded-[18px] before:border-2 before:border-dashed enabled:cursor-pointer enabled:hover:-translate-y-1 enabled:hover:-rotate-1 ${selected === p.id && owned ? "border-kunyit-400" : "border-krem-tua"}`}
                 >
                   <span
                     className={`bg-daun-100 bg-kawung grid h-28 place-items-center rounded-[18px] bg-size-[28px_28px] text-5xl ${owned ? "" : "opacity-30 brightness-35 grayscale"}`}

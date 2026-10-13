@@ -17,7 +17,7 @@ interface InputProps<Q> {
 }
 
 const chip = "min-h-14 cursor-pointer rounded-2xl border-3 px-4 font-display text-xl font-semibold transition";
-const chipIdle = "border-krem-tua bg-white shadow-krem hover:-translate-y-0.5 hover:border-langit-300";
+const chipIdle = "border-krem-tua bg-kartu shadow-krem hover:-translate-y-0.5 hover:border-langit-300";
 const chipRight = "border-daun-500 bg-daun-100";
 
 /** Mengacak sekali per soal (komponen di-remount lewat key saat soal berganti). */
@@ -93,7 +93,7 @@ function NumberInput({ question, status, onAnswer }: InputProps<NumberQuestion>)
         key={shake}
         animate={shake ? { x: [0, -8, 8, 0] } : {}}
         aria-live="polite"
-        className={`grid min-h-18 place-items-center rounded-3xl border-3 font-display text-4xl font-semibold ${done ? chipRight : "border-krem-tua bg-white"}`}
+        className={`grid min-h-18 place-items-center rounded-3xl border-3 font-display text-4xl font-semibold ${done ? chipRight : "border-krem-tua bg-kartu"}`}
       >
         {shown || <span className="text-xl text-tinta-redup">Ketik jawabanmu</span>}
       </motion.output>

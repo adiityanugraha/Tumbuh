@@ -63,6 +63,10 @@ drop policy if exists "tautan sendiri" on public.parent_links;
 create policy "tautan sendiri" on public.parent_links
   for select to authenticated using (parent_id = auth.uid());
 
+drop policy if exists "lepas tautan sendiri" on public.parent_links;
+create policy "lepas tautan sendiri" on public.parent_links
+  for delete to authenticated using (parent_id = auth.uid());
+
 -- Hanya orang tua yang boleh mengganti kelas: perubahan kelas dari akun anak dikembalikan ke nilai lama.
 create or replace function public.lock_child_grade()
 returns trigger

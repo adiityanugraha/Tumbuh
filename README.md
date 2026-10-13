@@ -37,7 +37,7 @@ Bila Supabase dikonfigurasi, layar awal menanyakan **"Kamu siapa?"**:
 
 Tanpa konfigurasi Supabase, aplikasi memakai profil lokal tanpa akun seperti versi awal.
 
-Pengaturan:
+Pengaturan Supabase:
 
 1. Buat project di [supabase.com](https://supabase.com).
 2. Authentication > Sign In / Providers > Email: matikan **Confirm email** (nama pengguna dipetakan ke email internal `nama@tumbuh.app`, tidak ada email sungguhan).
@@ -45,6 +45,10 @@ Pengaturan:
 4. Salin `.env.example` menjadi `.env.local`, isi `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Project Settings > API), lalu `npm run build`.
 
 Cara kerja: localStorage tetap menjadi cache sehingga aplikasi cepat. Saat masuk, data diambil dari server; saat keluar, data di perangkat dihapus. Perubahan disinkronkan dengan menggabungkan data lokal dan server (`src/lib/sync.ts`: sesi dan pesan digabung per id, profil dan tantangan memakai versi terbaru, kebun dihitung ulang dari sesi) saat aplikasi dibuka, setelah setiap perubahan, dan tiap menit selama halaman terlihat. Lupa kata sandi belum didukung (rencana pengembangan).
+
+## Pengaturan Pengguna
+
+Ketuk avatar di pojok kanan atas (anak) atau lingkaran inisial (orang tua) untuk membuka **Pengaturan**: ganti avatar, suara (efek bunyi, kecepatan bacaan), tampilan (**mode gelap/terang**, huruf besar, kurangi animasi), ganti kata sandi, sapaan bawaan orang tua, dan kelola anak. Mode gelap memakai token warna yang sama (`src/app/globals.css`, `:root[data-theme="gelap"]`) dan dipasang sebelum halaman tampil sehingga tidak berkedip.
 
 ## Deploy
 

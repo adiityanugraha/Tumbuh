@@ -176,3 +176,23 @@ export async function pushChild(
     (await db()).from("children").update({ data: state }).eq("id", childId),
   );
 }
+
+/** Ganti kata sandi: kata sandi lama dicek dulu dengan masuk ulang. */
+export async function changePassword(
+  username: string,
+  oldPassword: string,
+  newPassword: string,
+) {
+  await signIn(username, oldPassword);
+  const { error } = await (
+    await db()
+  ).auth.updateUser({ password: newPassword });
+  if (error) throw error;
+}
+
+/** Akun orang tua melepas tautan dengan satu anak (data anak tidak terhapus). */
+export async function unlinkChild(childId: string) {
+  await must(
+    (await db()).from("parent_links").delete().eq("child_id", childId),
+  );
+}

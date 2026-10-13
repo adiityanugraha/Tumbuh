@@ -5,8 +5,8 @@ type Variant = "daun" | "kunyit" | "ghost";
 
 const VARIANT: Record<Variant, string> = {
   daun: "bg-daun-600 text-white shadow-daun",
-  kunyit: "bg-kunyit-400 text-tinta shadow-kunyit",
-  ghost: "border-3 border-krem-tua bg-white text-tinta shadow-krem",
+  kunyit: "bg-kunyit-400 text-tinta-tetap shadow-kunyit",
+  ghost: "border-3 border-krem-tua bg-kartu text-tinta shadow-krem",
 };
 
 /** Tombol tebal ala 3D: naik saat hover, turun saat ditekan. */
@@ -24,7 +24,7 @@ export function ButtonLink({ variant, className = "", ...props }: ComponentProps
 export function Card({ batik = false, className = "", ...props }: ComponentProps<"div"> & { batik?: boolean }) {
   return (
     <div
-      className={`rounded-blob border-3 border-krem-tua bg-white p-5 ${batik ? "batik-line" : "relative"} ${className}`}
+      className={`rounded-blob border-3 border-krem-tua bg-kartu p-5 ${batik ? "batik-line" : "relative"} ${className}`}
       {...props}
     />
   );

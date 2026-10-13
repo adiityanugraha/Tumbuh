@@ -90,7 +90,7 @@ export function DailyCard() {
         <h2 id="soal-hari-ini" className="font-display text-2xl font-semibold">
           🌞 Soal Hari Ini
         </h2>
-        <span className="text-sogan rounded-full bg-white px-3 py-0.5 text-sm font-extrabold">
+        <span className="text-sogan rounded-full bg-kartu px-3 py-0.5 text-sm font-extrabold">
           {meta.emoji} {meta.name} · {q.topic}
         </span>
         <span className="text-tanah-700 ml-auto text-sm font-extrabold">
@@ -99,7 +99,7 @@ export function DailyCard() {
       </div>
 
       {done && status === "answering" ? (
-        <p className="mt-3 rounded-[20px] bg-white px-4 py-3 font-bold">
+        <p className="mt-3 rounded-[20px] bg-kartu px-4 py-3 font-bold">
           {done.results[0]?.correctFirstTry
             ? "✓ Kamu sudah menjawab Soal Hari Ini dengan benar. Hebat!"
             : "✓ Soal Hari Ini sudah dikerjakan."}{" "}
@@ -110,7 +110,7 @@ export function DailyCard() {
         </p>
       ) : (
         <div className="mt-3 grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
-          <div className="rounded-[22px] bg-white p-4">
+          <div className="rounded-[22px] bg-kartu p-4">
             <div className="flex items-start justify-between gap-3">
               <p className="font-display text-xl leading-snug font-semibold md:text-2xl">
                 {q.prompt}

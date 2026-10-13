@@ -1,4 +1,5 @@
-/** Efek bunyi pendek dibuat langsung dengan Web Audio, tanpa file audio. */
+/** Efek bunyi pendek dibuat langsung dengan Web Audio, tanpa file audio. Bisa dimatikan di Pengaturan > Suara. */
+import { getSettings } from "@/services/settings";
 
 let ctx: AudioContext | null = null;
 
@@ -18,6 +19,7 @@ function tone(freq: number, start: number, duration: number) {
 }
 
 function play(notes: [number, number, number][]) {
+  if (!getSettings().sound) return;
   try {
     notes.forEach(([f, s, d]) => tone(f, s, d));
   } catch {
