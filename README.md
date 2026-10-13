@@ -26,9 +26,20 @@ npm run build      # hasil statis di folder out/
 npm run preview    # menyajikan folder out/ secara lokal
 ```
 
+## Sinkronisasi Antarperangkat (opsional, Supabase)
+
+Tanpa konfigurasi ini aplikasi tetap berjalan penuh dengan localStorage. Bila diisi, halaman Orang Tua menampilkan kartu "Pantau dari HP Lain": perangkat anak membuat **kode keluarga** 6 karakter, lalu HP orang tua memasukkan kode itu. Login anonim, tanpa email.
+
+1. Buat project di [supabase.com](https://supabase.com).
+2. Authentication > Sign In / Providers: aktifkan **Allow anonymous sign-ins**.
+3. SQL Editor: jalankan isi [`supabase/schema.sql`](supabase/schema.sql) (tabel `families` dan `family_members` dengan Row Level Security, fungsi `create_family` dan `join_family`).
+4. Salin `.env.example` menjadi `.env.local`, isi `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Project Settings > API), lalu `npm run build`.
+
+Cara kerja: data tetap disimpan di localStorage. Saat tersambung, aplikasi menarik data keluarga, menggabungkannya (`src/lib/sync.ts`: sesi dan pesan digabung per id, profil dan tantangan memakai versi terbaru, kebun dihitung ulang dari sesi), lalu mengirim balik. Sinkron berjalan saat aplikasi dibuka, setelah setiap perubahan, dan tiap menit selama halaman terlihat. Mode Demo dan "Mulai dari awal" otomatis memutus perangkat dari keluarga.
+
 ## Deploy
 
-1. Set alamat situs agar sitemap, robots, dan Open Graph memakai domain yang benar (PowerShell):
+1. Set alamat situs (dan Supabase bila dipakai) di `.env.local`, atau lewat PowerShell:
    ```powershell
    $env:NEXT_PUBLIC_SITE_URL = "https://domain-hosting-panitia"; npm run build
    ```

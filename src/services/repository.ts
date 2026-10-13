@@ -1,4 +1,11 @@
-import type { Encouragement, Garden, ParentChallenge, Session, Student } from "@/lib/types";
+import type {
+  Encouragement,
+  Garden,
+  ParentChallenge,
+  Session,
+  Student,
+  SyncState,
+} from "@/lib/types";
 
 /**
  * Antarmuka penyimpanan. Komponen hanya memakai ini, tidak menyentuh localStorage langsung,
@@ -17,17 +24,13 @@ export interface Repository {
   markEncouragementsRead(): Promise<void>;
   getChallenge(): Promise<ParentChallenge | null>;
   saveChallenge(challenge: ParentChallenge | null): Promise<void>;
+  /** Seluruh data sekaligus, untuk sinkronisasi antarperangkat. */
+  exportState(): Promise<SyncState>;
+  importState(state: SyncState): Promise<void>;
   reset(): Promise<void>;
 }
 
-interface StoredState {
-  version: 1;
-  student: Student | null;
-  garden: Garden | null;
-  sessions: Session[];
-  encouragements: Encouragement[];
-  challenge: ParentChallenge | null;
-}
+type StoredState = { version: 1 } & SyncState;
 
 const KEY = "tumbuh:v1";
 const empty = (): StoredState => ({
@@ -62,7 +65,8 @@ export function createLocalRepository(storage: Storage): Repository {
 
   return {
     getStudent: async () => read().student,
-    saveStudent: async (student) => update((s) => void (s.student = student)),
+    saveStudent: async (student) =>
+      update((s) => void ((s.student = student), (s.studentAt = Date.now()))),
     getGarden: async () => read().garden,
     saveGarden: async (garden) => update((s) => void (s.garden = garden)),
     getSessions: async () => read().sessions,
@@ -72,7 +76,16 @@ export function createLocalRepository(storage: Storage): Repository {
     markEncouragementsRead: async () =>
       update((s) => s.encouragements.forEach((e) => (e.read = true))),
     getChallenge: async () => read().challenge,
-    saveChallenge: async (challenge) => update((s) => void (s.challenge = challenge)),
+    saveChallenge: async (challenge) =>
+      update(
+        (s) => void ((s.challenge = challenge), (s.challengeAt = Date.now())),
+      ),
+    exportState: async () => {
+      const { version, ...state } = read();
+      void version;
+      return state;
+    },
+    importState: async (state) => update((s) => void Object.assign(s, state)),
     reset: async () => storage.removeItem(KEY),
   };
 }

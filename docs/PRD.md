@@ -74,6 +74,7 @@ Tidak dibuat (keputusan peserta, 8 Okt 2026). Dipindah ke rencana pengembangan (
 2. Materi yang sudah dikuasai vs perlu latihan, per mapel.
 3. Tombol "Kirim Semangat": pengirim (Ibu, Ayah, ...), stiker, dan pesan singkat (maks. 80 huruf) yang muncul di Kebunku anak, dengan status sudah/belum dibaca.
 4. Dilindungi gerbang orang tua sederhana (soal hitungan) agar anak tidak iseng masuk.
+6. **Pantau dari HP Lain** (opsional, aktif bila Supabase dikonfigurasi): perangkat anak membuat kode keluarga 6 karakter, HP orang tua memasukkan kode itu sehingga laporan, tantangan, dan Kirim Semangat tersinkron. Login anonim tanpa email; data keluarga dilindungi Row Level Security. localStorage tetap menjadi penyimpanan utama sehingga aplikasi berjalan tanpa internet.
 5. **Tantangan & Hadiah**: orang tua membuat satu tantangan untuk 7 hari ke depan: target hari belajar (1-7) atau jumlah sesi (1-20), hadiah (maks. 40 huruf), dan pengirim. Progres terlihat di kedua sisi. Bisa dihapus atau diganti setelah selesai/berakhir.
 
 ### D. Mode Demo
@@ -129,6 +130,7 @@ Acuan visual lengkap: `docs/UI.md` dan prototipe `docs/mockup/index.html` (gaya 
 
 ## 11. Privasi Anak
 
+- Bila sinkronisasi dipakai, yang tersimpan di server Supabase hanya nama panggilan, avatar, kelas, dan riwayat belajar. Hal ini dijelaskan di kartu sinkronisasi.
 - Hanya nama panggilan. Tanpa email, nomor telepon, atau foto.
 - Tidak ada chat bebas antar murid.
 - Tidak ada analytics pihak ketiga.
@@ -143,7 +145,7 @@ Acuan visual lengkap: `docs/UI.md` dan prototipe `docs/mockup/index.html` (gaya 
 ## 13. Di Luar Cakupan (rencana pengembangan)
 
 - Dashboard guru: ringkasan kelas, status murid, materi tersulit, membuat tantangan kelas.
-- Login dan sinkronisasi cloud agar orang tua/guru bisa memantau dari perangkat lain.
+- Akun orang tua (email) dan dashboard guru di atas sinkronisasi Supabase yang sudah ada.
 - PWA offline.
 - Asisten AI ramah anak untuk petunjuk soal.
 - Notifikasi pengingat belajar ke orang tua.

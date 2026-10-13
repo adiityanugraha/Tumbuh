@@ -126,3 +126,15 @@ export interface ParentChallenge {
   reward: string;
   startDate: DateKey;
 }
+
+/** Seluruh data satu anak. Disimpan di localStorage dan, bila tersambung kode keluarga, disinkronkan ke Supabase. */
+export interface SyncState {
+  student: Student | null;
+  garden: Garden | null;
+  sessions: Session[];
+  encouragements: Encouragement[];
+  challenge: ParentChallenge | null;
+  /** Waktu (ms) profil dan tantangan terakhir diubah, untuk memilih versi terbaru saat sinkron. */
+  studentAt?: number;
+  challengeAt?: number;
+}

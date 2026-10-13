@@ -7,6 +7,7 @@ import { Icon, Mascot } from "@/components/art";
 import { Page } from "@/components/Page";
 import { PlantThumb } from "@/components/PlantVisual";
 import { RoleSwitch } from "@/components/RoleSwitch";
+import { FamilySyncCard, JoinFamilyForm } from "./FamilySync";
 import { Button, ButtonLink, Card, DemoTag, Tag } from "@/components/ui";
 import { getPlant, PLANT_ORDER, REGIONS, stageLabel } from "@/data/plants";
 import { SUBJECTS } from "@/data/questions";
@@ -59,7 +60,7 @@ export function ParentView() {
 }
 
 function NoStudent() {
-  const { loadDemo } = useApp();
+  const { loadDemo, cloudAvailable } = useApp();
   return (
     <Card className="mx-auto mt-10 max-w-lg text-center">
       <Mascot size={110} className="mx-auto" />
@@ -76,6 +77,11 @@ function NoStudent() {
           Buka Mode Demo
         </Button>
       </div>
+      {cloudAvailable && (
+        <div className="border-krem-tua mt-6 border-t-3 pt-5 text-left">
+          <JoinFamilyForm />
+        </div>
+      )}
     </Card>
   );
 }
@@ -289,6 +295,7 @@ function Report() {
         <div className="grid gap-5">
           <GardenCard />
           <ChallengeEditor />
+          <FamilySyncCard />
         </div>
       </div>
     </Page>
