@@ -55,7 +55,7 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
    - Laut hidup: awan, ombak, perahu, ikan, dan kompas (animasi mati bila `prefers-reduced-motion`).
    - Linimasa ekspedisi di bawah peta: 6 wilayah dengan status dan gambar tanamannya, bisa diklik.
    - Kenali Daerah: rumah adat, tarian, makanan khas, dan ungkapan daerah per wilayah, bisa dibacakan. Terkunci sampai wilayah dibuka.
-7. **Koleksi**: kartu fakta tanaman yang sudah tumbuh penuh, tanaman terkunci tampil sebagai siluet.
+7. **Koleksi**: kartu fakta tanaman yang sudah tumbuh penuh, tanaman terkunci tampil sebagai siluet. Panel detail berisi status konservasi (Dilindungi, Langka, Banyak dibudidayakan) beserta pesan menjaga alam, manfaat tanaman, dan ukuran yang dibandingkan dengan tinggi anak (sekitar 125 cm) dalam kalimat dan bar.
 8. **Lencana Pencapaian**: 8 lencana (Langkah Pertama, Tepat Sasaran, Rajin 3 Hari, Serba Bisa, Tanaman Pertama, Penjelajah Pulau, Rajin 7 Hari, Separuh Nusantara), dihitung dari riwayat belajar sehingga tidak hilang walau streak putus. Lencana yang belum didapat tampil pudar dan bisa diklik untuk melihat caranya. Lencana baru dirayakan di layar hasil sesi. (Kebun Kelas dibatalkan bersama sisi guru.)
 9. **Narasi suara**: Web Speech API. Soal Matematika dan IPAS dibacakan `id-ID`, soal Bahasa Inggris memakai `en-US` untuk kata/kalimat Inggris. Bila suara tidak tersedia, tombol speaker disembunyikan atau memberi pesan ramah, tidak error.
 10. **Maskot**: karakter orisinal (kumbang tukang kebun) yang menyapa, menyemangati, dan memberi petunjuk.

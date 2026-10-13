@@ -7,8 +7,10 @@ import { Page } from "@/components/Page";
 import { SpeakButton } from "@/components/SpeakButton";
 import { PlantThumb } from "@/components/PlantVisual";
 import { Card, Tag } from "@/components/ui";
+import { PLANT_INFO, type ConservationStatus } from "@/data/plant-info";
 import { PLANTS, REGIONS } from "@/data/plants";
-import type { RegionId } from "@/lib/types";
+import { CHILD_CM, formatSize, sizeComparison } from "@/lib/size";
+import type { PlantSpecies, RegionId } from "@/lib/types";
 
 export function KoleksiView() {
   const { garden } = useApp();
@@ -110,7 +112,7 @@ export function KoleksiView() {
                     <SpeakButton
                       parts={[
                         {
-                          text: `${detail.name}. ${detail.fact}`,
+                          text: `${detail.name}. ${detail.fact} Status: ${PLANT_INFO[detail.id].statusLabel}. Manfaat: ${PLANT_INFO[detail.id].benefit}`,
                           lang: "id-ID",
                         },
                       ]}
@@ -119,6 +121,7 @@ export function KoleksiView() {
                   </div>
                   <Tag className="mt-2.5">{detail.origin}</Tag>
                   <p className="mt-2 leading-relaxed">{detail.fact}</p>
+                  <PlantDetails plant={detail} />
                 </>
               ) : (
                 <div className="py-8 text-center">
@@ -139,5 +142,78 @@ export function KoleksiView() {
         </AnimatePresence>
       </div>
     </Page>
+  );
+}
+
+const STATUS_STYLE: Record<ConservationStatus, string> = {
+  dilindungi: "bg-tanah-100 text-tanah-700",
+  langka: "bg-kunyit-100 text-tanah-700",
+  umum: "bg-daun-100 text-daun-800",
+};
+
+const LABEL = "flex items-center gap-1.5 text-xs font-extrabold text-sogan";
+
+/** Status konservasi, manfaat, dan perbandingan ukuran tanaman dengan tinggi anak. */
+function PlantDetails({ plant }: { plant: PlantSpecies }) {
+  const info = PLANT_INFO[plant.id];
+  const max = Math.max(info.sizeCm, CHILD_CM);
+  const bars: [string, string, number, string][] = [
+    ["🧒", "Kamu", CHILD_CM, "bg-langit-300"],
+    [plant.emoji, plant.name, info.sizeCm, "bg-daun-500"],
+  ];
+  return (
+    <dl className="border-krem-tua mt-4 grid gap-3 border-t-3 pt-4">
+      <div>
+        <dt className={LABEL}>
+          <span aria-hidden="true">🛡️</span> Status
+        </dt>
+        <dd className="mt-1">
+          <span
+            className={`inline-block rounded-full px-2.5 py-0.5 text-sm font-extrabold ${STATUS_STYLE[info.status]}`}
+          >
+            {info.statusLabel}
+          </span>
+          {info.status !== "umum" && (
+            <span className="text-tinta-redup mt-1 block text-sm font-semibold">
+              Jangan dipetik atau ditebang, biarkan tumbuh di alam.
+            </span>
+          )}
+        </dd>
+      </div>
+      <div>
+        <dt className={LABEL}>
+          <span aria-hidden="true">🌿</span> Manfaat
+        </dt>
+        <dd className="mt-1 font-semibold">{info.benefit}</dd>
+      </div>
+      <div>
+        <dt className={LABEL}>
+          <span aria-hidden="true">📏</span> Ukuran
+        </dt>
+        <dd className="mt-1">
+          <span className="font-semibold">
+            {info.sizeOf} sekitar {formatSize(info.sizeCm)},{" "}
+            {sizeComparison(info.sizeCm)}.
+          </span>
+          <div className="mt-2 grid gap-1.5" aria-hidden="true">
+            {bars.map(([icon, label, cm, color]) => (
+              <div
+                key={label}
+                className="text-tinta-redup flex items-center gap-2 text-xs font-extrabold"
+              >
+                <span className="w-5 text-base">{icon}</span>
+                <span className="bg-krem-tua h-3 flex-1 rounded-full">
+                  <span
+                    className={`block h-full rounded-full ${color}`}
+                    style={{ width: `${Math.max(3, (cm / max) * 100)}%` }}
+                  />
+                </span>
+                <span className="w-12 text-right">{formatSize(cm)}</span>
+              </div>
+            ))}
+          </div>
+        </dd>
+      </div>
+    </dl>
   );
 }

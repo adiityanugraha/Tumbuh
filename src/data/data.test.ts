@@ -83,3 +83,15 @@ describe("budaya daerah", () => {
     }
   });
 });
+
+describe("info lengkap tanaman", () => {
+  it("setiap tanaman punya status, manfaat, dan ukuran", async () => {
+    const { PLANT_INFO } = await import("./plant-info");
+    for (const p of PLANTS) {
+      const info = PLANT_INFO[p.id];
+      expect(info, p.id).toBeDefined();
+      expect(info.benefit && info.statusLabel && info.sizeOf).toBeTruthy();
+      expect(info.sizeCm).toBeGreaterThan(0);
+    }
+  });
+});
