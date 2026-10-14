@@ -6,10 +6,19 @@ const ROLES = [
 ] as const;
 
 /** Pengalih peran Mode Demo: juri bisa berpindah sisi tanpa login. */
-export function RoleSwitch({ active, className = "" }: { active: (typeof ROLES)[number]["id"]; className?: string }) {
+export function RoleSwitch({
+  active,
+  className = "",
+}: {
+  active: (typeof ROLES)[number]["id"];
+  className?: string;
+}) {
   return (
-    <nav aria-label="Mode Demo: pilih peran" className={`items-center rounded-full bg-krem-tua p-1 text-sm font-extrabold ${className}`}>
-      <span className="px-2.5 text-xs text-sogan">Mode Demo</span>
+    <nav
+      aria-label="Mode Demo: pilih peran"
+      className={`bg-krem-tua items-center rounded-full p-1 text-sm font-extrabold ${className}`}
+    >
+      <span className="text-sogan px-2.5 text-xs">Mode Demo</span>
       {ROLES.map((r) => (
         <Link
           key={r.id}

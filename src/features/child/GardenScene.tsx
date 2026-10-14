@@ -129,7 +129,7 @@ export function GardenScene({
           </span>
         </>
       )}
-      <Tag className="text-daun-800! absolute top-4 right-4 z-10 bg-kartu! px-3! py-1! text-sm!">
+      <Tag className="text-daun-800! bg-kartu! absolute top-4 right-4 z-10 px-3! py-1! text-sm!">
         {wilted ? "Layu" : `Tahap: ${stageLabel(plant, stage)}`}
       </Tag>
 
@@ -168,7 +168,7 @@ export function GardenScene({
         </button>
       </div>
 
-      <div className="relative z-10 w-full bg-kartu/85 px-6 pt-4 pb-5">
+      <div className="bg-kartu/85 relative z-10 w-full px-6 pt-4 pb-5">
         <div className="text-tinta-redup flex flex-wrap justify-between gap-2 font-extrabold">
           <span className="font-display text-tinta text-xl">{plant.name}</span>
           <span>

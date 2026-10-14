@@ -19,6 +19,7 @@ import type {
   Account,
   Encouragement,
   Garden,
+  Gender,
   Grade,
   ParentChallenge,
   Session,
@@ -63,6 +64,7 @@ interface AppState {
     password: string;
     avatar: string;
     grade: Grade;
+    gender: Gender;
   }) => Promise<void>;
   registerParent: (input: {
     nickname: string;
@@ -81,7 +83,10 @@ interface AppState {
   /** Pengaturan perangkat (tema, huruf, animasi, suara, sapaan). */
   settings: Settings;
   updateSettings: (patch: Partial<Settings>) => void;
-  setAvatar: (avatar: string) => Promise<void>;
+  /** Avatar, tinggi badan, dan gambar badan: boleh diubah anak maupun orang tua, ikut tersinkron. */
+  updateStudent: (
+    patch: Partial<Pick<Student, "avatar" | "heightCm" | "gender">>,
+  ) => Promise<void>;
   changePassword: (oldPassword: string, newPassword: string) => Promise<void>;
   unlinkChild: (childId: string) => Promise<void>;
 }
@@ -199,6 +204,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     cloud.accountStore.set(acc);
     await load();
     setSyncStatus("ok");
+    // Hitung ulang kebun dari riwayat sesi server segera setelah masuk.
+    void syncNow();
   };
 
   const createStudent: AppState["createStudent"] = async (s) => {
@@ -297,6 +304,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     password,
     avatar,
     grade,
+    gender,
   }) => {
     const username = normalizeUsername(nickname);
     const { userId, hasProfile } = await cloud.signUpOrResume(
@@ -312,6 +320,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         nickname: nickname.trim(),
         avatar,
         grade,
+        gender,
         createdAt: toDateKey(),
       },
       studentAt: Date.now(),
@@ -407,10 +416,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setSettings(next);
   };
 
-  /** Avatar boleh diganti anak sendiri; ikut tersinkron ke orang tua. */
-  const setAvatar: AppState["setAvatar"] = async (avatar) => {
+  const updateStudent: AppState["updateStudent"] = async (patch) => {
     if (!student) return;
-    const st = { ...student, avatar };
+    const st = { ...student, ...patch };
     await getRepository().saveStudent(st);
     setStudent(st);
     void syncNow();
@@ -470,7 +478,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         syncNow,
         settings,
         updateSettings,
-        setAvatar,
+        updateStudent,
         changePassword,
         unlinkChild,
       }}

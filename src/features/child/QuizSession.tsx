@@ -18,6 +18,7 @@ import { playCorrect, playWrong } from "@/lib/sound";
 import type { AnswerResult, Garden, Question, Subject } from "@/lib/types";
 import { QuestionInput, type QuestionStatus } from "./QuestionInput";
 import { ResultView } from "./ResultView";
+import { SubjectIkon } from "@/components/Ikon";
 
 const PRAISE = ["Hebat!", "Pintar sekali!", "Betul!", "Keren!", "Mantap!"];
 
@@ -171,7 +172,7 @@ export function QuizSession({
     <section>
       <div className="relative mt-2 mb-5 flex flex-wrap items-center gap-x-5 gap-y-2">
         <h1 className="font-display text-daun-800 text-2xl font-semibold whitespace-nowrap md:text-3xl">
-          {meta.emoji}{" "}
+          <SubjectIkon subject={subject} />{" "}
           {review
             ? `Siram Ulang ${meta.name}`
             : topic

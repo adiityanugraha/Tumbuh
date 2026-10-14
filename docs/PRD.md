@@ -42,7 +42,7 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
 
 ### A. Sisi Anak (prioritas tertinggi)
 
-1. **Layar awal dan akun**: "Kamu siapa?" (Aku Anak / Saya Orang Tua / Mode Demo). Akun anak: daftar dengan nama pengguna, kata sandi, avatar, kelas; masuk dengan nama pengguna + kata sandi; profil menampilkan kode keluarga 6 karakter dan tombol keluar. Tanpa Supabase: profil lokal (nama panggilan, avatar, kelas). Tanpa data pribadi lain.
+1. **Layar awal dan akun**: "Kamu siapa?" (Aku Anak / Saya Orang Tua / Mode Demo). Akun anak: daftar dengan nama pengguna, kata sandi, laki-laki/perempuan (wajib, untuk gambar badan), avatar, kelas; masuk dengan nama pengguna + kata sandi; profil menampilkan kode keluarga 6 karakter dan tombol keluar. Tanpa Supabase: profil lokal (nama panggilan, laki-laki/perempuan, avatar, kelas). Tanpa data pribadi lain.
 2. **Kebunku**: tanaman aktif di tengah, streak harian, tombol besar "Ayo Belajar!", akses ke Peta dan Koleksi, kartu Lencanaku. Pesan semangat dari orang tua muncul di sini.
    - Kebun hidup: hanya tanaman yang sedang tumbuh yang tampil (tanaman yang sudah penuh ada di Koleksi), langit mengikuti jam lokal (pagi, siang, sore, malam berbintang), kupu-kupu, dan Kumbi yang bisa diketuk untuk sapaan. Mengetuk tanaman menampilkan fakta uniknya. Animasi mati bila `prefers-reduced-motion`.
    - Kartu "Hari ini": sesi dan soal benar hari ini, total soal benar, pengingat Siram Ulang.
@@ -55,10 +55,10 @@ Nama aplikasi: **Tumbuh** (kebun belajar Nusantara). Dokumen kebutuhan produk. S
    - Laut hidup: awan, ombak, perahu, ikan, dan kompas (animasi mati bila `prefers-reduced-motion`).
    - Linimasa ekspedisi di bawah peta: 6 wilayah dengan status dan gambar tanamannya, bisa diklik.
    - Kenali Daerah: rumah adat, tarian, makanan khas, dan ungkapan daerah per wilayah, bisa dibacakan. Terkunci sampai wilayah dibuka.
-7. **Koleksi**: kartu fakta tanaman yang sudah tumbuh penuh, tanaman terkunci tampil sebagai siluet. Panel detail berisi status konservasi (Dilindungi, Langka, Banyak dibudidayakan) beserta pesan menjaga alam, manfaat tanaman, dan ukuran yang dibandingkan dengan tinggi anak (sekitar 125 cm) dalam kalimat dan bar.
+7. **Koleksi**: kartu fakta tanaman yang sudah tumbuh penuh, tanaman terkunci tampil sebagai siluet. Panel detail berisi status konservasi (Dilindungi, Langka, Banyak dibudidayakan) beserta pesan menjaga alam, manfaat tanaman, dan ukuran yang dibandingkan dengan tinggi badan anak (isian di Pengaturan, atau perkiraan dari kelas bila kosong) dalam kalimat dan bar.
 8. **Lencana Pencapaian**: 8 lencana (Langkah Pertama, Tepat Sasaran, Rajin 3 Hari, Serba Bisa, Tanaman Pertama, Penjelajah Pulau, Rajin 7 Hari, Separuh Nusantara), dihitung dari riwayat belajar sehingga tidak hilang walau streak putus. Lencana yang belum didapat tampil pudar dan bisa diklik untuk melihat caranya. Lencana baru dirayakan di layar hasil sesi. (Kebun Kelas dibatalkan bersama sisi guru.)
 9. **Narasi suara**: Web Speech API. Soal Matematika dan IPAS dibacakan `id-ID`, soal Bahasa Inggris memakai `en-US` untuk kata/kalimat Inggris. Bila suara tidak tersedia, tombol speaker disembunyikan atau memberi pesan ramah, tidak error.
-10a. **Pengaturan** (ketuk avatar di header, kedua peran): tab Profil (ganti avatar; kode keluarga untuk akun anak; ganti kelas hanya di profil lokal/Mode Demo), Suara (efek suara nyala/mati, kecepatan suara bacaan), Tampilan (tema Ikuti perangkat/Terang/Gelap, ukuran huruf Normal/Besar, kurangi animasi), Akun (ganti kata sandi, keluar). Orang tua: Akun (sapaan bawaan untuk Kirim Semangat dan tantangan, ganti kata sandi, keluar), Anak (daftar anak, lepas tautan, tambah anak), Tampilan. Pengaturan suara dan tampilan disimpan per perangkat; avatar ikut tersinkron.
+10a. **Pengaturan** (ketuk avatar di header, kedua peran): tab Profil (ganti avatar; tinggi badan dengan switch gambar laki-laki/perempuan; kode keluarga untuk akun anak; ganti kelas hanya di profil lokal/Mode Demo), Suara (efek suara nyala/mati, kecepatan suara bacaan), Tampilan (tema Ikuti perangkat/Terang/Gelap, ukuran huruf Normal/Besar, kurangi animasi), Akun (ganti kata sandi, keluar). Orang tua: Akun (sapaan bawaan untuk Kirim Semangat dan tantangan, ganti kata sandi, keluar), Anak (tinggi badan anak aktif, daftar anak, lepas tautan, tambah anak), Tampilan. Pengaturan suara dan tampilan disimpan per perangkat; avatar ikut tersinkron.
 10. **Maskot**: karakter orisinal (kumbang tukang kebun) yang menyapa, menyemangati, dan memberi petunjuk.
 11. **Siram Ulang**: soal yang pernah salah (tidak benar di percobaan pertama) dikumpulkan per mapel di halaman Belajar. Sesi ulang berisi maksimal 5 soal itu dan tetap memberi air/pupuk. Soal hilang dari daftar setelah dijawab benar sekali coba.
 12. **Kartu Kata**: flashcard kosakata Bahasa Inggris bergambar, 8 tema dengan saran kelas 1-6. Ketuk untuk membalik (arti), tombol suara `en-US`, acak kartu. Tanpa skor.
@@ -132,7 +132,7 @@ Acuan visual lengkap: `docs/UI.md` dan prototipe `docs/mockup/index.html` (gaya 
 ## 11. Privasi Anak
 
 - Akun memakai nama pengguna dan kata sandi saja (dipetakan ke email internal, tidak ada email sungguhan). Yang tersimpan di server Supabase hanya nama pengguna, avatar, kelas, dan riwayat belajar.
-- Hanya nama panggilan. Tanpa email, nomor telepon, atau foto.
+- Hanya nama panggilan. Tanpa email, nomor telepon, atau foto. Satu-satunya data tubuh adalah tinggi badan (opsional), dipakai untuk perbandingan ukuran tanaman, plus pilihan gambar badan laki-laki/perempuan untuk ilustrasinya.
 - Tidak ada chat bebas antar murid.
 - Tidak ada analytics pihak ketiga.
 

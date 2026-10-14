@@ -1,4 +1,5 @@
 export type Grade = 1 | 2 | 3 | 4 | 5 | 6;
+export type Gender = "laki" | "perempuan";
 export type Subject = "matematika" | "indonesia" | "ipas" | "inggris";
 export type GrowthStage = "bibit" | "tunas" | "tumbuh" | "berbunga";
 export type RegionId =
@@ -75,6 +76,10 @@ export interface Student {
   avatar: string;
   grade: Grade;
   createdAt: DateKey;
+  /** Tinggi badan (cm), diisi anak atau orang tua. Kosong: perkiraan dari kelas. */
+  heightCm?: number;
+  /** Gambar badan di pengukur tinggi, wajib dipilih saat daftar. Kosong (data lama): laki-laki. */
+  gender?: Gender;
   /** true bila profil dibuat dari Mode Demo (riwayat belajar contoh). */
   demo?: boolean;
 }

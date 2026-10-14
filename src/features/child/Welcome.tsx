@@ -6,8 +6,15 @@ import { useEffect, useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import { Button } from "@/components/ui";
 import { authErrorText, passwordError, usernameError } from "@/lib/account";
-import type { Grade } from "@/lib/types";
-import { AVATARS, GRADES, KumbiPanel, Onboarding } from "./Onboarding";
+import type { Gender, Grade } from "@/lib/types";
+import {
+  AVATARS,
+  GenderChoice,
+  GRADES,
+  KumbiPanel,
+  Onboarding,
+} from "./Onboarding";
+import { Avatar, avatarName } from "@/components/Ikon";
 
 type Step = "pilih" | "anak" | "ortu";
 type Mode = "masuk" | "daftar";
@@ -35,7 +42,7 @@ export function Welcome() {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="border-krem-tua grid w-full overflow-hidden rounded-[36px] border-3 bg-kartu md:grid-cols-[1.1fr_1fr]"
+        className="border-krem-tua bg-kartu grid w-full overflow-hidden rounded-[36px] border-3 md:grid-cols-[1.1fr_1fr]"
       >
         <KumbiPanel />
         <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -76,7 +83,7 @@ function PickRole({ onPick }: { onPick: (s: Step) => void }) {
             key={r.id}
             type="button"
             onClick={() => onPick(r.id)}
-            className="border-krem-tua hover:border-daun-300 flex min-h-20 cursor-pointer items-center gap-4 rounded-[24px] border-3 bg-kartu px-5 text-left transition hover:-translate-y-0.5"
+            className="border-krem-tua hover:border-daun-300 bg-kartu flex min-h-20 cursor-pointer items-center gap-4 rounded-[24px] border-3 px-5 text-left transition hover:-translate-y-0.5"
           >
             <span className="text-4xl" aria-hidden="true">
               {r.emoji}
@@ -123,6 +130,7 @@ function AuthForm({
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState(AVATARS[1]);
   const [grade, setGrade] = useState<Grade | null>(null);
+  const [gender, setGender] = useState<Gender | null>(null);
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -131,6 +139,9 @@ function AuthForm({
   const invalid =
     usernameError(nickname) ??
     passwordError(password) ??
+    (daftar && role === "anak" && !gender
+      ? "Pilih laki-laki atau perempuan dulu."
+      : null) ??
     (daftar && role === "anak" && !grade ? "Pilih kelasmu dulu." : null) ??
     (daftar && role === "ortu" && code.length !== 6
       ? "Kode keluarga berisi 6 karakter."
@@ -144,7 +155,13 @@ function AuthForm({
     try {
       if (!daftar) await login(role, nickname, password);
       else if (role === "anak")
-        await registerChild({ nickname, password, avatar, grade: grade! });
+        await registerChild({
+          nickname,
+          password,
+          avatar,
+          grade: grade!,
+          gender: gender!,
+        });
       else await registerParent({ nickname, password, code });
       router.push(role === "anak" ? "/kebun/" : "/orang-tua/");
     } catch (err) {
@@ -220,6 +237,7 @@ function AuthForm({
 
       {daftar && role === "anak" && (
         <>
+          <GenderChoice value={gender} onChange={setGender} />
           <fieldset>
             <legend className="text-sogan mb-2 font-extrabold">
               Pilih teman avatarmu
@@ -231,10 +249,10 @@ function AuthForm({
                   type="button"
                   onClick={() => setAvatar(a)}
                   aria-pressed={avatar === a}
-                  aria-label={`Avatar ${a}`}
+                  aria-label={`Avatar ${avatarName(a)}`}
                   className={`aspect-square cursor-pointer rounded-[20px] border-3 text-3xl transition hover:scale-105 ${avatar === a ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-kartu"}`}
                 >
-                  {a}
+                  <Avatar emoji={a} />
                 </button>
               ))}
             </div>

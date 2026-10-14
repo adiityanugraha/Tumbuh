@@ -9,6 +9,7 @@ import { topicProgress } from "@/lib/insights";
 import type { Subject } from "@/lib/types";
 import { QuizSession } from "./QuizSession";
 import { SUBJECT_BG } from "./KebunView";
+import { LockIkon } from "@/components/Ikon";
 
 const STATE = {
   dikuasai: {
@@ -64,7 +65,7 @@ export function TopikView({ subject }: { subject: Subject }) {
   );
   return (
     <Page
-      title={`${meta.emoji} Pilih Topik ${meta.name}`}
+      title={`Pilih Topik ${meta.name}`}
       subtitle={`Kelas ${student.grade}. Latih satu topik sampai kamu mahir. Topik bertanda 💧 paling perlu dilatih.`}
       aside={
         <ButtonLink
@@ -85,13 +86,13 @@ export function TopikView({ subject }: { subject: Subject }) {
               <button
                 type="button"
                 onClick={() => setTopic(t.topic)}
-                className="batik-line rounded-blob border-krem-tua hover:border-daun-300 flex h-full w-full cursor-pointer flex-col items-start gap-2 border-3 bg-kartu p-5 text-left transition hover:-translate-y-1"
+                className="batik-line rounded-blob border-krem-tua hover:border-daun-300 bg-kartu flex h-full w-full cursor-pointer flex-col items-start gap-2 border-3 p-5 text-left transition hover:-translate-y-1"
               >
                 <span
                   className={`grid size-12 place-items-center rounded-2xl text-2xl ${SUBJECT_BG[subject]}`}
                   aria-hidden="true"
                 >
-                  {st.icon}
+                  {t.mastery === "belum" ? <LockIkon /> : st.icon}
                 </span>
                 <span className="font-display text-xl font-semibold">
                   {t.topic}

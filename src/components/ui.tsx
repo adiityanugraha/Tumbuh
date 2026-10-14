@@ -13,18 +13,36 @@ const VARIANT: Record<Variant, string> = {
 export const buttonClass = (variant: Variant = "daun", extra = "") =>
   `inline-flex min-h-14 cursor-pointer items-center justify-center gap-2 rounded-blob px-7 font-display text-xl font-semibold transition hover:-translate-y-0.5 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 ${VARIANT[variant]} ${extra}`;
 
-export function Button({ variant, className = "", ...props }: ComponentProps<"button"> & { variant?: Variant }) {
-  return <button type="button" className={buttonClass(variant, className)} {...props} />;
+export function Button({
+  variant,
+  className = "",
+  ...props
+}: ComponentProps<"button"> & { variant?: Variant }) {
+  return (
+    <button
+      type="button"
+      className={buttonClass(variant, className)}
+      {...props}
+    />
+  );
 }
 
-export function ButtonLink({ variant, className = "", ...props }: ComponentProps<typeof Link> & { variant?: Variant }) {
+export function ButtonLink({
+  variant,
+  className = "",
+  ...props
+}: ComponentProps<typeof Link> & { variant?: Variant }) {
   return <Link className={buttonClass(variant, className)} {...props} />;
 }
 
-export function Card({ batik = false, className = "", ...props }: ComponentProps<"div"> & { batik?: boolean }) {
+export function Card({
+  batik = false,
+  className = "",
+  ...props
+}: ComponentProps<"div"> & { batik?: boolean }) {
   return (
     <div
-      className={`rounded-blob border-3 border-krem-tua bg-kartu p-5 ${batik ? "batik-line" : "relative"} ${className}`}
+      className={`rounded-blob border-krem-tua bg-kartu border-3 p-5 ${batik ? "batik-line" : "relative"} ${className}`}
       {...props}
     />
   );
@@ -33,17 +51,29 @@ export function Card({ batik = false, className = "", ...props }: ComponentProps
 export function Tag({ className = "", ...props }: ComponentProps<"span">) {
   return (
     <span
-      className={`inline-block rounded-full bg-krem-tua px-2.5 py-0.5 text-xs font-extrabold text-sogan ${className}`}
+      className={`bg-krem-tua text-sogan inline-block rounded-full px-2.5 py-0.5 text-xs font-extrabold ${className}`}
       {...props}
     />
   );
 }
 
 /** Label wajib untuk tampilan yang memakai data dummy. */
-export const DemoTag = () => <Tag title="Data ini contoh untuk Mode Demo, bukan data asli">Data contoh</Tag>;
+export const DemoTag = () => (
+  <Tag title="Data ini contoh untuk Mode Demo, bukan data asli">
+    Data contoh
+  </Tag>
+);
 
 /** Bar progres. Motif parang untuk progres tanaman, polos untuk lainnya. */
-export function Bar({ value, motif = true, label }: { value: number; motif?: boolean; label: string }) {
+export function Bar({
+  value,
+  motif = true,
+  label,
+}: {
+  value: number;
+  motif?: boolean;
+  label: string;
+}) {
   return (
     <div
       role="progressbar"
@@ -51,7 +81,7 @@ export function Bar({ value, motif = true, label }: { value: number; motif?: boo
       aria-valuenow={Math.round(value)}
       aria-valuemin={0}
       aria-valuemax={100}
-      className="h-4.5 overflow-hidden rounded-full bg-krem-tua"
+      className="bg-krem-tua h-4.5 overflow-hidden rounded-full"
     >
       <div
         className={`h-full rounded-full transition-[width] duration-700 ${motif ? "bg-parang" : "bg-daun-500"}`}

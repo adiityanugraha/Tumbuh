@@ -11,6 +11,7 @@ import { checkAnswer, type AnswerValue } from "@/lib/session";
 import { playCelebrate, playCorrect, playWrong } from "@/lib/sound";
 import { QuestionInput, type QuestionStatus } from "./QuestionInput";
 import { revealText } from "./QuizSession";
+import { SubjectIkon } from "@/components/Ikon";
 
 /** Soal Hari Ini: satu soal spesial per hari, disimpan sebagai sesi 1 soal (ikut menyiram tanaman dan streak). */
 export function DailyCard() {
@@ -90,8 +91,8 @@ export function DailyCard() {
         <h2 id="soal-hari-ini" className="font-display text-2xl font-semibold">
           🌞 Soal Hari Ini
         </h2>
-        <span className="text-sogan rounded-full bg-kartu px-3 py-0.5 text-sm font-extrabold">
-          {meta.emoji} {meta.name} · {q.topic}
+        <span className="text-sogan bg-kartu rounded-full px-3 py-0.5 text-sm font-extrabold">
+          <SubjectIkon subject={subject} /> {meta.name} · {q.topic}
         </span>
         <span className="text-tanah-700 ml-auto text-sm font-extrabold">
           Benar sekali coba: 💧 +1 🌱 +1
@@ -99,7 +100,7 @@ export function DailyCard() {
       </div>
 
       {done && status === "answering" ? (
-        <p className="mt-3 rounded-[20px] bg-kartu px-4 py-3 font-bold">
+        <p className="bg-kartu mt-3 rounded-[20px] px-4 py-3 font-bold">
           {done.results[0]?.correctFirstTry
             ? "✓ Kamu sudah menjawab Soal Hari Ini dengan benar. Hebat!"
             : "✓ Soal Hari Ini sudah dikerjakan."}{" "}
@@ -110,7 +111,7 @@ export function DailyCard() {
         </p>
       ) : (
         <div className="mt-3 grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
-          <div className="rounded-[22px] bg-kartu p-4">
+          <div className="bg-kartu rounded-[22px] p-4">
             <div className="flex items-start justify-between gap-3">
               <p className="font-display text-xl leading-snug font-semibold md:text-2xl">
                 {q.prompt}

@@ -16,6 +16,7 @@ import {
   type RegionStatus,
 } from "@/lib/garden";
 import type { Garden, RegionId } from "@/lib/types";
+import { CULTURE_IKON, Ikon, LockIkon } from "@/components/Ikon";
 
 // Peta: public/peta/peta.webp (aset peserta). Mask per wilayah dibuat otomatis dari bentuk daratan.
 // box = kotak klik (persen), badge = posisi ikon gembok bawaan gambar yang ditutup lencana status,
@@ -132,7 +133,7 @@ export function PetaView() {
                   )}
                   {r.id === selected && (
                     <div
-                      className="absolute inset-0 animate-pulse bg-kartu/20"
+                      className="bg-kartu/20 absolute inset-0 animate-pulse"
                       style={maskStyle(r.id)}
                     />
                   )}
@@ -171,10 +172,10 @@ export function PetaView() {
                   />
                   <span
                     aria-hidden="true"
-                    className={`pointer-events-none absolute grid size-[3.2%] min-h-6 min-w-6 -translate-1/2 place-items-center rounded-full border-2 bg-kartu text-[clamp(10px,1.4vw,18px)] font-bold shadow ${st === "aktif" ? "animate-bob border-daun-500" : st === "selesai" ? "border-kunyit-400 text-kunyit-600" : "border-krem-tua"}`}
+                    className={`bg-kartu pointer-events-none absolute grid size-[3.2%] min-h-6 min-w-6 -translate-1/2 place-items-center rounded-full border-2 text-[clamp(10px,1.4vw,18px)] font-bold shadow ${st === "aktif" ? "animate-bob border-daun-500" : st === "selesai" ? "border-kunyit-400 text-kunyit-600" : "border-krem-tua"}`}
                     style={{ left: `${badge[0]}%`, top: `${badge[1]}%` }}
                   >
-                    {BADGE[st]}
+                    {st === "terkunci" ? <LockIkon /> : BADGE[st]}
                   </span>
                 </Fragment>
               );
@@ -437,7 +438,7 @@ function Timeline({
               type="button"
               onClick={() => onSelect(r.id)}
               aria-pressed={r.id === selected}
-              className={`relative flex h-full w-full cursor-pointer flex-col items-center gap-1.5 rounded-[22px] border-3 bg-kartu p-3 text-center transition hover:-translate-y-0.5 ${
+              className={`bg-kartu relative flex h-full w-full cursor-pointer flex-col items-center gap-1.5 rounded-[22px] border-3 p-3 text-center transition hover:-translate-y-0.5 ${
                 r.id === selected
                   ? "border-daun-500"
                   : "border-krem-tua hover:border-daun-300"
@@ -452,7 +453,13 @@ function Timeline({
                       : "bg-krem-tua text-tinta-redup"
                 }`}
               >
-                {st === "selesai" ? "✓" : st === "terkunci" ? "🔒" : i + 1}
+                {st === "selesai" ? (
+                  "✓"
+                ) : st === "terkunci" ? (
+                  <LockIkon />
+                ) : (
+                  i + 1
+                )}
               </span>
               <span className="text-sm leading-tight font-extrabold">
                 {r.name}
@@ -506,8 +513,8 @@ function Culture({ id, locked }: { id: RegionId; locked: boolean }) {
       </div>
       {locked ? (
         <p className="bg-krem text-tinta-redup mt-2 rounded-[18px] p-3 text-sm font-bold">
-          🔒 Buka wilayah ini untuk mengenal rumah adat, tarian, makanan, dan
-          ungkapan daerahnya.
+          <LockIkon /> Buka wilayah ini untuk mengenal rumah adat, tarian,
+          makanan, dan ungkapan daerahnya.
         </p>
       ) : (
         <ul className="mt-2 grid gap-2">
@@ -517,10 +524,10 @@ function Culture({ id, locked }: { id: RegionId; locked: boolean }) {
               className="bg-krem flex items-start gap-3 rounded-[18px] p-2.5"
             >
               <span
-                className="grid size-11 flex-none place-items-center rounded-2xl bg-kartu text-2xl"
+                className="bg-kartu grid size-11 flex-none place-items-center rounded-2xl text-2xl"
                 aria-hidden="true"
               >
-                {c.icon}
+                <Ikon name={CULTURE_IKON[c.kind]} />
               </span>
               <span>
                 <span className="text-sogan block text-xs font-extrabold">

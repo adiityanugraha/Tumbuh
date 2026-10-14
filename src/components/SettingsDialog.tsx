@@ -10,6 +10,8 @@ import type { Grade } from "@/lib/types";
 import type { Settings } from "@/services/settings";
 import { useApp } from "./AppProvider";
 import { Button, ButtonLink } from "./ui";
+import { HeightPicker } from "./HeightPicker";
+import { Avatar, avatarName } from "./Ikon";
 
 type Variant = "anak" | "ortu";
 type Tab = "profil" | "suara" | "tampilan" | "akun" | "anak";
@@ -101,7 +103,7 @@ export function SettingsButton({ variant }: { variant: Variant }) {
   const ref = useRef<HTMLDialogElement>(null);
   const face =
     variant === "anak"
-      ? student?.avatar
+      ? student && <Avatar emoji={student.avatar} />
       : account?.role === "ortu"
         ? account.username[0]?.toUpperCase()
         : "⚙️";
@@ -131,7 +133,7 @@ function SettingsDialog({
   const tabs: Tab[] =
     variant === "anak"
       ? ["profil", "suara", "tampilan", "akun"]
-      : account?.role === "ortu"
+      : account?.role === "ortu" || student
         ? ["akun", "anak", "tampilan"]
         : ["akun", "tampilan"];
   const [tab, setTab] = useState<Tab>(tabs[0]);
@@ -173,7 +175,7 @@ function SettingsDialog({
               role="tab"
               aria-selected={active === t}
               onClick={() => setTab(t)}
-              className={`min-h-10 min-w-0 flex-1 cursor-pointer rounded-full px-2 text-sm whitespace-nowrap sm:px-3 sm:text-base transition ${active === t ? "bg-kartu text-tinta shadow-sm" : "text-tinta-redup"}`}
+              className={`min-h-10 min-w-0 flex-1 cursor-pointer rounded-full px-2 text-sm whitespace-nowrap transition sm:px-3 sm:text-base ${active === t ? "bg-kartu text-tinta shadow-sm" : "text-tinta-redup"}`}
             >
               {TAB_LABEL[t]}
             </button>
@@ -197,14 +199,14 @@ function SettingsDialog({
 }
 
 function ProfileTab({ onClose }: { onClose: () => void }) {
-  const { student, account, setAvatar, setGrade } = useApp();
+  const { student, account, updateStudent, setGrade } = useApp();
   if (!student) return null;
   const isAccount = account?.role === "anak";
   return (
     <>
       <div className="mt-3 flex items-center gap-3">
         <span className="border-kunyit-400 bg-kunyit-100 grid size-16 place-items-center rounded-full border-3 text-4xl">
-          {student.avatar}
+          <Avatar emoji={student.avatar} />
         </span>
         <div>
           <p className="font-display text-2xl font-semibold">
@@ -222,16 +224,17 @@ function ProfileTab({ onClose }: { onClose: () => void }) {
             <button
               key={a}
               type="button"
-              onClick={() => setAvatar(a)}
+              onClick={() => updateStudent({ avatar: a })}
               aria-pressed={student.avatar === a}
-              aria-label={`Avatar ${a}`}
+              aria-label={`Avatar ${avatarName(a)}`}
               className={`aspect-square cursor-pointer rounded-2xl border-3 text-2xl transition hover:scale-105 ${student.avatar === a ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-kartu"}`}
             >
-              {a}
+              <Avatar emoji={a} />
             </button>
           ))}
         </div>
       </fieldset>
+      <HeightPicker who="anak" />
       {isAccount ? (
         <div className="bg-kunyit-100 mt-5 rounded-[20px] p-4 text-center">
           <p className="text-sogan font-extrabold">Kode keluarga</p>
@@ -574,11 +577,12 @@ function ChildrenTab() {
   const { account, unlinkChild } = useApp();
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  if (account?.role !== "ortu") return null;
+  if (account?.role !== "ortu") return <HeightPicker who="ortu" />;
   const kids = account.children ?? [];
   return (
     <>
-      <p className="text-tinta-redup mt-3 text-sm font-semibold">
+      <HeightPicker who="ortu" />
+      <p className="text-tinta-redup mt-5 text-sm font-semibold">
         Anak yang terhubung dengan akunmu. Melepas tautan tidak menghapus data
         belajar anak.
       </p>
@@ -589,7 +593,7 @@ function ChildrenTab() {
             className="bg-krem flex flex-wrap items-center gap-3 rounded-[20px] p-3"
           >
             <span className="text-3xl" aria-hidden="true">
-              {c.avatar}
+              <Avatar emoji={c.avatar} />
             </span>
             <span className="flex-1 font-bold">
               {c.nickname}

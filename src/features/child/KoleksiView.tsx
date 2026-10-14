@@ -9,7 +9,8 @@ import { PlantThumb } from "@/components/PlantVisual";
 import { Card, Tag } from "@/components/ui";
 import { PLANT_INFO, type ConservationStatus } from "@/data/plant-info";
 import { PLANTS, REGIONS } from "@/data/plants";
-import { CHILD_CM, formatSize, sizeComparison } from "@/lib/size";
+import { Avatar } from "@/components/Ikon";
+import { childHeight, formatSize, sizeComparison } from "@/lib/size";
 import type { PlantSpecies, RegionId } from "@/lib/types";
 
 export function KoleksiView() {
@@ -62,7 +63,7 @@ export function KoleksiView() {
                   disabled={!owned}
                   onClick={() => setSelected(p.id)}
                   aria-pressed={selected === p.id}
-                  className={`before:border-tanah-300 enabled:hover:border-kunyit-400 relative rounded-3xl border-3 bg-kartu p-3 text-center transition before:pointer-events-none before:absolute before:inset-1.5 before:rounded-[18px] before:border-2 before:border-dashed enabled:cursor-pointer enabled:hover:-translate-y-1 enabled:hover:-rotate-1 ${selected === p.id && owned ? "border-kunyit-400" : "border-krem-tua"}`}
+                  className={`before:border-tanah-300 enabled:hover:border-kunyit-400 bg-kartu relative rounded-3xl border-3 p-3 text-center transition before:pointer-events-none before:absolute before:inset-1.5 before:rounded-[18px] before:border-2 before:border-dashed enabled:cursor-pointer enabled:hover:-translate-y-1 enabled:hover:-rotate-1 ${selected === p.id && owned ? "border-kunyit-400" : "border-krem-tua"}`}
                 >
                   <span
                     className={`bg-daun-100 bg-kawung grid h-28 place-items-center rounded-[18px] bg-size-[28px_28px] text-5xl ${owned ? "" : "opacity-30 brightness-35 grayscale"}`}
@@ -155,10 +156,17 @@ const LABEL = "flex items-center gap-1.5 text-xs font-extrabold text-sogan";
 
 /** Status konservasi, manfaat, dan perbandingan ukuran tanaman dengan tinggi anak. */
 function PlantDetails({ plant }: { plant: PlantSpecies }) {
+  const { student } = useApp();
   const info = PLANT_INFO[plant.id];
-  const max = Math.max(info.sizeCm, CHILD_CM);
-  const bars: [string, string, number, string][] = [
-    ["🧒", "Kamu", CHILD_CM, "bg-langit-300"],
+  const childCm = student ? childHeight(student) : 125;
+  const max = Math.max(info.sizeCm, childCm);
+  const bars: [React.ReactNode, string, number, string][] = [
+    [
+      student ? <Avatar emoji={student.avatar} /> : "🧒",
+      "Kamu",
+      childCm,
+      "bg-langit-300",
+    ],
     [plant.emoji, plant.name, info.sizeCm, "bg-daun-500"],
   ];
   return (
@@ -193,7 +201,7 @@ function PlantDetails({ plant }: { plant: PlantSpecies }) {
         <dd className="mt-1">
           <span className="font-semibold">
             {info.sizeOf} sekitar {formatSize(info.sizeCm)},{" "}
-            {sizeComparison(info.sizeCm)}.
+            {sizeComparison(info.sizeCm, childCm)}.
           </span>
           <div className="mt-2 grid gap-1.5" aria-hidden="true">
             {bars.map(([icon, label, cm, color]) => (

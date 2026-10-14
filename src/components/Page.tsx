@@ -22,8 +22,12 @@ export function Page({
     >
       <div className="relative mt-2 mb-5 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-semibold text-daun-800 md:text-4xl">{title}</h1>
-          {subtitle && <p className="mt-1 font-bold text-tinta-redup">{subtitle}</p>}
+          <h1 className="font-display text-daun-800 text-3xl font-semibold md:text-4xl">
+            {title}
+          </h1>
+          {subtitle && (
+            <p className="text-tinta-redup mt-1 font-bold">{subtitle}</p>
+          )}
         </div>
         {aside}
       </div>

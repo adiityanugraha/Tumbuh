@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import { Mascot, MegaMendung } from "@/components/art";
 import { Button } from "@/components/ui";
-import type { Grade } from "@/lib/types";
+import { GENDERS } from "@/components/HeightPicker";
+import type { Gender, Grade } from "@/lib/types";
+import Image from "next/image";
+import { Avatar, avatarName } from "@/components/Ikon";
 
 export const AVATARS = ["🦁", "🐰", "🐼", "🦊", "🐸", "🐢", "🐨", "🦋"];
 export const GRADES: Grade[] = [1, 2, 3, 4, 5, 6];
@@ -17,18 +20,19 @@ export function Onboarding() {
   const [nickname, setNickname] = useState("");
   const [avatar, setAvatar] = useState(AVATARS[1]);
   const [grade, setGrade] = useState<Grade | null>(null);
+  const [gender, setGender] = useState<Gender | null>(null);
 
   useEffect(() => {
     if (ready && student) router.replace("/kebun/");
   }, [ready, student, router]);
 
   const name = nickname.trim();
-  const canStart = name.length > 0 && grade !== null;
+  const canStart = name.length > 0 && grade !== null && gender !== null;
 
   const start = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!canStart) return;
-    await createStudent({ nickname: name, avatar, grade });
+    await createStudent({ nickname: name, avatar, grade, gender });
     router.push("/kebun/");
   };
 
@@ -39,7 +43,7 @@ export function Onboarding() {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="border-krem-tua grid w-full overflow-hidden rounded-[36px] border-3 bg-kartu md:grid-cols-[1.1fr_1fr]"
+        className="border-krem-tua bg-kartu grid w-full overflow-hidden rounded-[36px] border-3 md:grid-cols-[1.1fr_1fr]"
       >
         <KumbiPanel />
 
@@ -63,6 +67,8 @@ export function Onboarding() {
             </span>
           </label>
 
+          <GenderChoice value={gender} onChange={setGender} />
+
           <fieldset>
             <legend className="text-sogan mb-2 font-extrabold">
               Pilih teman avatarmu
@@ -74,10 +80,10 @@ export function Onboarding() {
                   type="button"
                   onClick={() => setAvatar(a)}
                   aria-pressed={avatar === a}
-                  aria-label={`Avatar ${a}`}
+                  aria-label={`Avatar ${avatarName(a)}`}
                   className={`aspect-square cursor-pointer rounded-[20px] border-3 text-3xl transition hover:scale-105 ${avatar === a ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-kartu"}`}
                 >
-                  {a}
+                  <Avatar emoji={a} />
                 </button>
               ))}
             </div>
@@ -124,6 +130,41 @@ export function Onboarding() {
         </form>
       </motion.div>
     </main>
+  );
+}
+
+/** Pilihan wajib saat daftar: anak laki-laki atau perempuan (gambar badan di pengukur tinggi). */
+export function GenderChoice({
+  value,
+  onChange,
+}: {
+  value: Gender | null;
+  onChange: (g: Gender) => void;
+}) {
+  return (
+    <fieldset>
+      <legend className="text-sogan mb-2 font-extrabold">Kamu anak...</legend>
+      <div className="grid grid-cols-2 gap-2.5">
+        {GENDERS.map(([g, label]) => (
+          <button
+            key={g}
+            type="button"
+            onClick={() => onChange(g)}
+            aria-pressed={value === g}
+            className={`flex min-h-16 cursor-pointer flex-col items-center justify-center gap-1 rounded-[20px] border-3 p-2 text-lg font-extrabold whitespace-nowrap transition hover:scale-[1.02] sm:flex-row sm:gap-3 ${value === g ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-kartu"}`}
+          >
+            <Image
+              src={`/badan/${g}.webp`}
+              alt=""
+              width={265}
+              height={800}
+              className="bg-langit-100 size-12 flex-none rounded-full object-cover object-top"
+            />
+            {label}
+          </button>
+        ))}
+      </div>
+    </fieldset>
   );
 }
 

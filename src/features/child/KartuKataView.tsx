@@ -80,7 +80,7 @@ export function KartuKataView() {
             >
               <span
                 aria-hidden={flipped}
-                className="rounded-blob border-krem-tua absolute inset-0 flex flex-col items-center justify-center gap-2 border-3 bg-kartu backface-hidden"
+                className="rounded-blob border-krem-tua bg-kartu absolute inset-0 flex flex-col items-center justify-center gap-2 border-3 backface-hidden"
               >
                 <span className="text-8xl" aria-hidden="true">
                   {emoji}

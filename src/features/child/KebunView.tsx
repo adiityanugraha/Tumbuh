@@ -20,6 +20,7 @@ import { mistakeIds } from "@/lib/session";
 import { BadgeCard } from "./BadgeCard";
 import { ChallengeCard } from "./ChallengeCard";
 import { GardenScene } from "./GardenScene";
+import { Avatar, Sticker, SubjectIkon } from "@/components/Ikon";
 
 export const SUBJECT_BG = {
   matematika: "bg-kunyit-100",
@@ -82,7 +83,7 @@ export function KebunView() {
           <Card>
             <div className="flex items-center gap-3.5">
               <span className="border-kunyit-400 bg-kunyit-100 grid size-16 flex-none place-items-center rounded-full border-3 text-4xl">
-                {student.avatar}
+                <Avatar emoji={student.avatar} />
               </span>
               <div>
                 <p className="font-display text-2xl font-semibold">
@@ -117,14 +118,16 @@ export function KebunView() {
 
           <div className="border-kunyit-400 bg-kunyit-100 flex items-start gap-3 rounded-[20px] border-2 border-dashed p-4 font-bold">
             <span className="text-3xl" aria-hidden="true">
-              {latest?.sticker ?? "🐞"}
+              {latest ? <Sticker emoji={latest.sticker} /> : "🐞"}
             </span>
             <div className="flex-1">
               {latest ? (
                 <>
                   Pesan dari {latest.from ?? "orang tua"}
                   {!latest.read && (
-                    <Tag className="bg-kunyit-400! text-tinta-tetap! ml-2">Baru</Tag>
+                    <Tag className="bg-kunyit-400! text-tinta-tetap! ml-2">
+                      Baru
+                    </Tag>
                   )}
                   <p className="font-semibold">
                     &ldquo;{latest.message}&rdquo;
@@ -167,12 +170,12 @@ export function KebunView() {
                 <Link
                   key={s.id}
                   href={`/belajar/${s.id}/`}
-                  className="border-krem-tua hover:border-daun-300 flex min-h-18 items-center gap-3.5 rounded-[22px] border-3 bg-kartu px-4 py-2.5 transition hover:translate-x-1"
+                  className="border-krem-tua hover:border-daun-300 bg-kartu flex min-h-18 items-center gap-3.5 rounded-[22px] border-3 px-4 py-2.5 transition hover:translate-x-1"
                 >
                   <span
                     className={`grid size-12 flex-none place-items-center rounded-2xl text-2xl ${SUBJECT_BG[s.id]}`}
                   >
-                    {s.emoji}
+                    <SubjectIkon subject={s.id} />
                   </span>
                   <span>
                     <span className="font-display block text-lg font-semibold">

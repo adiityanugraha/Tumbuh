@@ -16,22 +16,33 @@ export function ChallengeCard() {
   return (
     <Card batik>
       <div className="flex items-center justify-between gap-2">
-        <h2 className="font-display text-xl font-semibold">Tantangan dari {challenge.from}</h2>
+        <h2 className="font-display text-xl font-semibold">
+          Tantangan dari {challenge.from}
+        </h2>
         <span className="text-2xl" aria-hidden="true">
           {st.completed ? "🎁" : "🎯"}
         </span>
       </div>
-      <p className="mt-1 text-sm font-bold text-tinta-redup">
-        {challengeLabel(challenge)} sampai {keyToDate(st.endDate).toLocaleDateString("id-ID", { weekday: "long" })}
+      <p className="text-tinta-redup mt-1 text-sm font-bold">
+        {challengeLabel(challenge)} sampai{" "}
+        {keyToDate(st.endDate).toLocaleDateString("id-ID", { weekday: "long" })}
       </p>
       <div className="mt-2.5">
-        <Bar value={(st.done / challenge.target) * 100} motif={false} label="Progres tantangan dari orang tua" />
+        <Bar
+          value={(st.done / challenge.target) * 100}
+          motif={false}
+          label="Progres tantangan dari orang tua"
+        />
       </div>
-      <p className="mt-2 text-sm font-extrabold text-tinta-redup">
+      <p className="text-tinta-redup mt-2 text-sm font-extrabold">
         {st.done} / {challenge.target} {unit}
       </p>
-      <p className={`mt-2 rounded-2xl px-3 py-2 text-sm font-bold ${st.completed ? "bg-daun-100 text-daun-800" : "bg-krem"}`}>
-        {st.completed ? `Tantangan selesai! Tagih hadiahmu ke ${challenge.from}: ` : "Hadiah: "}
+      <p
+        className={`mt-2 rounded-2xl px-3 py-2 text-sm font-bold ${st.completed ? "bg-daun-100 text-daun-800" : "bg-krem"}`}
+      >
+        {st.completed
+          ? `Tantangan selesai! Tagih hadiahmu ke ${challenge.from}: `
+          : "Hadiah: "}
         <b>{challenge.reward}</b>
       </p>
     </Card>

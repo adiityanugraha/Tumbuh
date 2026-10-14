@@ -48,7 +48,7 @@ Cara kerja: localStorage tetap menjadi cache sehingga aplikasi cepat. Saat masuk
 
 ## Pengaturan Pengguna
 
-Ketuk avatar di pojok kanan atas (anak) atau lingkaran inisial (orang tua) untuk membuka **Pengaturan**: ganti avatar, suara (efek bunyi, kecepatan bacaan), tampilan (**mode gelap/terang**, huruf besar, kurangi animasi), ganti kata sandi, sapaan bawaan orang tua, dan kelola anak. Mode gelap memakai token warna yang sama (`src/app/globals.css`, `:root[data-theme="gelap"]`) dan dipasang sebelum halaman tampil sehingga tidak berkedip.
+Ketuk avatar di pojok kanan atas (anak) atau lingkaran inisial (orang tua) untuk membuka **Pengaturan**: ganti avatar, **tinggi badan** (switch gambar anak laki-laki/perempuan dan meteran dinding yang bisa digeser, dipakai untuk perbandingan ukuran di Koleksi; bisa diisi anak maupun orang tua), suara (efek bunyi, kecepatan bacaan), tampilan (**mode gelap/terang**, huruf besar, kurangi animasi), ganti kata sandi, sapaan bawaan orang tua, dan kelola anak. Mode gelap memakai token warna yang sama (`src/app/globals.css`, `:root[data-theme="gelap"]`) dan dipasang sebelum halaman tampil sehingga tidak berkedip.
 
 ## Deploy
 
@@ -79,6 +79,8 @@ Diukur 13 Okt 2026 dengan Lighthouse 12 (Edge headless) di laptop pengembang; an
 - `src/data/plants.ts`: fakta 12 tanaman Nusantara bertanda VERIFY, wajib dicek manual.
 - `src/data/plant-info.ts`: status konservasi, manfaat, dan ukuran 12 tanaman bertanda VERIFY, wajib dicek manual.
 - `src/data/culture.ts`: fakta budaya 6 wilayah (rumah adat, tarian, makanan, ungkapan) bertanda VERIFY, wajib dicek manual.
+- `supabase/buka-lencana.sql`: skrip DUMMY untuk demo, menambahkan 14 sesi contoh ke satu akun anak agar semua lencana terbuka. Jangan dipakai untuk akun sungguhan.
+- `src/lib/size.ts`: perkiraan tinggi anak per kelas (118-144 cm) saat tinggi badan belum diisi, bertanda VERIFY.
 - `src/lib/site.ts`: alamat situs placeholder `https://tumbuh.example.com` (VERIFY), ganti lewat `NEXT_PUBLIC_SITE_URL` saat build.
 - `src/data/vocab.ts`: 79 kosakata Kartu Kata (8 tema), perlu ditinjau ulang oleh manusia.
 - `src/data/questions/`: 384 soal (16 per mapel per kelas, termasuk 96 soal Bahasa Indonesia baru) disusun mengacu Kurikulum Merdeka, perlu ditinjau ulang oleh manusia sebelum lomba.

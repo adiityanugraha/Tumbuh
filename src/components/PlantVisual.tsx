@@ -33,7 +33,10 @@ const src = (id: string, stage: GrowthStage) => `/tanaman/${id}-${stage}.webp`;
 function scaleOf([, h]: [number, number], potWidth: number, maxHeight: number) {
   return Math.min(potWidth / POT_PX, maxHeight / h);
 }
-const sized = ([w, h]: [number, number], k: number) => ({ width: Math.round(w * k), height: Math.round(h * k) });
+const sized = ([w, h]: [number, number], k: number) => ({
+  width: Math.round(w * k),
+  height: Math.round(h * k),
+});
 
 /** Tanaman di pot sesuai tahap. Tanpa ilustrasi: SVG sementara. Layu: warna pudar dan sedikit merunduk. */
 export function PlantVisual({
@@ -64,8 +67,16 @@ export function PlantVisual({
     if (TREES.has(plant.id)) return plantImg;
     const ground = sized(GROUND, k);
     return (
-      <div className="relative flex justify-center" style={{ paddingBottom: Math.round(ground.height * POT_LIFT) }}>
-        <Image src="/tanaman/tanah.webp" alt="" {...ground} className="absolute bottom-0 left-1/2 max-w-none -translate-x-1/2" />
+      <div
+        className="relative flex justify-center"
+        style={{ paddingBottom: Math.round(ground.height * POT_LIFT) }}
+      >
+        <Image
+          src="/tanaman/tanah.webp"
+          alt=""
+          {...ground}
+          className="absolute bottom-0 left-1/2 max-w-none -translate-x-1/2"
+        />
         {plantImg}
       </div>
     );
@@ -73,8 +84,16 @@ export function PlantVisual({
   // PLACEHOLDER: ilustrasi SVG umum sampai aset tanaman ini tersedia.
   return (
     <div className="flex flex-col items-center">
-      <div className={wilted ? "saturate-50" : "animate-sway"} style={{ transformOrigin: "50% 100%" }}>
-        <PlantArt stage={stage} color={plant.color} wilted={wilted} size={potWidth * 1.1} />
+      <div
+        className={wilted ? "saturate-50" : "animate-sway"}
+        style={{ transformOrigin: "50% 100%" }}
+      >
+        <PlantArt
+          stage={stage}
+          color={plant.color}
+          wilted={wilted}
+          size={potWidth * 1.1}
+        />
       </div>
       <div className="-mt-1.5">
         <Pot width={potWidth * 1.15} />
@@ -84,12 +103,25 @@ export function PlantVisual({
 }
 
 /** Gambar kecil tanaman untuk kartu koleksi dan peta: ilustrasi tahap berbunga dalam kotak, atau emoji. */
-export function PlantThumb({ plant, size }: { plant: PlantSpecies; size: number }) {
+export function PlantThumb({
+  plant,
+  size,
+}: {
+  plant: PlantSpecies;
+  size: number;
+}) {
   const dims = ILLUSTRATED[plant.id];
   if (dims) {
     const k = size / Math.max(...dims);
     // Versi kecil 300px (public/tanaman/kecil/) agar koleksi dan peta tidak memuat gambar ukuran penuh.
-    return <Image src={`/tanaman/kecil/${plant.id}.webp`} alt="" width={Math.round(dims[0] * k)} height={Math.round(dims[1] * k)} />;
+    return (
+      <Image
+        src={`/tanaman/kecil/${plant.id}.webp`}
+        alt=""
+        width={Math.round(dims[0] * k)}
+        height={Math.round(dims[1] * k)}
+      />
+    );
   }
   // PLACEHOLDER: emoji sampai ilustrasi tersedia.
   return <span style={{ fontSize: size * 0.55 }}>{plant.emoji}</span>;

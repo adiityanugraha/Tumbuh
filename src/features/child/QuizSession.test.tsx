@@ -1,25 +1,94 @@
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { createElement, Fragment, type ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Question } from "@/lib/types";
 
 // Animasi dimatikan: elemen motion dirender sebagai elemen HTML biasa.
 vi.mock("motion/react", () => {
-  const strip = ({ initial, animate, exit, transition, ...rest }: Record<string, unknown>) => (void [initial, animate, exit, transition], rest);
+  const strip = ({
+    initial,
+    animate,
+    exit,
+    transition,
+    ...rest
+  }: Record<string, unknown>) => (
+    void [initial, animate, exit, transition],
+    rest
+  );
   const cache: Record<string, unknown> = {};
-  const motion = new Proxy({}, { get: (_, tag: string) => (cache[tag] ??= (props: Record<string, unknown>) => createElement(tag, strip(props))) });
-  const Pass = ({ children }: { children: ReactNode }) => createElement(Fragment, null, children);
+  const motion = new Proxy(
+    {},
+    {
+      get: (_, tag: string) =>
+        (cache[tag] ??= (props: Record<string, unknown>) =>
+          createElement(tag, strip(props))),
+    },
+  );
+  const Pass = ({ children }: { children: ReactNode }) =>
+    createElement(Fragment, null, children);
   return { motion, AnimatePresence: Pass, MotionConfig: Pass };
 });
-vi.mock("@/lib/sound", () => ({ playCorrect: vi.fn(), playWrong: vi.fn(), playCelebrate: vi.fn() }));
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn(), replace: vi.fn() }) }));
+vi.mock("@/lib/sound", () => ({
+  playCorrect: vi.fn(),
+  playWrong: vi.fn(),
+  playCelebrate: vi.fn(),
+}));
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn() }),
+}));
 
 const QUESTIONS: Question[] = [
-  { id: "t1", type: "pilihan", topic: "A", prompt: "Soal pilihan", hint: "Petunjuk satu", options: ["satu", "dua", "tiga"], answer: 1 },
-  { id: "t2", type: "isian", topic: "B", prompt: "Soal isian", hint: "h", answer: 7 },
-  { id: "t3", type: "cocokkan", topic: "C", prompt: "Soal cocokkan", hint: "h", pairs: [["kiri1", "KANAN1"], ["kiri2", "KANAN2"]] },
-  { id: "t4", type: "urutkan", topic: "D", prompt: "Soal urutkan", hint: "h", items: ["x1", "x2", "x3"] },
-  { id: "t5", type: "pilihan", topic: "E", prompt: "Soal terakhir", hint: "h", options: ["p", "q", "r", "s"], answer: 3 },
+  {
+    id: "t1",
+    type: "pilihan",
+    topic: "A",
+    prompt: "Soal pilihan",
+    hint: "Petunjuk satu",
+    options: ["satu", "dua", "tiga"],
+    answer: 1,
+  },
+  {
+    id: "t2",
+    type: "isian",
+    topic: "B",
+    prompt: "Soal isian",
+    hint: "h",
+    answer: 7,
+  },
+  {
+    id: "t3",
+    type: "cocokkan",
+    topic: "C",
+    prompt: "Soal cocokkan",
+    hint: "h",
+    pairs: [
+      ["kiri1", "KANAN1"],
+      ["kiri2", "KANAN2"],
+    ],
+  },
+  {
+    id: "t4",
+    type: "urutkan",
+    topic: "D",
+    prompt: "Soal urutkan",
+    hint: "h",
+    items: ["x1", "x2", "x3"],
+  },
+  {
+    id: "t5",
+    type: "pilihan",
+    topic: "E",
+    prompt: "Soal terakhir",
+    hint: "h",
+    options: ["p", "q", "r", "s"],
+    answer: 3,
+  },
 ];
 vi.mock("@/data/questions", () => ({
   getQuestions: () => QUESTIONS,
@@ -39,7 +108,8 @@ function Gate() {
   return ready && student ? <QuizSession subject="matematika" /> : null;
 }
 
-const click = (name: string | RegExp) => fireEvent.click(screen.getByRole("button", { name }));
+const click = (name: string | RegExp) =>
+  fireEvent.click(screen.getByRole("button", { name }));
 
 describe("QuizSession", () => {
   beforeEach(() => {
@@ -48,11 +118,30 @@ describe("QuizSession", () => {
       "tumbuh:v1",
       JSON.stringify({
         version: 1,
-        student: { nickname: "Uji", avatar: "🐰", grade: 3, createdAt: "2026-10-06" },
-        garden: { activePlantId: "rafflesia", water: 0, fertilizer: 0, collection: [], streak: 0, lastStudyDate: null },
+        student: {
+          nickname: "Uji",
+          avatar: "🐰",
+          grade: 3,
+          createdAt: "2026-10-06",
+        },
+        garden: {
+          activePlantId: "rafflesia",
+          water: 0,
+          fertilizer: 0,
+          collection: [],
+          streak: 0,
+          lastStudyDate: null,
+        },
         sessions: [],
         encouragements: [],
-        challenge: { id: "c", from: "Ibu", kind: "sesi", target: 1, reward: "Piknik", startDate: new Date().toLocaleDateString("sv-SE") },
+        challenge: {
+          id: "c",
+          from: "Ibu",
+          kind: "sesi",
+          target: 1,
+          reward: "Piknik",
+          startDate: new Date().toLocaleDateString("sv-SE"),
+        },
       }),
     );
   });
@@ -99,7 +188,9 @@ describe("QuizSession", () => {
     expect(document.body).toHaveTextContent("💧 +4Air");
     expect(document.body).toHaveTextContent("🌱 +3Pupuk");
     expect(document.body).toHaveTextContent("Lencana baru: Langkah Pertama!");
-    expect(document.body).toHaveTextContent("Tantangan dari Ibu selesai! Tagih hadiahmu: Piknik");
+    expect(document.body).toHaveTextContent(
+      "Tantangan dari Ibu selesai! Tagih hadiahmu: Piknik",
+    );
     await waitFor(() => {
       const saved = JSON.parse(localStorage.getItem("tumbuh:v1")!);
       expect(saved.sessions).toHaveLength(1);

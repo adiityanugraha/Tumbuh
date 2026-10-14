@@ -24,6 +24,7 @@ import {
 } from "@/lib/garden";
 import { masteryBySubject, weeklySummary, type Mastery } from "@/lib/insights";
 import type { Encouragement, Grade, ParentChallenge } from "@/lib/types";
+import { Avatar, Sticker, stickerName, SubjectIkon } from "@/components/Ikon";
 
 export function ParentView() {
   const { ready, student, account } = useApp();
@@ -140,7 +141,7 @@ function ParentToolbar() {
             onClick={() => c.id !== account.activeChildId && switchChild(c.id)}
             className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-full border-3 px-3.5 font-bold transition ${c.id === account.activeChildId ? "border-daun-800 bg-daun-600 text-white" : "border-krem-tua hover:border-daun-300 bg-kartu"}`}
           >
-            <span aria-hidden="true">{c.avatar}</span>
+            <Avatar emoji={c.avatar} />
             {c.nickname}
           </button>
         ))}
@@ -367,7 +368,7 @@ function Report() {
                     className="border-krem-tua rounded-[22px] border-3 p-4"
                   >
                     <h3 className="font-display flex items-center gap-2 text-lg font-semibold">
-                      <span aria-hidden="true">{s.emoji}</span>
+                      <SubjectIkon subject={s.id} />
                       {s.name}
                       <span className="text-tinta-redup ml-auto text-sm font-extrabold">
                         {week.bySubject[s.id]} sesi
@@ -702,11 +703,11 @@ function SendEncouragement() {
                     key={s}
                     type="button"
                     aria-pressed={sticker === s}
-                    aria-label={`Stiker ${s}`}
+                    aria-label={`Stiker ${stickerName(s)}`}
                     onClick={() => setSticker(s)}
                     className={`aspect-square min-h-11 cursor-pointer rounded-2xl border-3 text-2xl transition ${sticker === s ? "border-kunyit-400 bg-kunyit-100" : "border-krem-tua bg-kartu"}`}
                   >
-                    {s}
+                    <Sticker emoji={s} />
                   </button>
                 ))}
               </div>
@@ -774,7 +775,7 @@ function SentItem({ e }: { e: Encouragement }) {
   return (
     <li className="bg-krem flex items-start gap-2.5 rounded-2xl px-3 py-2 text-sm font-bold">
       <span className="text-2xl" aria-hidden="true">
-        {e.sticker}
+        <Sticker emoji={e.sticker} />
       </span>
       <div className="flex-1">
         <p>&ldquo;{e.message}&rdquo;</p>
