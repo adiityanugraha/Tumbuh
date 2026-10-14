@@ -2,7 +2,7 @@
 
 Panduan singkat untuk juri: cara mencoba seluruh fitur Tumbuh dalam sekitar 10 menit.
 
-- **Situs:** https://tumbuhnusantara.my.id
+- **Situs:** https://tumbuhnusantara.m1sec.my.id (cadangan: https://peserta61.m1sec.my.id)
 - **Perangkat:** desktop atau laptop disarankan (desain web-first), tetap rapi di HP mulai lebar 360px.
 - **Peramban:** Chrome atau Edge terbaru. Narasi suara memakai suara bawaan peramban (Web Speech API), jadi pastikan volume menyala.
 

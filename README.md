@@ -4,7 +4,7 @@ Web edukasi untuk anak SD kelas 1-6. Anak merawat kebun virtual dan menjelajah P
 
 Karya untuk M-ONE Telkomsel Coding Competition, Kategori Umum, tema "Innovating Education Through Technology", subtema "Web Education for Kids (untuk anak SD)".
 
-**Situs:** [tumbuhnusantara.my.id](https://tumbuhnusantara.my.id)
+**Situs:** [tumbuhnusantara.m1sec.my.id](https://tumbuhnusantara.m1sec.my.id) (cadangan: [peserta61.m1sec.my.id](https://peserta61.m1sec.my.id))
 
 | Dokumen | Isi |
 |---|---|
@@ -78,7 +78,7 @@ Ketuk avatar di pojok kanan atas (anak) atau lingkaran inisial (orang tua) untuk
 
 ## Deploy
 
-### Dokploy (dipakai untuk lomba, domain di Hostinger)
+### Dokploy (dipakai untuk lomba)
 
 Repo sudah berisi `Dockerfile` (Node 22 membangun situs statis, nginx menyajikan folder `out/`) dan `nginx.conf` (padanan `.htaccess`: kompresi, cache aset, halaman 404, redirect garis miring yang aman di belakang proxy).
 
@@ -88,35 +88,42 @@ Repo sudah berisi `Dockerfile` (Node 22 membangun situs statis, nginx menyajikan
    - Build Type: **Dockerfile**, Docker File: `Dockerfile`.
 3. **Environment** > Build-time Arguments (nilai `NEXT_PUBLIC_*` dibaca saat build, bukan saat jalan):
    ```
-   NEXT_PUBLIC_SITE_URL=https://tumbuhnusantara.my.id
+   NEXT_PUBLIC_SITE_URL=https://tumbuhnusantara.m1sec.my.id
    NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
    NEXT_PUBLIC_SUPABASE_ANON_KEY=anon-key-dari-supabase
    ```
    Tanpa dua variabel Supabase, situs tetap jalan dengan profil lokal tanpa akun.
 4. **Deploy**, lalu pantau tab Logs sampai build selesai.
-5. **Domains** > Add Domain: isi host `tumbuhnusantara.my.id`, Container Port **80**, nyalakan **HTTPS** dengan sertifikat Let's Encrypt.
-6. **Hostinger** (hPanel > Domains > DNS / Nameservers): tambah record **A** dengan nama `@` (domain utama) atau nama subdomain, isi dengan **IP server Dokploy**. Hapus record A/AAAA lama untuk nama yang sama (misalnya halaman parkir Hostinger), lalu tunggu propagasi DNS sebelum sertifikat HTTPS terbit.
+5. **Domains** > Add Domain: host `tumbuhnusantara.m1sec.my.id` (subdomain dari domain panitia), Path `/`, Container Port **80**. **Matikan HTTPS** karena domain panitia sudah di belakang Cloudflare (Cloudflare yang memasang HTTPS); bila dinyalakan, Traefik dan Cloudflare saling mengalihkan dan terjadi redirect loop.
+6. Untuk domain sendiri (misalnya dari Hostinger): buat record **A** ke IP asli server Dokploy (bukan IP Cloudflare), lalu tambahkan host-nya di Domains dengan HTTPS dan Let's Encrypt.
 7. Opsional: nyalakan **Auto Deploy** di Dokploy agar setiap push ke `main` langsung dideploy ulang.
 
 ### Hosting statis lain (cPanel/Apache)
 
 1. Build dengan alamat situs, misalnya lewat PowerShell:
    ```powershell
-   $env:NEXT_PUBLIC_SITE_URL = "https://tumbuhnusantara.my.id"; npm run build
+   $env:NEXT_PUBLIC_SITE_URL = "https://tumbuhnusantara.m1sec.my.id"; npm run build
    ```
-   Tanpa variabel ini dipakai alamat bawaan `https://tumbuhnusantara.my.id` (lihat `src/lib/site.ts`).
+   Tanpa variabel ini dipakai alamat bawaan `https://tumbuhnusantara.m1sec.my.id` (lihat `src/lib/site.ts`).
 2. Unggah seluruh isi folder `out/` ke direktori publik (misalnya `public_html`). `out/.htaccess` ikut terunggah untuk Apache.
 
 `npm run build` juga menjalankan `scripts/fix-segments.mjs`, yang menyalin file prefetch Next ke nama yang diminta browser (tanpa ini muncul error 404 di konsol pada build Windows).
 
-## Kualitas (Lighthouse mobile, build statis, Mode Demo)
+## Kualitas (Lighthouse mobile, situs live, Mode Demo)
 
 | Halaman | Performa | Aksesibilitas | Best Practices | SEO |
 |---|---|---|---|---|
-| Onboarding `/` | 100 | 100 | 100 | 100 |
-| Kebunku, Belajar, Sesi belajar, Peta, Koleksi, Kartu Kata, Memori, Orang Tua | 94-100 | 100 | 100 | 100 |
+| Layar awal `/` | 100 | 100 | 100 | 100 |
+| Kebunku | 97 | 100 | 100 | 100 |
+| Belajar | 97 | 100 | 100 | 100 |
+| Sesi belajar (Matematika) | 98 | 100 | 100 | 100 |
+| Peta | 92 | 100 | 100 | 100 |
+| Koleksi | 97 | 100 | 100 | 100 |
+| Kartu Kata | 98 | 100 | 100 | 100 |
+| Memori | 100 | 100 | 100 | 100 |
+| Orang Tua | 100 | 100 | 100 | 100 |
 
-Diukur 14 Okt 2026 dengan Lighthouse 12 (Edge headless) di laptop pengembang, setelah penambahan ikon, gambar badan, dan latar truntum; angka performa bisa berbeda di server hosting.
+Diukur 14 Okt 2026 dengan Lighthouse 12 (Edge headless, emulasi mobile) terhadap situs yang sudah dideploy di Dokploy panitia (`https://peserta61.m1sec.my.id`, aplikasi yang sama dengan alamat utama).
 
 ## Status Dummy dan Placeholder
 
