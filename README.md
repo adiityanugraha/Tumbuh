@@ -4,7 +4,7 @@ Web edukasi untuk anak SD kelas 1-6. Anak merawat kebun virtual dan menjelajah P
 
 Karya untuk M-ONE Telkomsel Coding Competition, Kategori Umum, tema "Innovating Education Through Technology", subtema "Web Education for Kids (untuk anak SD)".
 
-**Situs:** https://domain-dari-panitia <!-- PLACEHOLDER: ganti setelah deploy -->
+**Situs:** [tumbuhnusantara.my.id](https://tumbuhnusantara.my.id)
 
 | Dokumen | Isi |
 |---|---|
@@ -88,13 +88,13 @@ Repo sudah berisi `Dockerfile` (Node 22 membangun situs statis, nginx menyajikan
    - Build Type: **Dockerfile**, Docker File: `Dockerfile`.
 3. **Environment** > Build-time Arguments (nilai `NEXT_PUBLIC_*` dibaca saat build, bukan saat jalan):
    ```
-   NEXT_PUBLIC_SITE_URL=https://domain-kamu
+   NEXT_PUBLIC_SITE_URL=https://tumbuhnusantara.my.id
    NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
    NEXT_PUBLIC_SUPABASE_ANON_KEY=anon-key-dari-supabase
    ```
    Tanpa dua variabel Supabase, situs tetap jalan dengan profil lokal tanpa akun.
 4. **Deploy**, lalu pantau tab Logs sampai build selesai.
-5. **Domains** > Add Domain: isi host (misalnya `tumbuh.domain-kamu`), Container Port **80**, nyalakan **HTTPS** dengan sertifikat Let's Encrypt.
+5. **Domains** > Add Domain: isi host `tumbuhnusantara.my.id`, Container Port **80**, nyalakan **HTTPS** dengan sertifikat Let's Encrypt.
 6. **Hostinger** (hPanel > Domains > DNS / Nameservers): tambah record **A** dengan nama `@` (domain utama) atau nama subdomain, isi dengan **IP server Dokploy**. Hapus record A/AAAA lama untuk nama yang sama (misalnya halaman parkir Hostinger), lalu tunggu propagasi DNS sebelum sertifikat HTTPS terbit.
 7. Opsional: nyalakan **Auto Deploy** di Dokploy agar setiap push ke `main` langsung dideploy ulang.
 
@@ -102,9 +102,9 @@ Repo sudah berisi `Dockerfile` (Node 22 membangun situs statis, nginx menyajikan
 
 1. Build dengan alamat situs, misalnya lewat PowerShell:
    ```powershell
-   $env:NEXT_PUBLIC_SITE_URL = "https://domain-kamu"; npm run build
+   $env:NEXT_PUBLIC_SITE_URL = "https://tumbuhnusantara.my.id"; npm run build
    ```
-   Tanpa variabel ini dipakai placeholder `https://tumbuh.example.com` (VERIFY, lihat `src/lib/site.ts`).
+   Tanpa variabel ini dipakai alamat bawaan `https://tumbuhnusantara.my.id` (lihat `src/lib/site.ts`).
 2. Unggah seluruh isi folder `out/` ke direktori publik (misalnya `public_html`). `out/.htaccess` ikut terunggah untuk Apache.
 
 `npm run build` juga menjalankan `scripts/fix-segments.mjs`, yang menyalin file prefetch Next ke nama yang diminta browser (tanpa ini muncul error 404 di konsol pada build Windows).
@@ -128,6 +128,5 @@ Diukur 14 Okt 2026 dengan Lighthouse 12 (Edge headless) di laptop pengembang, se
 - `src/data/culture.ts`: fakta budaya 6 wilayah (rumah adat, tarian, makanan, ungkapan) bertanda VERIFY, wajib dicek manual.
 - `supabase/buka-lencana.sql`: skrip DUMMY untuk demo, menambahkan 14 sesi contoh ke satu akun anak agar semua lencana terbuka. Jangan dipakai untuk akun sungguhan.
 - `src/lib/size.ts`: perkiraan tinggi anak per kelas (118-144 cm) saat tinggi badan belum diisi, bertanda VERIFY.
-- `src/lib/site.ts`: alamat situs placeholder `https://tumbuh.example.com` (VERIFY), ganti lewat `NEXT_PUBLIC_SITE_URL` saat build.
 - `src/data/vocab.ts`: 79 kosakata Kartu Kata (8 tema), perlu ditinjau ulang oleh manusia.
 - `src/data/questions/`: 384 soal (16 per mapel per kelas, termasuk 96 soal Bahasa Indonesia baru) disusun mengacu Kurikulum Merdeka, perlu ditinjau ulang oleh manusia sebelum lomba.
