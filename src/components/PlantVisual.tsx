@@ -60,7 +60,7 @@ export function PlantVisual({
         src={src(plant.id, stage)}
         alt={`${plant.name}, tahap ${stage}${wilted ? ", sedang layu" : ""}`}
         {...sized(dims, k)}
-        priority
+        preload
         className={`relative origin-bottom ${wilted ? "-rotate-3 saturate-[.35] sepia-[.4]" : "animate-breathe"}`}
       />
     );

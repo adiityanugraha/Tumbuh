@@ -93,9 +93,9 @@ Ketuk avatar di pojok kanan atas (anak) atau lingkaran inisial (orang tua) untuk
 | Halaman | Performa | Aksesibilitas | Best Practices | SEO |
 |---|---|---|---|---|
 | Onboarding `/` | 100 | 100 | 100 | 100 |
-| Kebunku, Belajar, Sesi belajar, Peta, Koleksi, Kartu Kata, Memori, Orang Tua | 93-100 | 100 | 100 | 100 |
+| Kebunku, Belajar, Sesi belajar, Peta, Koleksi, Kartu Kata, Memori, Orang Tua | 94-100 | 100 | 100 | 100 |
 
-Diukur 13 Okt 2026 dengan Lighthouse 12 (Edge headless) di laptop pengembang; angka performa bisa berbeda di server hosting. Perlu diukur ulang setelah penambahan ikon, gambar badan, dan latar truntum (14 Okt).
+Diukur 14 Okt 2026 dengan Lighthouse 12 (Edge headless) di laptop pengembang, setelah penambahan ikon, gambar badan, dan latar truntum; angka performa bisa berbeda di server hosting.
 
 ## Status Dummy dan Placeholder
 

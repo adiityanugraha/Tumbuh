@@ -86,7 +86,7 @@ export function GardenScene({
           alt=""
           width={92}
           height={91}
-          priority
+          preload
           className="motion-safe:animate-bob absolute top-3 left-4 z-[1]"
         />
       ) : (
@@ -95,7 +95,7 @@ export function GardenScene({
           alt=""
           width={88}
           height={89}
-          priority
+          preload
           className={`motion-safe:animate-spin-slow absolute left-4 z-[1] ${tod === "sore" ? "top-10 opacity-90" : "top-3"}`}
         />
       )}

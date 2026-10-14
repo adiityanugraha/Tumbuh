@@ -337,6 +337,7 @@ function Report() {
                     <span
                       className={`w-full max-w-12 rounded-t-xl ${n ? "bg-daun-500" : "bg-krem-tua"}`}
                       style={{ height: `${n ? (n / maxPerDay) * 70 : 6}%` }}
+                      role="img"
                       aria-label={`${n} sesi`}
                     />
                     <span className={d === today ? "text-tinta" : ""}>

@@ -115,7 +115,7 @@ export function PetaView() {
               src="/peta/peta.webp"
               alt="Peta kepulauan Indonesia"
               fill
-              priority
+              preload
               className="object-cover"
               sizes="(min-width: 1024px) 860px, 100vw"
             />
