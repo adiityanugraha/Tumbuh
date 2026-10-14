@@ -78,13 +78,34 @@ Ketuk avatar di pojok kanan atas (anak) atau lingkaran inisial (orang tua) untuk
 
 ## Deploy
 
-1. Set alamat situs (dan Supabase bila dipakai) di `.env.local`, atau lewat PowerShell:
+### Dokploy (dipakai untuk lomba, domain di Hostinger)
+
+Repo sudah berisi `Dockerfile` (Node 22 membangun situs statis, nginx menyajikan folder `out/`) dan `nginx.conf` (padanan `.htaccess`: kompresi, cache aset, halaman 404, redirect garis miring yang aman di belakang proxy).
+
+1. **Push** repo ke GitHub (publik).
+2. **Dokploy** > Create Project > Create Service > **Application**.
+   - Provider: GitHub (atau Git dengan URL repo publik), branch `main`.
+   - Build Type: **Dockerfile**, Docker File: `Dockerfile`.
+3. **Environment** > Build-time Arguments (nilai `NEXT_PUBLIC_*` dibaca saat build, bukan saat jalan):
+   ```
+   NEXT_PUBLIC_SITE_URL=https://domain-kamu
+   NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=anon-key-dari-supabase
+   ```
+   Tanpa dua variabel Supabase, situs tetap jalan dengan profil lokal tanpa akun.
+4. **Deploy**, lalu pantau tab Logs sampai build selesai.
+5. **Domains** > Add Domain: isi host (misalnya `tumbuh.domain-kamu`), Container Port **80**, nyalakan **HTTPS** dengan sertifikat Let's Encrypt.
+6. **Hostinger** (hPanel > Domains > DNS / Nameservers): tambah record **A** dengan nama `@` (domain utama) atau nama subdomain, isi dengan **IP server Dokploy**. Hapus record A/AAAA lama untuk nama yang sama (misalnya halaman parkir Hostinger), lalu tunggu propagasi DNS sebelum sertifikat HTTPS terbit.
+7. Opsional: nyalakan **Auto Deploy** di Dokploy agar setiap push ke `main` langsung dideploy ulang.
+
+### Hosting statis lain (cPanel/Apache)
+
+1. Build dengan alamat situs, misalnya lewat PowerShell:
    ```powershell
-   $env:NEXT_PUBLIC_SITE_URL = "https://domain-hosting-panitia"; npm run build
+   $env:NEXT_PUBLIC_SITE_URL = "https://domain-kamu"; npm run build
    ```
    Tanpa variabel ini dipakai placeholder `https://tumbuh.example.com` (VERIFY, lihat `src/lib/site.ts`).
-2. Unggah seluruh isi folder `out/` ke direktori publik hosting (misalnya `public_html`). Tidak butuh Node.js di server.
-3. Untuk hosting Apache/cPanel, `out/.htaccess` ikut terunggah: kompresi, cache aset, dan halaman 404. Server lain mengabaikannya.
+2. Unggah seluruh isi folder `out/` ke direktori publik (misalnya `public_html`). `out/.htaccess` ikut terunggah untuk Apache.
 
 `npm run build` juga menjalankan `scripts/fix-segments.mjs`, yang menyalin file prefetch Next ke nama yang diminta browser (tanpa ini muncul error 404 di konsol pada build Windows).
 
