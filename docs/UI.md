@@ -12,7 +12,8 @@ Acuan visual yang disetujui peserta pada 5 Okt 2026. Prototipe yang bisa diklik:
 
 | Motif | Dipakai di |
 |---|---|
-| Kawung | Pola latar halaman (opasitas sekitar 6%), pot tanaman, latar gambar kartu koleksi, lingkaran perayaan |
+| Truntum | Pola latar halaman (bunga kecil bertabur, ubin 56px, versi terang dan gelap) |
+| Kawung | Pot tanaman, latar gambar kartu koleksi, lingkaran perayaan |
 | Mega mendung | Pita awan biru berlapis di bawah header, langit kebun, panel onboarding |
 | Parang | Garis bawah header, bar progres tanaman, garis aksen bawah kartu, garis atas navigasi bawah (HP) |
 

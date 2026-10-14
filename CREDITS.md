@@ -26,6 +26,7 @@ Daftar sumber dan lisensi setiap aset yang dipakai.
 | Kumbi berperahu di peta | `public/peta/kumbi-perahu.webp` | Dibuat peserta dengan AI image generator (`asset/kumbi perahu.jpg`), latar biru dan garis peta dibuang, tepi pita ombak dipudarkan, 400px | Hasil generasi AI milik peserta |
 | Ikon mapel, avatar, lencana, budaya daerah, gembok, dan stiker orang tua | `public/ikon/*.webp` | Dibuat peserta dengan AI image generator (`asset/logo matpel.jpg`, `avatar.jpg`, `achivement.jpg`, `ikon kenali daerah.jpg`, `kunci.jpg`, `stiker orang tua.jpg`), latar dibuang dan dipotong per ikon (256px) | Hasil generasi AI milik peserta |
 | Gambar anak laki-laki dan perempuan (pengukur tinggi) | `public/badan/*.webp` | Dibuat peserta dengan AI image generator (`asset/tinggi laki laki.jpg`, `tinggi perempuan.jpg`), latar kawung dibuang | Hasil generasi AI milik peserta |
+| Motif latar truntum (terang dan gelap) | `src/app/globals.css` (`--latar-truntum`) | Dibuat peserta (`asset/latar-truntum.css`), SVG inline | Milik peserta |
 | Mask wilayah peta | `public/peta/*.png` | Dibuat otomatis dari bentuk daratan pada peta di atas (Python: PIL, NumPy, SciPy) | Turunan aset peta |
 | Maskot Kumbi, ilustrasi tanaman, pot, awan mega mendung | `src/components/art.tsx` | Dibuat sendiri (SVG) | Milik peserta |
 

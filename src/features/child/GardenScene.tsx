@@ -75,7 +75,7 @@ export function GardenScene({
   const night = tod === "malam";
   return (
     <div
-      className={`border-krem-tua relative flex min-h-[520px] flex-col items-center justify-end overflow-hidden rounded-[32px] border-3 bg-linear-to-b ${SKY[tod]} md:col-span-2 xl:col-span-1 xl:col-start-2 xl:row-start-1 xl:h-[calc(100svh-13rem)] xl:max-h-[720px]`}
+      className={`border-krem-tua relative flex min-h-[520px] flex-col items-center justify-end overflow-hidden rounded-[32px] border-3 bg-krem bg-linear-to-b ${SKY[tod]} md:col-span-2 xl:col-span-1 xl:col-start-2 xl:row-start-1 xl:h-[calc(100svh-13rem)] xl:max-h-[720px]`}
     >
       <MegaMendung
         className={`absolute inset-x-0 top-0 h-28 w-full ${night ? "opacity-30" : ""}`}
