@@ -2,8 +2,9 @@
 
 Disalin otomatis dari transkrip Claude Code oleh `scripts/prompt-log.mjs`, kata per kata, tanpa diedit.
 Termasuk jawaban peserta atas pertanyaan pilihan dari AI. Waktu dalam WIB.
+Satu sesi di luar proyek (pertanyaan AlmaLinux untuk tugas kuliah) tidak dimasukkan, lihat `EXCLUDED` di skrip.
 
-Terakhir diperbarui: 14 Okt 2026, 12.21.06 WIB
+Terakhir diperbarui: 14 Okt 2026, 12.38.34 WIB
 
 ## Sesi 6371c798
 
@@ -569,18 +570,8 @@ dimana code login
 lanjut ke fase 5
 ```
 
-## Sesi c3376cb6
-
-Mulai: 9 Okt 2026, 12.19.33 WIB
-
-### 90. Prompt - 9 Okt 2026, 12.19.33 WIB
+### 90. Prompt - 14 Okt 2026, 12.38.08 WIB
 
 ```text
-cara download almalinux di vbox
-```
-
-### 91. Prompt - 9 Okt 2026, 12.22.28 WIB
-
-```text
-sebaiknya download yang mana untuk tugas?
+ya, hapus sesi almalinux dari log
 ```

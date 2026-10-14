@@ -7,6 +7,8 @@ import { join } from "node:path";
 const slug = process.cwd().replace(/[:\\/ ]/g, "-");
 const dir = process.argv[2] ?? join(homedir(), ".claude", "projects", slug);
 const out = join(process.cwd(), "docs", "LOG_PROMPT.md");
+// Sesi yang dibuka di folder ini tapi tidak terkait proyek (pertanyaan AlmaLinux untuk tugas kuliah, 9 Okt 2026).
+const EXCLUDED = ["c3376cb6"];
 
 const wib = (iso) =>
   new Date(iso).toLocaleString("id-ID", { timeZone: "Asia/Jakarta", dateStyle: "medium", timeStyle: "medium" }) +
@@ -41,7 +43,7 @@ function entriesOf(file) {
 }
 
 const sessions = readdirSync(dir)
-  .filter((f) => f.endsWith(".jsonl"))
+  .filter((f) => f.endsWith(".jsonl") && !EXCLUDED.some((id) => f.startsWith(id)))
   .map((f) => ({ id: f.replace(".jsonl", ""), entries: entriesOf(join(dir, f)) }))
   .filter((s) => s.entries.length)
   .sort((a, b) => a.entries[0].time.localeCompare(b.entries[0].time));
@@ -52,6 +54,7 @@ const lines = [
   "",
   "Disalin otomatis dari transkrip Claude Code oleh `scripts/prompt-log.mjs`, kata per kata, tanpa diedit.",
   "Termasuk jawaban peserta atas pertanyaan pilihan dari AI. Waktu dalam WIB.",
+  "Satu sesi di luar proyek (pertanyaan AlmaLinux untuk tugas kuliah) tidak dimasukkan, lihat `EXCLUDED` di skrip.",
   "",
   `Terakhir diperbarui: ${wib(new Date().toISOString())}`,
   "",
