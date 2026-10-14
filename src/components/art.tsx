@@ -1,4 +1,4 @@
-// PLACEHOLDER: ilustrasi SVG sederhana (maskot, tanaman, pot, awan). Diganti/dipoles di Fase 4.
+// PLACEHOLDER: ilustrasi SVG sederhana buatan sendiri (maskot, pot, awan). Tanaman SVG hanya cadangan; tampilan utama memakai gambar di public/tanaman.
 import type { GrowthStage } from "@/lib/types";
 
 /** Kumbi, kumbang tukang kebun. Maskot orisinal. */

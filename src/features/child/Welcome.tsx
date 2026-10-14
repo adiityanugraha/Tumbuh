@@ -98,7 +98,7 @@ function PickRole({ onPick }: { onPick: (s: Step) => void }) {
         ))}
       </div>
       <p className="text-tinta-redup mt-auto text-center text-sm font-bold">
-        Juri atau ingin melihat contoh dulu?{" "}
+        Akun Demo{" "}
         <button
           type="button"
           onClick={async () => {

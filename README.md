@@ -4,9 +4,35 @@ Web edukasi untuk anak SD kelas 1-6. Anak merawat kebun virtual dan menjelajah P
 
 Karya untuk M-ONE Telkomsel Coding Competition, Kategori Umum, tema "Innovating Education Through Technology", subtema "Web Education for Kids (untuk anak SD)".
 
-- Spesifikasi produk: [`docs/PRD.md`](docs/PRD.md)
-- Acuan AI Agent: [`AGENTS.md`](AGENTS.md)
-- Sumber aset: [`CREDITS.md`](CREDITS.md)
+**Situs:** https://domain-dari-panitia <!-- PLACEHOLDER: ganti setelah deploy -->
+
+| Dokumen | Isi |
+|---|---|
+| [`DEMO.md`](DEMO.md) | Panduan juri: mencoba semua fitur dalam sekitar 10 menit (Mode Demo tanpa akun) |
+| [`docs/PRD.md`](docs/PRD.md) | Spesifikasi produk, sumber kebenaran fitur |
+| [`AGENTS.md`](AGENTS.md) | Acuan AI Agent: stack, aturan kerja, rencana fase |
+| [`docs/UI.md`](docs/UI.md) | Acuan visual (motif batik, warna, komponen) |
+| [`docs/JURNAL_PROMPT.md`](docs/JURNAL_PROMPT.md) | 5 prompt pilihan: PRD, debugging, audit/optimasi, finishing, bebas |
+| [`docs/LOG_PROMPT.md`](docs/LOG_PROMPT.md) | Log prompt mentah, disalin otomatis kata per kata |
+| [`CREDITS.md`](CREDITS.md) | Sumber dan lisensi aset |
+
+## Fitur
+
+**Anak**
+- **Kebunku**: tanaman Nusantara tumbuh dari jawaban benar (air dan pupuk), layu bila 3 hari tidak belajar tapi tidak pernah mati. Langit mengikuti jam, maskot Kumbi, streak, lencana, dan tantangan dari orang tua.
+- **Belajar**: 4 mapel (Matematika, Bahasa Indonesia, IPAS, Bahasa Inggris) untuk kelas 1-6, 384 soal Kurikulum Merdeka dengan 4 tipe (pilihan ganda, isian angka, mencocokkan, mengurutkan). Ada Soal Hari Ini, latihan per topik, dan Siram Ulang untuk soal yang pernah salah. Soal bisa dibacakan (Web Speech API).
+- **Peta Nusantara**: 6 wilayah terbuka bertahap, jalur ekspedisi, linimasa, dan Kenali Daerah (rumah adat, tarian, makanan, ungkapan).
+- **Koleksi**: fakta, status konservasi, manfaat, dan ukuran tanaman dibanding tinggi badan anak.
+- **Kartu Kata** (kosakata Inggris bergambar) dan **Memori Nusantara** (permainan memasangkan kartu).
+
+**Orang tua**
+- Laporan mingguan dalam bahasa sederhana, materi dikuasai vs perlu latihan per mapel.
+- Kirim Semangat (stiker + pesan) dan Tantangan & Hadiah.
+- Satu akun bisa terhubung ke beberapa anak lewat kode keluarga.
+
+**Untuk semua**
+- Pengaturan: mode gelap/terang, huruf besar, kurangi animasi, suara, avatar, tinggi badan.
+- Mode Demo tanpa akun untuk juri. Tanpa iklan, analytics, atau chat bebas.
 
 ## Stack
 
@@ -30,7 +56,7 @@ npm run preview    # menyajikan folder out/ secara lokal
 
 Bila Supabase dikonfigurasi, layar awal menanyakan **"Kamu siapa?"**:
 
-- **Aku Anak**: daftar dengan nama pengguna, kata sandi, avatar, dan kelas, atau masuk dengan nama pengguna + kata sandi. Profil anak (ketuk avatar) menampilkan **kode keluarga** 6 karakter.
+- **Aku Anak**: daftar dengan nama pengguna, kata sandi, laki-laki/perempuan, avatar, dan kelas, atau masuk dengan nama pengguna + kata sandi. Profil anak (ketuk avatar) menampilkan **kode keluarga** 6 karakter.
 - **Saya Orang Tua**: daftar dengan nama pengguna, kata sandi, dan kode keluarga anak (ada bantuan cara menemukannya), lalu masuk berikutnya cukup nama pengguna + kata sandi. Satu akun orang tua bisa menghubungkan beberapa anak (tombol "+ Tambah anak").
 - Kelas dipilih anak saat mendaftar. Setelah itu **hanya orang tua** yang bisa menggantinya (juga dikunci trigger di database).
 - **Mode Demo** tetap tersedia tanpa akun untuk juri.
@@ -69,7 +95,7 @@ Ketuk avatar di pojok kanan atas (anak) atau lingkaran inisial (orang tua) untuk
 | Onboarding `/` | 100 | 100 | 100 | 100 |
 | Kebunku, Belajar, Sesi belajar, Peta, Koleksi, Kartu Kata, Memori, Orang Tua | 93-100 | 100 | 100 | 100 |
 
-Diukur 13 Okt 2026 dengan Lighthouse 12 (Edge headless) di laptop pengembang; angka performa bisa berbeda di server hosting.
+Diukur 13 Okt 2026 dengan Lighthouse 12 (Edge headless) di laptop pengembang; angka performa bisa berbeda di server hosting. Perlu diukur ulang setelah penambahan ikon, gambar badan, dan latar truntum (14 Okt).
 
 ## Status Dummy dan Placeholder
 
