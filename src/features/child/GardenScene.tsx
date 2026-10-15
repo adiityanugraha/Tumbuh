@@ -141,7 +141,7 @@ export function GardenScene({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             role="status"
-            className="border-kunyit-400 bg-kunyit-100 absolute inset-x-4 top-20 z-20 rounded-[20px] border-2 px-4 py-3 font-bold shadow-sm"
+            className="border-kunyit-400 bg-kunyit-100 absolute inset-x-4 top-20 z-30 rounded-[20px] border-2 px-4 py-3 font-bold shadow-sm"
           >
             {bubble}
           </motion.p>

@@ -182,7 +182,7 @@ function Match({ question, status, onAnswer }: InputProps<MatchQuestion>) {
       <p className="text-tinta-redup text-center font-bold">
         {done
           ? "Pasangan yang benar:"
-          : "Klik kotak kiri, lalu pilih pasangannya di kanan."}
+          : "Pasangkan kotak-kotak ini."}
       </p>
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="grid gap-2.5">
